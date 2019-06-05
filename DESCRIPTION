@@ -1,0 +1,17 @@
+Package: injectr
+Title: Inject code to existing functions
+Version: 0.1
+Authors@R:
+    person(given = "Filip",
+           family = "Krikava",
+           role = c("aut", "cre"),
+           email = "krikava@gmail.com",
+           comment = c(ORCID = "0000-0002-0478-6202"))
+Description: Allow one to inject arbitrary code at the entry point or at the exit point of an existing function.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Suggests:
+    testthat
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
