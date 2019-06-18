@@ -5,3 +5,4 @@
 ^injectr.Rcheck$
 ^Makefile$
 ^injectr_.*\.tar\.gz$
+^.dir-locals\.el$

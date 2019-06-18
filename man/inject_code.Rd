@@ -4,20 +4,31 @@
 \alias{inject_code}
 \title{Injects code into an existing function.}
 \usage{
-inject_code(fun, code, where = c("onentry", "onexit", "onerror"))
+inject_code(code, fun, where = "onentry", wrap = FALSE)
 }
 \arguments{
-\item{fun}{a function into which the code should be inserted.}
+\item{code}{the code that should be inserted.}
 
-\item{code}{an expression that should be inserted.}
+\item{fun}{the function into which the code should be inserted.}
 
-\item{where}{a indicates at which point of the \code{fun} invocation the given
-\code{code} shall run.}
+\item{where}{indicates at which point of the \code{fun} invocation the given
+\code{code} shall run. It can be one of the following: \code{onentry}, \code{onexit},
+\code{onsuccess}, \code{onerror}.}
+
+\item{wrap}{indicates if it the given \code{code} should be wrapped in an
+anonymous function (\code{TRUE}) or inserted as is (\code{FALSE}).}
+}
+\value{
+NULL invisibly
 }
 \description{
 The \code{code} argument is recorded without evaluation and it will be inserted
-at the beginning of the \code{fun}. If \code{where} is not \code{onentry} it will be
-wrapped in \code{on.exit} call. If \code{where} is \code{onerror}, the wrapped code will
-further make the \code{code} to run only in the case the function failed with an
-error condition.
+at the beginning of the \code{fun}. If it is a symbol, its value will be looked
+starting in the callee frame. If \code{where} is not \code{onentry} it will be wrapped
+in \code{on.exit} call. If \code{where} is \code{onerror}, the wrapped code will further
+make the \code{code} to run only in the case the function failed with an error
+condition.
+}
+\details{
+This function modifies the original function.
 }
