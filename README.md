@@ -1,36 +1,46 @@
-# injectr
+injectr
+=======
 
 R package for injecting code into existing functions.
 
-## Usage
+Usage
+-----
 
-```r
-> f <- function(x) {
-  x*x
-}
+    library(injectr)
 
-> inject_code(f, message("f called with x: ", x))
+Look for the documentation of the `inject_code`.
 
-> f(42)
-f called with x: 42
-[1] 1764
-```
+### Examples
 
-```r
-> f <- function(x) {
-  x*x
-}
+#### On entry example
 
-> inject_code(f, message("f called with x: ", x, " returning: ", returnValue()), "onexit")
+    f <- function(x) {
+      x*x
+    }
 
-> f(42)
-f called with x: 42 returning: 1764
-[1] 1764
-```
+    inject_code(message("f called with x: ", x), f)
 
-## Building
+    f(42)
 
-```sh
-make build
-```
+    ## f called with x: 42
 
+    ## [1] 1764
+
+#### On exit example
+
+    f <- function(x) {
+      x*x
+    }
+
+    inject_code(message("f called with x: ", x, " returning: ", returnValue()), f, "onexit")
+
+    f(42)
+
+    ## f called with x: 42 returning: 1764
+
+    ## [1] 1764
+
+Building
+--------
+
+    make build

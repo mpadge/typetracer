@@ -14,6 +14,7 @@ clean:
 
 document:
 	Rscript -e 'devtools::document()'
+	Rscript -e 'rmarkdown::render("README.Rmd")'
 
 test:
 	Rscript -e 'devtools::test()'
