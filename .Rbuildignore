@@ -1,0 +1,8 @@
+^\.ccls.*$
+^\.travis\.yml$
+^\.gitignore$
+^\.git$
+^injectr.Rcheck$
+^Makefile$
+^injectr_.*\.tar\.gz$
+^.dir-locals\.el$

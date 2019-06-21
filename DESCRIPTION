@@ -8,7 +8,7 @@ Authors@R:
            email = "krikava@gmail.com",
            comment = c(ORCID = "0000-0002-0478-6202"))
 Description: Allow one to inject arbitrary code at the entry point or at the exit point of an existing function.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests:
