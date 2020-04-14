@@ -47,17 +47,17 @@ inject_symbol <- function(name, fun, where, wrap) {
         closure=inject_closure(sym, fun, where, wrap),
         expression=inject_expression(sym, fun, where, wrap),
         language=inject_language(sym, fun, where, wrap),
-        default=stop("Unsupported code type: ", typeof(sym))
+        stop("Unsupported code type: ", typeof(sym))
     )
 }
 
 resolve_name <- function(name, pos) {
     v <- name
-    while(pos > 1 && is.symbol(v)) {
+    while(pos >= 0 && is.symbol(v)) {
         tryCatch({
             v <- get(as.character(v), envir=sys.frame(pos), inherits=FALSE)
         }, error=function(e) {
-            if (pos == 2) stop(e)
+            if (pos == 0) stop(e)
         })
         pos <- pos - 1
     }
