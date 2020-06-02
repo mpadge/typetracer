@@ -79,7 +79,14 @@ inject_expression <- function(code, fun, where, wrap) {
     ocb_remapped <- !identical(get("{", envir=environment(fun)), .Primitive("{"))
 
     wrapped_code <- prepare_code_to_run(code, where)
-    new_body <- prepend_code(body(fun), wrapped_code, ocb_remapped)
+
+    fun_body <- body(fun)
+
+    if(where != "onentry") {
+        fun_body <- process_on_exit(fun_body)
+    }
+
+    new_body <- prepend_code(fun_body, wrapped_code, ocb_remapped)
 
     invisible(reassign_function_body(fun, new_body))
 }
