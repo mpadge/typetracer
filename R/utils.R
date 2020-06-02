@@ -2,6 +2,7 @@ reassign_function_body <- function(fun, body) {
     invisible(.Call(reassign_function_body_, fun, body))
 }
 
+#' @export
 create_duplicate <- function(x) {
     .Call(create_duplicate_, x)
 }
