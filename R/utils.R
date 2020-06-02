@@ -6,6 +6,7 @@ create_duplicate <- function(x) {
     .Call(create_duplicate_, x)
 }
 
+#' @export
 sexp_address <- function(x) {
     .Call(sexp_address_, x)
 }
