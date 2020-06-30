@@ -18,3 +18,6 @@ document:
 
 test:
 	Rscript -e 'devtools::test()'
+
+install:
+	R CMD INSTALL .
