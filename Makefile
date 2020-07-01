@@ -11,13 +11,14 @@ check: build
 clean:
 	-rm -f injectr*tar.gz
 	-rm -fr injectr.Rcheck
+	-rm -fr src/*.{o,so}
 
-document:
+document: clean
 	Rscript -e 'devtools::document()'
 	Rscript -e 'rmarkdown::render("README.Rmd")'
 
 test:
 	Rscript -e 'devtools::test()'
 
-install:
+install: clean
 	R CMD INSTALL .
