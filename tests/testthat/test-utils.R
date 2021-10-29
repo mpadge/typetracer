@@ -32,19 +32,3 @@ test_that("reassign_function_body returns invisibly", {
     f1 <- function() 1
     expect_invisible(reassign_function_body(f1, 2))
 })
-
-test_that("create_duplicate creates a duplicate", {
-    f1 <- function(x) x
-    f2 <- create_duplicate(f1)
-
-    expect_false(sexp_address(f1) == sexp_address(f2))
-    expect_true(identical(f1, f2))
-    expect_true(compare(f1, f2)$equal)
-})
-
-test_that("sexp_address returns an address of SEXP", {
-    a <- 1
-
-    expect_equal(sexp_address(a), sexp_address(a))
-    expect_true(startsWith(sexp_address(a), "0x"))
-})

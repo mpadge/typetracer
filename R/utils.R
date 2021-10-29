@@ -2,16 +2,6 @@ reassign_function_body <- function(fun, body) {
     invisible(.Call(reassign_function_body_, fun, body))
 }
 
-#' @export
-create_duplicate <- function(x) {
-    .Call(create_duplicate_, x)
-}
-
-#' @export
-sexp_address <- function(x) {
-    .Call(sexp_address_, x)
-}
-
 ## TODO: Fix implementation to properly handle the complete call signature of on.exit
 process_on_exit <- function(expr) {
     if(typeof(expr) == "language") {

@@ -26,33 +26,10 @@ SEXP reassign_function_body(SEXP fun, SEXP body) {
   return R_NilValue;
 }
 
-SEXP create_duplicate(SEXP target) {
-  if (isNull(target)) Rf_error("target must not be null");
-
-  return Rf_duplicate(target);
-}
-
-SEXP sexp_address(SEXP s) {
-  if (isNull(s)) Rf_error("target must not be null");
-
-  char *address;
-  if (asprintf(&address, "%p", (void *)s) == -1) {
-    Rf_error("Getting address of SEXP failed");
-  }
-
-  SEXP result = Rf_mkString(address);
-
-  return result;
-}
-
 extern SEXP reassign_function_body(SEXP, SEXP);
-extern SEXP create_duplicate(SEXP);
-extern SEXP sexp_address(SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
     {"reassign_function_body_", (DL_FUNC)&reassign_function_body, 2},
-    {"create_duplicate_", (DL_FUNC)&create_duplicate, 1},
-    {"sexp_address_", (DL_FUNC)&sexp_address, 1},
     {NULL, NULL, 0}
 };
 

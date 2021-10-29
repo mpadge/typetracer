@@ -72,7 +72,8 @@ inject_expression <- function(code, fun, where, wrap) {
         as.call(c(as.function(as.list(code))))
     } else {
         # get the content of the EXPRSXP
-        code[[1]]
+        #code[[1]]
+        code
     }
 
     # checks if OpenCurlyBrace (i.e. `{`) has been redefined
