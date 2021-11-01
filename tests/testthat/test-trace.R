@@ -6,13 +6,14 @@ test_that("tracer body", {
 
 test_that("injected tracer body", {
 
-    f <- function (x, y) {
+    e <- new.env(parent=emptyenv())
+    e$f <- function (x, y) {
         x * x + y * y
     }
-    body0 <- body (f)
+    body0 <- body (e$f)
 
-    inject_tracer (f, .GlobalEnv)
-    body1 <- body (f)
+    inject_tracer (e$f, e)
+    body1 <- body (e$f)
 
     expect_false (identical (body0, body1))
     expect_true (length (body1) > length (body0))
@@ -22,18 +23,22 @@ test_that("injected tracer body", {
 
 test_that("No traces", {
 
+    clear_traces ()
     expect_message (x <- load_traces (),
                     "No traces found; first run 'inject_tracer'")
     expect_null (x)
 })
 
 test_that("trace call", {
-    f <- function (x, y) {
+    e <- new.env(parent=emptyenv())
+    e$f <- function (x, y) {
         x * x + y * y
     }
-    inject_tracer (f, .GlobalEnv)
+
+    inject_tracer (e$f, e$e)
 
     clear_traces ()
+    f <- e$f
     val <- f (x = 1:2, y = 3:4 + 0.)
     flist <- list.files (tempdir (),
                          pattern = "^typetrace\\_",
