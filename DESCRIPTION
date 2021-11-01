@@ -1,6 +1,6 @@
 Package: typetracer
 Title: Trace Function Parameter Types
-Version: 0.0.0.005
+Version: 0.0.0.006
 Authors@R: c(
     person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2172-5265")),
@@ -9,6 +9,8 @@ Authors@R: c(
   )
 Description: 
 License: MIT + file LICENSE
+Imports:
+    brio
 Suggests:
     testthat
 Encoding: UTF-8
