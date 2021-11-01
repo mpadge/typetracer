@@ -8,3 +8,4 @@
 ^.dir-locals\.el$
 ^\.pre-commit-config\.yaml$
 ^codemeta\.json$
+^\.github$
