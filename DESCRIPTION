@@ -1,13 +1,14 @@
-Package: injectr
-Title: Inject code to existing functions
-Version: 0.1
-Authors@R:
+Package: typetracer
+Title: Trace Function Parameter Types
+Version: 0.0.0
+Authors@R: c(
+    person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-2172-5265")),
     person(given = "Filip",
            family = "Krikava",
-           role = c("aut", "cre"),
-           email = "krikava@gmail.com",
-           comment = c(ORCID = "0000-0002-0478-6202"))
-Description: Allow one to inject arbitrary code at the entry point or at the exit point of an existing function.
+           role = "aut",
+           comment = "Author of original 'injectr' code on which this package builds; https://github.com/PRL-PRG/injectr"))
+Description: 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
