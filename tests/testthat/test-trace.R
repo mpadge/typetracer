@@ -1,7 +1,14 @@
+
+is_gh_cov <- identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage"))
+
+
 test_that("tracer body", {
 
     body <- body (get_types)
-    testthat::expect_snapshot (body)
+    if (!is_gh_cov) {
+        # covr injects other symbols into code on workflow, so snapshot differs
+        testthat::expect_snapshot (body)
+    }
 })
 
 test_that("injected tracer body", {
