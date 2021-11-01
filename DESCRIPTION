@@ -1,6 +1,6 @@
 Package: typetracer
 Title: Trace Function Parameter Types
-Version: 0.0.0.021
+Version: 0.0.0.022
 Authors@R: c(
     person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2172-5265")),
@@ -13,7 +13,8 @@ Imports:
     brio,
     tibble
 Suggests:
-    testthat
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

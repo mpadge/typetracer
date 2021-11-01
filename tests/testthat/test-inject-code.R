@@ -1,5 +1,4 @@
 # Original /injectr' test file https://github.com/PRL-PRG/injectr
-context("test-inject-code")
 
 test_that("inject_code injects code (LANGSXP) at the beginning of the given function body", {
     f <- function(x) { 42 }
