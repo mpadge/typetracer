@@ -20,10 +20,10 @@ used to trace parameter types on each call.
     }
     inject_tracer (f, .GlobalEnv)
 
-Calls to the function, `f`, will then traces each parameter of the
-function, currently extracting (for purposes of demonstration only)
-values for `storage.type` and `length`. These values can be accessed
-with the `load_traces` function.
+Calls to the function, `f`, will then trace each parameter of the
+function. The current demonstration-only version extracts values for
+`storage.type` and `length`. These values can be accessed with the
+`load_traces` function.
 
     val <- f (x = 1:2, y = 3:4 + 0.)
     load_traces ()
