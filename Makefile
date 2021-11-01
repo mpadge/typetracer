@@ -6,11 +6,11 @@ build: document
 	R CMD build .
 
 check: build
-	R CMD check injectr*tar.gz
+	R CMD check typetracer*tar.gz
 
 clean:
-	-rm -f injectr*tar.gz
-	-rm -fr injectr.Rcheck
+	-rm -f typetracer*tar.gz
+	-rm -fr typetracer.Rcheck
 	-rm -fr src/*.{o,so}
 
 document: clean

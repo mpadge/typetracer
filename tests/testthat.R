@@ -1,4 +1,4 @@
 library(testthat)
-library(injectr)
+library(typetracer)
 
-test_check("injectr")
+test_check("typetracer")
