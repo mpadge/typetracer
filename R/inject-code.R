@@ -145,7 +145,8 @@ wrap_code_onexit <- function(code) {
 
 wrap_code_onexit_state <- function(code, failure) {
     code <- substitute({
-        default <- typetracer:::.default_return_value
+        #default <- typetracer:::.default_return_value
+        default <- utils::getFromNamespace (".default_return_value", "typetracer")
         retv <- returnValue(default=default)
         if (identical(default, retv) == HAS_FAILED) CODE
     }, list(CODE=code, HAS_FAILED=failure))

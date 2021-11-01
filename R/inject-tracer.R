@@ -9,6 +9,7 @@
 #' @export
 inject_tracer <- function (f, e) {
 
-    code <- body (typetracer:::get_types)
+    get_types <- utils::getFromNamespace ("get_types", "typetracer")
+    code <- body (get_types)
     invisible (inject_code (code, f))
 }
