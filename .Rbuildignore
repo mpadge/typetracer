@@ -6,3 +6,5 @@
 ^Makefile$
 ^injectr_.*\.tar\.gz$
 ^.dir-locals\.el$
+^\.pre-commit-config\.yaml$
+^codemeta\.json$
