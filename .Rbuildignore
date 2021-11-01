@@ -1,10 +1,12 @@
+^aaa*
+^README\.Rmd$
+^README\.html$
 ^\.ccls.*$
-^\.travis\.yml$
 ^\.gitignore$
 ^\.git$
-^injectr.Rcheck$
+^typetracer.Rcheck$
 ^Makefile$
-^injectr_.*\.tar\.gz$
+^typetracer_.*\.tar\.gz$
 ^.dir-locals\.el$
 ^\.pre-commit-config\.yaml$
 ^\.hooks$
