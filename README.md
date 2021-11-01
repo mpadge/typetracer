@@ -20,7 +20,8 @@ temporary directory associated with the R process used to load the
 `typetracer` package. This ensures that traces will still work even when
 called in multi-threaded processes. The following code shows an example
 call to the `f` function, and subsequent extraction of the traces which
-are dumped to files prefixed with `typetrace_`:
+are dumped to files prefixed with `typetrace_`. Current demo-only
+version dumps `storage.type` and `length`.
 
     val <- f (x = 1:2, y = 3:4)
     traces <- list.files (tempdir (), pattern = "^typetrace\\_", full.names = TRUE)
