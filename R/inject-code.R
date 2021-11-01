@@ -1,3 +1,7 @@
+
+# Modified from 'injectr' by Filip Krikava
+# https://github.com/PRL-PRG/injectr
+
 #' Injects code into an existing function.
 #'
 #' The `code` argument is recorded without evaluation and it will be inserted
