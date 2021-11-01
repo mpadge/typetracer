@@ -1,16 +1,17 @@
 Package: typetracer
 Title: Trace Function Parameter Types
-Version: 0.0.0.013
+Version: 0.0.0.014
 Authors@R: c(
     person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2172-5265")),
     person("Filip", "Krikava", role = "aut",
            comment = "Author of original 'injectr' code on which this package builds; https://github.com/PRL-PRG/injectr")
   )
-Description: 
+Description: Trace function parameter types.
 License: MIT + file LICENSE
 Imports:
-    brio
+    brio,
+    tibble
 Suggests:
     testthat
 Encoding: UTF-8
