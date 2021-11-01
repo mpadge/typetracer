@@ -8,7 +8,7 @@
   "description": "",
   "name": "typetracer: Trace Function Parameter Types",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.0.008",
+  "version": "0.0.0.009",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",

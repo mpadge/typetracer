@@ -14,12 +14,10 @@ used to trace parameter types on each call.
     }
     inject_tracer (f, .GlobalEnv)
 
-Calls to the function, `f`, will then dump traces to a file in the
-temporary directory associated with the R process used to load the
-`typetracer` package. This ensures that traces will still work even when
-called in multi-threaded processes. The following code shows an example
-call to the `f` function, and subsequent extraction of the traces.
-Current demo-only version only traces `storage.type` and `length`.
+Calls to the function, `f`, will then traces each parameter of the
+function, currently extracting (for purposes of demonstration only)
+values for `storage.type` and `length`. These values can be accessed
+with the `load_traces` function.
 
     val <- f (x = 1:2, y = 3:4 + 0.)
     load_traces ()
