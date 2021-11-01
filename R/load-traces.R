@@ -7,6 +7,11 @@ load_traces <- function () {
     td <- options ("typetracedir")$typetracedir
     traces <- list.files (td, pattern = "^typetrace\\_", full.names = TRUE)
 
+    if (length (traces) == 0L) {
+        message ("No traces found; first run 'inject_tracer'")
+        return (NULL)
+    }
+
     out <- lapply (traces, function (i) {
                        xi <- brio::readLines (i)
                        do.call (rbind, strsplit (xi, ","))
