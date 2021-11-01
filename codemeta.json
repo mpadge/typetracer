@@ -8,7 +8,7 @@
   "description": "Trace function parameter types.",
   "name": "typetracer: Trace Function Parameter Types",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.0.018",
+  "version": "0.0.0.19",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -83,9 +83,6 @@
   ],
   "codeRepository": "https://github.com/mpadge/typetracer",
   "readme": "https://github.com/mpadge/typetracer/blob/main/README.md",
-  "fileSize": "39.269KB",
-  "contIntegration": [
-    "https://github.com/mpadge/typetracer/actions",
-    "https://codecov.io/gh/mpadge/typetracer"
-  ]
+  "fileSize": "39.811KB",
+  "contIntegration": ["https://github.com/mpadge/typetracer/actions", "https://codecov.io/gh/mpadge/typetracer"]
 }
