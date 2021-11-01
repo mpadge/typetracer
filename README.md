@@ -1,3 +1,9 @@
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/mpadge/typetracer/workflows/R-CMD-check/badge.svg)](https://github.com/mpadge/typetracer/actions)
+[![codecov](https://codecov.io/gh/mpadge/typetracer/branch/main/graph/badge.svg)](https://codecov.io/gh/mpadge/typetracer)
+<!-- badges: end -->
+
 # typetracer
 
 Trace function parameter types in R packages.
