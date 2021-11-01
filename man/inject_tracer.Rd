@@ -18,3 +18,10 @@ Nothing (will error on fail).
 \description{
 Inject parameter tracer into one function
 }
+\note{
+The tracer is defined in the internal \code{get_types} function. This uses
+an \code{options} variable defined on package load for the current \code{tempdir},
+defining a single location where all traced values are dumped. This is done
+via \code{options} to allow both multi-threaded function calls and calls via
+\pkg{callr} to be traced.
+}
