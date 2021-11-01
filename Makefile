@@ -2,7 +2,7 @@
 
 all: document build check
 
-build: document
+build: doc
 	R CMD build .
 
 check: build
@@ -13,7 +13,7 @@ clean:
 	-rm -fr typetracer.Rcheck
 	-rm -fr src/*.{o,so}
 
-document: clean
+doc: clean
 	Rscript -e 'devtools::document()'
 	Rscript -e 'rmarkdown::render("README.Rmd")'
 
