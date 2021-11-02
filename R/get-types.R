@@ -12,15 +12,21 @@ get_types <- function () {
     con <- file (fname, open = "w")
 
     # Extract values. `match.call` returns the *expressions* submitted to the
-    # call, while the evaluated versions are stored in the environment. `get` is
-    # used for the latter to avoid re-`eval`-ing.
+    # call, while the evaluated versions of formalArgs are stored in the
+    # environment. `get` is used for the latter to avoid re-`eval`-ing, but
+    # `...` args are not eval'd on function entry.
     fn_call <- match.call (expand.dots = TRUE)
     fn_name <- fn_call [[1]]
     pars <- as.list (fn_call [-1L]) # unevalated expressions
     par_names <- names (pars)
+    fn_env <- environment ()
 
     for (p in par_names) {
-        p_eval <- get (p, pos = -1L)
+        if (p %in% names (fn_env)) {
+            p_eval <- get (p, envir = fn_env)
+        } else if (p %in% names (pars)) {
+            p_eval <- eval (pars [[p]])
+        }
         p_mode <- storage.mode (p_eval)
         p_len <- length (p_eval)
         out <- paste0 (c (fn_name, p, p_mode, p_len), collapse = ",")
