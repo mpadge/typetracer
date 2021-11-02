@@ -230,8 +230,7 @@ test_that("inject_code wraps code into a function to avoid variable clashes", {
     }
 
     expect_null(inject_code(x <- 2, f, wrap = FALSE))
-    #expect_equal(f(1), 2)
-    expect_equal(f(1), 1)
+    expect_equal(f(1), 2)
 
     expect_null(inject_code(x <- 4, g, wrap = TRUE))
     expect_equal(g(2), 2)

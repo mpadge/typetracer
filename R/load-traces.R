@@ -16,11 +16,11 @@ load_traces <- function () {
                        xi <- brio::readLines (i)
                        do.call (rbind, strsplit (xi, ","))
         })
-    out <- tibble::tibble (data.frame (do.call (rbind, out)))
-
-    names (out) <- c ("function", "parameter", "storage_mode", "length")
-
-    out$length <- as.integer (out$length)
+    out <- do.call (rbind, out)
+    out <- tibble::tibble ("function"  = out [, 1],
+                           "parameter" = out [, 2],
+                           "storage_mode" = out [, 3],
+                           "length" = as.integer (out [, 4]))
 
     return (out)
 }
