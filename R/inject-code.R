@@ -83,8 +83,11 @@ inject_expression <- function (code, fun, where, wrap) {
     }
 
     # checks if OpenCurlyBrace (i.e. `{`) has been redefined
-    ocb_remapped <- !identical (get ("{", envir = environment (fun)),
-                                .Primitive ("{"))
+    env <- environment (fun)
+    if (is.null (env)) {
+        env <- as.environment ("package:base")
+    }
+    ocb_remapped <- !identical (get ("{", envir = env), .Primitive ("{"))
 
     wrapped_code <- prepare_code_to_run (code, where)
 
