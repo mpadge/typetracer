@@ -11,14 +11,19 @@ get_types <- function () {
     fname <- file.path (td, paste0 ("typetrace_", nm, ".txt"))
     con <- file (fname, open = "w")
 
-    # values:
-    fn <- match.call () [[1]]
-    pars <- formals (get (fn))
+    # Extract values. `match.call` returns the *expressions* submitted to the
+    # call, while the evaluated versions are stored in the environment. `get` is
+    # used for the latter to avoid re-`eval`-ing.
+    fn_call <- match.call (expand.dots = TRUE)
+    fn_name <- fn_call [[1]]
+    pars <- as.list (fn_call [-1L]) # unevalated expressions
+    par_names <- names (pars)
 
-    for (p in names (pars)) {
-        p_mode <- storage.mode (get (p))
-        p_len <- length (get (p))
-        out <- paste0 (c (fn, p, p_mode, p_len), collapse = ",")
+    for (p in par_names) {
+        p_eval <- get (p, pos = -1L)
+        p_mode <- storage.mode (p_eval)
+        p_len <- length (p_eval)
+        out <- paste0 (c (fn_name, p, p_mode, p_len), collapse = ",")
         writeLines (out, con)
     }
     close (con)
