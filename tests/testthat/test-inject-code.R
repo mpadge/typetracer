@@ -1,7 +1,9 @@
 # Original /injectr' test file https://github.com/PRL-PRG/injectr
 
-test_that("inject_code injects code (LANGSXP) at the beginning of the given function body", {
-    f <- function(x) { 42 }
+test_that("inject_code injects code (LANGSXP) at the beginning of the given function body", { # nolint
+    f <- function(x) {
+        42
+    }
 
     capture <- NULL
 
@@ -11,8 +13,10 @@ test_that("inject_code injects code (LANGSXP) at the beginning of the given func
     expect_equal(capture, 1)
 })
 
-test_that("inject_code injects code (LANGSXP) at the beginning of the given function body with no {}", {
-    f <- function(x) 42
+test_that("inject_code injects code (LANGSXP) at the beginning of the given function body with no {}", { # nolint
+    f <- function(x) {
+        42
+    }
 
     capture <- NULL
 
@@ -22,8 +26,10 @@ test_that("inject_code injects code (LANGSXP) at the beginning of the given func
     #expect_equal(capture, 1)
 })
 
-test_that("inject_code injects code (LANGSXP) at the beginning of the given function body with ...", {
-    f <- function(...) 42
+test_that("inject_code injects code (LANGSXP) at the beginning of the given function body with ...", { # nolint
+    f <- function(...) {
+        42
+    }
 
     capture <- NULL
 
@@ -33,7 +39,7 @@ test_that("inject_code injects code (LANGSXP) at the beginning of the given func
     #expect_equal(capture, c(1, 2, 3))
 })
 
-test_that("inject_code injects code (LANGSXP from symbol) at the beginning of the given function body", {
+test_that("inject_code injects code (LANGSXP from symbol) at the beginning of the given function body", { # nolint
     f <- function(x) {
         42
     }
@@ -50,7 +56,7 @@ test_that("inject_code injects code (LANGSXP from symbol) at the beginning of th
     expect_equal(capture, 1)
 })
 
-test_that("inject_code injects code (EXPRSXP from symbol) at the beginning of the given function body", {
+test_that("inject_code injects code (EXPRSXP from symbol) at the beginning of the given function body", { # nolint
     f <- function(x) {
         42
     }
@@ -67,9 +73,9 @@ test_that("inject_code injects code (EXPRSXP from symbol) at the beginning of th
     expect_equal(capture, 1)
 })
 
-test_that("inject_code injects code (CLOSXP from symbol) at the beginning of the given function body", {
+test_that("inject_code injects code (CLOSXP from symbol) at the beginning of the given function body", { # nolint
     f <- function(x) {
-        1+1
+        1 + 1
         42
     }
 
@@ -88,9 +94,9 @@ test_that("inject_code injects code (CLOSXP from symbol) at the beginning of the
     expect_equal(capture, 2)
 })
 
-test_that("inject_code injects code (CLOSXP with no args from symbol) at the beginning of the given function body", {
+test_that("inject_code injects code (CLOSXP with no args from symbol) at the beginning of the given function body", { # nolint
     f <- function() {
-        1+1
+        1 + 1
         42
     }
 
@@ -124,7 +130,7 @@ test_that("inject_code injects code to be run at function exit", {
     expect_equal(capture, 1)
 })
 
-test_that("inject_code injects code to be run at function exit getting return value", {
+test_that("inject_code injects code to be run at function exit getting return value", { # nolint
     capture <<- NULL
 
     f <- function(x) {
@@ -139,7 +145,7 @@ test_that("inject_code injects code to be run at function exit getting return va
     expect_equal(capture, 1)
 })
 
-test_that("inject_code injects code to be run when function throws an exception", {
+test_that("inject_code injects code to be run when function throws an exception", { # nolint
     capture <- NULL
 
     f <- function(x) {
@@ -158,7 +164,7 @@ test_that("inject_code injects code to be run when function throws an exception"
     expect_equal(capture, 1)
 })
 
-test_that("inject_code injects code to be run when function exists successfully", {
+test_that("inject_code injects code to be run when function exists successfully", { # nolint
     capture <- NULL
 
     f <- function(x) {
@@ -202,23 +208,31 @@ test_that("inject_code supports multiple injection", {
 })
 
 test_that("inject_code returns silently", {
-    f <- function() 1
+    f <- function() {
+        1
+    }
     expect_silent(inject_code(2, f))
 })
 
 test_that("inject_code returns invisibly", {
-    f <- function() 1
+    f <- function() {
+        1
+    }
     expect_invisible(inject_code(2, f))
 })
 
 test_that("inject_code wraps code into a function to avoid variable clashes", {
-    f <- function(x) x
-    g <- function(x) x
+    f <- function(x) {
+        x
+    }
+    g <- function(x) {
+        x
+    }
 
-    expect_null(inject_code(x <- 2, f, wrap=FALSE))
+    expect_null(inject_code(x <- 2, f, wrap = FALSE))
     #expect_equal(f(1), 2)
     expect_equal(f(1), 1)
 
-    expect_null(inject_code(x <- 4, g, wrap=TRUE))
+    expect_null(inject_code(x <- 4, g, wrap = TRUE))
     expect_equal(g(2), 2)
 })
