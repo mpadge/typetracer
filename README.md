@@ -13,7 +13,9 @@ Trace function parameter types in R packages.
 ## Example
 
 Define a function, and use `inject_tracer` to inject parameter tracers
-used to trace parameter types on each call.
+used to trace parameter types on each call. The following function
+includes an additional parameter, `z`, which is left undefined here,
+along with `...` to allow passing of arbitrary parameter values.
 
     f <- function (x, y, z, ...) {
         x * x + y * y
@@ -24,7 +26,7 @@ Calls to the function, `f`, will then trace each parameter of the
 function. The current demonstration-only version extracts values for
 `storage.type` and `length`. These values can be accessed with the
 `load_traces` function, with this example additionally demonstrating
-that missing parameters (in this case, `z`) are not traced.
+that the additional parameter, `z`, is not traced when left undefined.
 
     val <- f (x = 1:2, y = 3:4 + 0.)
     load_traces ()
