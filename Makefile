@@ -20,5 +20,8 @@ doc: clean
 test:
 	Rscript -e 'devtools::test()'
 
+check:
+	Rscript -e 'library(pkgcheck); checks <- pkgcheck(); print(checks); summary (checks)'
+
 install: clean
 	R CMD INSTALL .
