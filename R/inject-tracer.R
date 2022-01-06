@@ -58,6 +58,8 @@ cache_file_name <- function (f, f_name) {
 #' \link{inject_tracer} function.
 #'
 #' @inheritParams inject_tracer
+#' @return Logical value indicating whether or not tracer was able to be removed
+#' ("uninjected").
 #' @export
 uninject_tracer <- function (f) {
 
@@ -71,6 +73,5 @@ uninject_tracer <- function (f) {
 
     body <- readRDS (f_name)
     reassign_function_body (f, body)
-
-    return (TRUE)
+    file.remove (f_name)
 }

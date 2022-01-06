@@ -10,6 +10,10 @@ uninject_tracer(f)
 \item{f}{A function (that is, an object of class "function", and not a
 character string).}
 }
+\value{
+Logical value indicating whether or not tracer was able to be removed
+("uninjected").
+}
 \description{
 This function removes traces previous injected into functions with the
 \link{inject_tracer} function.

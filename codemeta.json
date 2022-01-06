@@ -1,20 +1,19 @@
 {
-  "@context": [
-    "https://doi.org/10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "typetracer",
   "description": "Trace function parameter types.",
   "name": "typetracer: Trace Function Parameter Types",
+  "codeRepository": "https://github.com/mpadge/typetracer",
+  "issueTracker": "https://github.com/mpadge/typetracer/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.0.062",
+  "version": "0.0.0.63",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.1 (2021-08-10)",
+  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
   "author": [
     {
       "@type": "Person",
@@ -29,9 +28,6 @@
       "familyName": "Krikava"
     }
   ],
-  "contributor": {},
-  "copyrightHolder": {},
-  "funder": {},
   "maintainer": [
     {
       "@type": "Person",
@@ -56,8 +52,8 @@
       "sameAs": "https://CRAN.R-project.org/package=testthat"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "brio",
       "name": "brio",
@@ -69,7 +65,19 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=brio"
     },
-    {
+    "2": {
+      "@type": "SoftwareApplication",
+      "identifier": "checkmate",
+      "name": "checkmate",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=checkmate"
+    },
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "tibble",
       "name": "tibble",
@@ -80,14 +88,11 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=tibble"
-    }
-  ],
-  "codeRepository": "https://github.com/mpadge/typetracer",
-  "fileSize": "46.298KB",
-  "contIntegration": [
-    "https://github.com/mpadge/typetracer/actions",
-    "https://codecov.io/gh/mpadge/typetracer"
-  ],
-  "issueTracker": "https://github.com/mpadge/typetracer/issues",
-  "readme": "https://github.com/mpadge/typetracer/blob/main/README.md"
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "38.121KB",
+  "readme": "https://github.com/mpadge/typetracer/blob/main/README.md",
+  "contIntegration": ["https://github.com/mpadge/typetracer/actions", "https://codecov.io/gh/mpadge/typetracer"],
+  "keywords": "r"
 }
