@@ -24,13 +24,15 @@ trace_package <- function (package = NULL) {
 
     exs <- get_pkg_examples (package)
 
-    pdf (file = NULL) # suppress any plot output
+    # suppress any plot output
+    dev <- options ()$"device"
+    options (device = NULL)
     o <- suppressWarnings (
         out <- tryCatch (
             eval (parse (text = exs)),
             error = function (e) NULL)
     )
-    chk <- dev.off ()
+    options (device = dev)
 
     traces <- load_traces ()
 
