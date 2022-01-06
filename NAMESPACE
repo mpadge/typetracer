@@ -3,5 +3,6 @@
 export(clear_traces)
 export(inject_tracer)
 export(load_traces)
+export(trace_package)
 export(uninject_tracer)
 useDynLib(typetracer, .registration = TRUE)
