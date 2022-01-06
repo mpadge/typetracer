@@ -5,8 +5,8 @@ all: document build check
 build: doc
 	R CMD build .
 
-check: build
-	R CMD check typetracer*tar.gz
+#check: build
+#	R CMD check typetracer*tar.gz
 
 clean:
 	-rm -f typetracer*tar.gz
