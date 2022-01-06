@@ -25,24 +25,14 @@ along with `...` to allow passing of arbitrary parameter values.
 Calls to the function, `f`, will then trace each parameter of the
 function. The current demonstration-only version extracts values for
 `storage.type` and `length`. These values can be accessed with the
-`load_traces` function, with this example additionally demonstrating
-that the additional parameter, `z`, is not traced when left undefined.
+`load_traces` function, with this example additionally demonstrating:
 
-    val <- f (x = 1:2, y = 3:4 + 0.)
-    load_traces ()
+1.  That the additional parameter, `z`, is not traced when left
+    undefined; and
+2.  That additional parameters passed via `...` are successfully traced.
 
-    ## # A tibble: 2 × 4
-    ##   `function` parameter storage_mode length
-    ##   <chr>      <chr>     <chr>         <int>
-    ## 1 f          x         integer           2
-    ## 2 f          y         double            2
+<!-- -->
 
-The following example demonstrates that additional parameters passed via
-`...` are successfully traced. Note also the `clear_traces()` function
-which removes all previous traces, ensuring that `load_traces()` will
-only return the most recently generated traces.
-
-    clear_traces ()
     val <- f (x = 1:2, y = 3:4 + 0., a = "blah", b = list (a = 1, b = "b"))
     load_traces ()
 
@@ -53,6 +43,12 @@ only return the most recently generated traces.
     ## 2 f          y         double            2
     ## 3 f          a         character         1
     ## 4 f          b         list              2
+
+Traces themselves are saved in the temporary directory of the current R
+session, and the `load_traces()` function simple loads all traces
+created in that session. The function `clear_traces()` removes all
+traces, so that `load_traces()` will only load new traces produced after
+that time.
 
 ## Example #2
 
@@ -108,7 +104,7 @@ that injection is almost instantaneous.
     })
 
     ##    user  system elapsed 
-    ##   0.032   0.006   0.039
+    ##   0.033   0.000   0.034
 
 ### Run the example code
 
@@ -136,14 +132,14 @@ Finally, load the resultant type traces as above
     ## # A tibble: 2,792 × 4
     ##    `function` parameter storage_mode length
     ##    <chr>      <chr>     <chr>         <int>
-    ##  1 append     x         list              0
-    ##  2 append     values    language          3
-    ##  3 append     x         list             16
+    ##  1 append     x         list              3
+    ##  2 append     values    language          2
+    ##  3 append     x         list              1
     ##  4 append     values    language          3
     ##  5 append     x         list              0
-    ##  6 append     values    language          3
-    ##  7 append     x         list              8
-    ##  8 append     values    language          1
-    ##  9 append     x         list              4
+    ##  6 append     values    language          2
+    ##  7 append     x         list              4
+    ##  8 append     values    language          4
+    ##  9 append     x         list             11
     ## 10 append     values    language          4
     ## # … with 2,782 more rows
