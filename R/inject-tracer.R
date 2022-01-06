@@ -18,15 +18,17 @@ inject_tracer <- function (f, e) {
     checkmate::assert_function (f)
     checkmate::assert_environment (e)
 
+    # save body for re-injection:
     f_name <- deparse (substitute (f))
-    cache_body (f, f_name, e)
+    f_name <- cache_file_name (f, f_name, e)
+    saveRDS (object = body (f), file = f_name)
 
     get_types <- utils::getFromNamespace ("get_types", "typetracer")
     code <- body (get_types)
     invisible (inject_code (code, f))
 }
 
-cache_body <- function (f, f_name, e) {
+cache_file_name <- function (f, f_name, e) {
 
     cache_dir <- file.path (getOption ("typetracedir"),
                             "fn_bodies")
@@ -34,12 +36,32 @@ cache_body <- function (f, f_name, e) {
         dir.create (cache_dir, recursive = TRUE)
     }
 
-    cache_file <- file.path (cache_dir,
-                             paste0 ("typetrace--",
-                                     f_name,
-                                     "--",
-                                     environmentName (e),
-                                     ".Rds"))
+    file.path (cache_dir,
+               paste0 ("typetrace--",
+                       f_name,
+                       "--",
+                       environmentName (e),
+                       ".Rds"))
+}
 
-    saveRDS (object = body (f), file = cache_file)
+
+#' Remove parameter tracer from one function
+#'
+#' This function removes traces previous injected into functions with the
+#' \link{inject_tracer} function.
+#'
+#' @inheritParams inject_tracer
+#' @export
+uninject_tracer <- function (f, e) {
+
+    checkmate::assert_function (f)
+    checkmate::assert_environment (e)
+
+    f_name <- deparse (substitute (f))
+    if (!file.exists (f_name)) {
+        return (FALSE)
+    }
+
+    inject_code (readRDS (f_name), f)
+    return (TRUE)
 }
