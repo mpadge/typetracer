@@ -13,14 +13,13 @@
 #' via `options` to allow both multi-threaded function calls and calls via
 #' \pkg{callr} to be traced.
 #' @export
-inject_tracer <- function (f, e) {
+inject_tracer <- function (f) {
 
     checkmate::assert_function (f)
-    checkmate::assert_environment (e)
 
     # save body for re-injection:
     f_name <- deparse (substitute (f))
-    f_name <- cache_file_name (f, f_name, e)
+    f_name <- cache_file_name (f, f_name)
     saveRDS (object = body (f), file = f_name)
 
     get_types <- utils::getFromNamespace ("get_types", "typetracer")
@@ -40,7 +39,7 @@ inject_tracer <- function (f, e) {
     invisible (reassign_function_body (f, new_body))
 }
 
-cache_file_name <- function (f, f_name, e) {
+cache_file_name <- function (f, f_name) {
 
     cache_dir <- file.path (getOption ("typetracedir"),
                             "fn_bodies")
@@ -51,8 +50,6 @@ cache_file_name <- function (f, f_name, e) {
     file.path (cache_dir,
                paste0 ("typetrace--",
                        f_name,
-                       "--",
-                       environmentName (e),
                        ".Rds"))
 }
 
@@ -64,13 +61,12 @@ cache_file_name <- function (f, f_name, e) {
 #'
 #' @inheritParams inject_tracer
 #' @export
-uninject_tracer <- function (f, e) {
+uninject_tracer <- function (f) {
 
     checkmate::assert_function (f)
-    checkmate::assert_environment (e)
 
     f_name <- deparse (substitute (f))
-    f_name <- cache_file_name (f, f_name, e)
+    f_name <- cache_file_name (f, f_name)
     if (!file.exists (f_name)) {
         return (FALSE)
     }
