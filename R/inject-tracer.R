@@ -14,7 +14,28 @@
 #' @export
 inject_tracer <- function (f, e) {
 
+    cache_body (f, e)
+
     get_types <- utils::getFromNamespace ("get_types", "typetracer")
     code <- body (get_types)
-    invisible (inject_code (code, f))
+    invisible (inject_code (code, get (f, envir = e)))
+}
+
+cache_body <- function (f, e) {
+
+    cache_dir <- file.path (getOption ("typetracedir"),
+                            "fn_bodies")
+    if (!dir.exists (cache_dir)) {
+        dir.create (cache_dir, recursive = TRUE)
+    }
+
+    cache_file <- file.path (cache_dir,
+                             paste0 ("typetrace--",
+                                     f,
+                                     "--",
+                                     environmentName (e),
+                                     ".Rds"))
+
+    fn_body <- body (get (f, envir = e))
+    saveRDS (object = fn_body, file = cache_file)
 }
