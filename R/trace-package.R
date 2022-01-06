@@ -26,7 +26,9 @@ trace_package <- function (package = NULL) {
 
     pdf (file = NULL) # suppress any plot output
     o <- suppressWarnings (
-        out <- eval (parse (text = exs))
+        out <- tryCatch (
+            eval (parse (text = exs)),
+            error = function (e) NULL)
     )
     chk <- dev.off ()
 
