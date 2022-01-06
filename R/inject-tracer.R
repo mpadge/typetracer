@@ -58,10 +58,13 @@ uninject_tracer <- function (f, e) {
     checkmate::assert_environment (e)
 
     f_name <- deparse (substitute (f))
+    f_name <- cache_file_name (f, f_name, e)
     if (!file.exists (f_name)) {
         return (FALSE)
     }
 
-    inject_code (readRDS (f_name), f)
+    body <- readRDS (f_name)
+    inject_code (body, f)
+
     return (TRUE)
 }
