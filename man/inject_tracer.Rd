@@ -7,7 +7,8 @@
 inject_tracer(f, e)
 }
 \arguments{
-\item{f}{Name of function as character string}
+\item{f}{A function (that is, an object of class "function", and not a
+character string).}
 
 \item{e}{Environment in which function is defined; generally
 \code{as.environment("package:<pkg_name>")}.}
