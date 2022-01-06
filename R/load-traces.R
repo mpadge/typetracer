@@ -1,14 +1,17 @@
 
 #' Load traces of parameter types
 #'
+#' @param quiet If `FALSE`, issue message when no traces found.
 #' @export
-load_traces <- function () {
+load_traces <- function (quiet = FALSE) {
 
     td <- options ("typetracedir")$typetracedir
     traces <- list.files (td, pattern = "^typetrace\\_", full.names = TRUE)
 
     if (length (traces) == 0L) {
-        message ("No traces found; first run 'inject_tracer'")
+        if (!quiet) {
+            message ("No traces found; first run 'inject_tracer'")
+        }
         return (NULL)
     }
 

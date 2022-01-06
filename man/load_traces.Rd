@@ -4,7 +4,10 @@
 \alias{load_traces}
 \title{Load traces of parameter types}
 \usage{
-load_traces()
+load_traces(quiet = FALSE)
+}
+\arguments{
+\item{quiet}{If \code{FALSE}, issue message when no traces found.}
 }
 \description{
 Load traces of parameter types
