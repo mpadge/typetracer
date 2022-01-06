@@ -34,7 +34,7 @@ trace_package <- function (package = NULL) {
     )
     options (device = dev)
 
-    traces <- load_traces ()
+    traces <- load_traces (quiet = TRUE)
 
     clear_traces ()
 
