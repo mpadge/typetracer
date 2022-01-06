@@ -22,15 +22,21 @@ get_types <- function () {
     fn_env <- environment ()
 
     for (p in par_names) {
+
         if (p %in% names (fn_env)) {
             p_eval <- get (p, envir = fn_env)
         } else if (p %in% names (pars)) {
-            p_eval <- eval (pars [[p]])
+            p_eval <- tryCatch (
+                eval (pars [[p]]),
+                error = function (e) NULL)
         }
-        p_mode <- storage.mode (p_eval)
-        p_len <- length (p_eval)
-        out <- paste0 (c (fn_name, p, p_mode, p_len), collapse = ",")
-        writeLines (out, typetracer_con)
+
+        if (!is.null (p_eval)) {
+            p_mode <- storage.mode (p_eval)
+            p_len <- length (p_eval)
+            out <- paste0 (c (fn_name, p, p_mode, p_len), collapse = ",")
+            writeLines (out, typetracer_con)
+        }
     }
     close (typetracer_con)
 
