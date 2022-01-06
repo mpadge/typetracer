@@ -23,7 +23,12 @@ trace_package <- function (package = NULL) {
     }
 
     exs <- get_pkg_examples (package)
-    eval (parse (text = exs))
+
+    pdf (file = NULL) # suppress any plot output
+    o <- suppressWarnings (
+        out <- eval (parse (text = exs))
+    )
+    chk <- dev.off ()
 
     traces <- load_traces ()
 
