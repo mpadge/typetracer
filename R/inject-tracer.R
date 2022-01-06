@@ -14,6 +14,10 @@
 #' @export
 inject_tracer <- function (f, e) {
 
+    checkmate::assert_character (f)
+    checkmate::assert_scalar (f)
+    checkmate::assert_environment (e)
+
     cache_body (f, e)
 
     get_types <- utils::getFromNamespace ("get_types", "typetracer")
