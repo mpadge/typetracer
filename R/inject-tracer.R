@@ -3,8 +3,6 @@
 #'
 #' @param f A function (that is, an object of class "function", and not a
 #' character string).
-#' @param e Environment in which function is defined; generally
-#' `as.environment("package:<pkg_name>")`.
 #' @return Nothing (will error on fail).
 #'
 #' @note The tracer is defined in the internal `get_types` function. This uses

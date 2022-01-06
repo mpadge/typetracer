@@ -4,14 +4,11 @@
 \alias{inject_tracer}
 \title{Inject parameter tracer into one function}
 \usage{
-inject_tracer(f, e)
+inject_tracer(f)
 }
 \arguments{
 \item{f}{A function (that is, an object of class "function", and not a
 character string).}
-
-\item{e}{Environment in which function is defined; generally
-\code{as.environment("package:<pkg_name>")}.}
 }
 \value{
 Nothing (will error on fail).

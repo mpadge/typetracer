@@ -4,14 +4,11 @@
 \alias{uninject_tracer}
 \title{Remove parameter tracer from one function}
 \usage{
-uninject_tracer(f, e)
+uninject_tracer(f)
 }
 \arguments{
 \item{f}{A function (that is, an object of class "function", and not a
 character string).}
-
-\item{e}{Environment in which function is defined; generally
-\code{as.environment("package:<pkg_name>")}.}
 }
 \description{
 This function removes traces previous injected into functions with the
