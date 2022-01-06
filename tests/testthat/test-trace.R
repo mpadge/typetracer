@@ -19,7 +19,7 @@ test_that("injected tracer body", {
     }
     body0 <- body (e$f)
 
-    inject_tracer ("f", e)
+    inject_tracer (e$f, e)
     body1 <- body (e$f)
 
     expect_false (identical (body0, body1))
@@ -42,7 +42,7 @@ test_that("trace call", {
         x * x + y * y
     }
 
-    inject_tracer ("f", e)
+    inject_tracer (e$f, e)
 
     clear_traces ()
     f <- e$f

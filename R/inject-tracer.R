@@ -1,7 +1,8 @@
 
 #' Inject parameter tracer into one function
 #'
-#' @param f Name of function as character string
+#' @param f A function (that is, an object of class "function", and not a
+#' character string).
 #' @param e Environment in which function is defined; generally
 #' `as.environment("package:<pkg_name>")`.
 #' @return Nothing (will error on fail).
@@ -14,18 +15,18 @@
 #' @export
 inject_tracer <- function (f, e) {
 
-    checkmate::assert_character (f)
-    checkmate::assert_scalar (f)
+    checkmate::assert_function (f)
     checkmate::assert_environment (e)
 
-    cache_body (f, e)
+    f_name <- deparse (substitute (f))
+    cache_body (f, f_name, e)
 
     get_types <- utils::getFromNamespace ("get_types", "typetracer")
     code <- body (get_types)
-    invisible (inject_code (code, get (f, envir = e)))
+    invisible (inject_code (code, f))
 }
 
-cache_body <- function (f, e) {
+cache_body <- function (f, f_name, e) {
 
     cache_dir <- file.path (getOption ("typetracedir"),
                             "fn_bodies")
@@ -35,11 +36,10 @@ cache_body <- function (f, e) {
 
     cache_file <- file.path (cache_dir,
                              paste0 ("typetrace--",
-                                     f,
+                                     f_name,
                                      "--",
                                      environmentName (e),
                                      ".Rds"))
 
-    fn_body <- body (get (f, envir = e))
-    saveRDS (object = fn_body, file = cache_file)
+    saveRDS (object = body (f), file = cache_file)
 }
