@@ -13,14 +13,13 @@ test_that("tracer body", {
 
 test_that("injected tracer body", {
 
-    e <- new.env(parent=emptyenv())
-    e$f <- function (x, y) {
+    f <- function (x, y) {
         x * x + y * y
     }
-    body0 <- body (e$f)
+    body0 <- body (f)
 
-    inject_tracer (e$f, e)
-    body1 <- body (e$f)
+    inject_tracer (f)
+    body1 <- body (f)
 
     expect_false (identical (body0, body1))
     expect_true (length (body1) > length (body0))
@@ -37,15 +36,14 @@ test_that("No traces", {
 })
 
 test_that("trace call", {
-    e <- new.env(parent=emptyenv())
-    e$f <- function (x, y) {
+
+    f <- function (x, y) {
         x * x + y * y
     }
 
-    inject_tracer (e$f, e)
+    inject_tracer (f)
 
     clear_traces ()
-    f <- e$f
     val <- f (x = 1:2, y = 3:4 + 0.)
     flist <- list.files (tempdir (),
                          pattern = "^typetrace\\_",
@@ -63,17 +61,16 @@ test_that("trace call", {
 
 test_that ("untrace call", {
 
-    e <- new.env(parent=emptyenv())
-    e$f <- function (x, y) {
+    f <- function (x, y) {
         x * x + y * y
     }
-    body0 <- body (e$f)
+    body0 <- body (f)
 
-    inject_tracer (e$f, e)
-    body1 <- body (e$f)
+    inject_tracer (f)
+    body1 <- body (f)
 
-    uninject_tracer (e$f, e)
-    body2 <- body (e$f)
+    expect_true (uninject_tracer (f))
+    body2 <- body (f)
 
     e0 <- as.character (as.expression (body0))
     e1 <- as.character (as.expression (body1))
