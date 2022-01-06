@@ -64,7 +64,7 @@ uninject_tracer <- function (f, e) {
     }
 
     body <- readRDS (f_name)
-    inject_code (body, f)
+    reassign_function_body (f, body)
 
     return (TRUE)
 }
