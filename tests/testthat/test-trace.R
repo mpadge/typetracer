@@ -60,3 +60,26 @@ test_that("trace call", {
     expect_identical (names (x),
                       c ("function", "parameter", "storage_mode", "length"))
 })
+
+test_that ("untrace call", {
+
+    e <- new.env(parent=emptyenv())
+    e$f <- function (x, y) {
+        x * x + y * y
+    }
+    body0 <- body (e$f)
+
+    inject_tracer (e$f, e)
+    body1 <- body (e$f)
+
+    uninject_tracer (e$f, e)
+    body2 <- body (e$f)
+
+    e0 <- as.character (as.expression (body0))
+    e1 <- as.character (as.expression (body1))
+    e2 <- as.character (as.expression (body2))
+
+    expect_false (identical (e0, e1))
+
+    expect_identical (e0, e2)
+})
