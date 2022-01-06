@@ -9,7 +9,7 @@ get_types <- function () {
     td <- options ("typetracedir")
     nm <- paste0 (sample (c (letters, LETTERS), 8), collapse = "")
     fname <- file.path (td, paste0 ("typetrace_", nm, ".txt"))
-    con <- file (fname, open = "w")
+    typetracer_con <- file (fname, open = "at")
 
     # Extract values. `match.call` returns the *expressions* submitted to the
     # call, while the evaluated versions of formalArgs are stored in the
@@ -30,7 +30,11 @@ get_types <- function () {
         p_mode <- storage.mode (p_eval)
         p_len <- length (p_eval)
         out <- paste0 (c (fn_name, p, p_mode, p_len), collapse = ",")
-        writeLines (out, con)
+        writeLines (out, typetracer_con)
     }
-    close (con)
+    close (typetracer_con)
+
+    rm (td, nm, fname, typetracer_con,
+        fn_call, fn_name, pars, par_names,
+        fn_env, p, p_eval, p_mode, p_len, out)
 }
