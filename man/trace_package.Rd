@@ -7,7 +7,7 @@
 trace_package(package = NULL)
 }
 \arguments{
-\item{Package}{Name of package to be traced (as character value)}
+\item{package}{Name of package to be traced (as character value)}
 }
 \value{
 A \code{data.frame} of data on every parameter of every function as

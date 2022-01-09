@@ -1,7 +1,7 @@
 
 #' Trace all parameters for all functions in a specified package
 #'
-#' @param Package Name of package to be traced (as character value)
+#' @param package Name of package to be traced (as character value)
 #' @return A `data.frame` of data on every parameter of every function as
 #' specified in code provided in package examples.
 #' @export
