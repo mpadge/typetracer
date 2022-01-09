@@ -50,7 +50,14 @@ get_pkg_examples <- function (package) {
 
     rd <- tools::Rd_db (package)
 
-    exs <- lapply (rd, function (i) {
+    has_exs <- vapply (rd, function (i) {
+                out <- vapply (i, function (j)
+                        any (attr (j, "Rd_tag") == "\\examples"),
+                        logical (1))
+                any (out)
+    }, logical (1))
+
+    exs <- lapply (rd [which (has_exs)], function (i) {
         f <- tempfile ()
         tools::Rd2ex (i, out = f)
         out <- brio::read_lines (f)
