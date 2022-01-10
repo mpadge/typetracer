@@ -28,7 +28,8 @@ trace_package <- function (package = NULL,
     }
 
     p <- paste0 ("package:", package)
-    if (!p %in% search ()) {
+    pkg_attached <- p %in% search ()
+    if (!pkg_attached) {
         attachNamespace (package)
     }
 
@@ -55,6 +56,11 @@ trace_package <- function (package = NULL,
     for (f in fns) {
         f <- get (f, envir = pkg_env)
         uninject_tracer (f)
+    }
+
+    unloadNamespace (package)
+    if (pkg_attached) {
+        attachNamespace 
     }
 
     return (traces)
