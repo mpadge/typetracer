@@ -82,7 +82,8 @@ trace_package_tests <- function (package, pkg_dir = NULL) {
     if (is.null (pkg_dir)) {
         ip <- utils::installed.packages ()
         ip <- ip [ip [, 1] == package, ]
-        pkg_dir <- ip [which (names (ip) == "LibPath")]
+        pkg_dir <- file.path (ip [which (names (ip) == "LibPath")],
+                              package)
     }
     test_dir <- file.path (pkg_dir, "tests")
 
