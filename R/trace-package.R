@@ -39,6 +39,8 @@ trace_package <- function (package = NULL,
         inject_tracer (f)
     }
 
+    clear_traces ()
+
     if ("examples" %in% types) {
         trace_package_exs (package)
     }
