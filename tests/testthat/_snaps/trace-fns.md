@@ -25,10 +25,11 @@
                   p_len <- length(p_eval)
                   out <- paste0(c(fn_name, p, p_mode, p_len), collapse = ",")
                   writeLines(out, typetracer_con)
+                  rm(p_mode, p_len, out, p_eval)
               }
           }
           close(typetracer_con)
           rm(td, nm, fname, typetracer_con, fn_call, fn_name, pars, 
-              par_names, fn_env, p, p_eval, p_mode, p_len, out)
+              par_names, fn_env, p)
       }
 
