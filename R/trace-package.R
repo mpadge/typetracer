@@ -22,17 +22,7 @@ trace_package <- function (package = NULL) {
         inject_tracer (f)
     }
 
-    exs <- get_pkg_examples (package)
-
-    # suppress any plot output
-    dev <- options ()$"device"
-    options (device = NULL)
-    o <- suppressWarnings (
-        out <- tryCatch (
-            eval (parse (text = exs)),
-            error = function (e) NULL)
-    )
-    options (device = dev)
+    trace_package_exs (package)
 
     traces <- load_traces (quiet = TRUE)
 
@@ -44,6 +34,21 @@ trace_package <- function (package = NULL) {
     }
 
     return (traces)
+}
+
+trace_package_exs <- function (package) {
+
+    exs <- get_pkg_examples (package)
+
+    # suppress any plot output
+    dev <- options ()$"device"
+    options (device = NULL)
+    o <- suppressWarnings (
+        out <- tryCatch (
+            eval (parse (text = exs)),
+            error = function (e) NULL)
+    )
+    options (device = dev)
 }
 
 get_pkg_examples <- function (package) {
