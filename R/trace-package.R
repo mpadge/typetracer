@@ -43,10 +43,11 @@ trace_package <- function (package = NULL,
     clear_traces ()
 
     if ("examples" %in% types) {
-        trace_package_exs (package)
+        res <- trace_package_exs (package)
     }
     if ("tests" %in% types) {
-        trace_package_tests (package, pkg_dir)
+        res <- c (res,
+                  trace_package_tests (package, pkg_dir))
     }
 
     traces <- load_traces (quiet = TRUE)
@@ -93,10 +94,13 @@ trace_package_tests <- function (package, pkg_dir = NULL) {
         pkg_dir <- file.path (ip [which (names (ip) == "LibPath")],
                               package)
     }
+    if (length (pkg_dir) == 0L) { # in test environments
+        return (list ())
+    }
     test_dir <- file.path (pkg_dir, "tests")
 
     if (!dir.exists (test_dir)) {
-        return (NULL)
+        return (list ()) # test_check returns list
     }
 
     withr::with_dir (test_dir,
