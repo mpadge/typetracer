@@ -8,14 +8,14 @@ test_that("trace package", {
 
     expect_s3_class (x0 <- trace_package (package), "tbl_df")
 
-    expect_true (nrow (x0) > 500)
+    expect_true (nrow (x0) > 50) # arbitrarily low number
     expect_identical (names (x0),
                       c ("function", "parameter", "storage_mode", "length"))
 
     expect_s3_class (x1 <- trace_package (package,
                                           types = c ("examples", "tests")),
                      "tbl_df")
-    expect_true (nrow (x1) > 500)
+    expect_true (nrow (x1) > 50)
     expect_identical (names (x1),
                       c ("function", "parameter", "storage_mode", "length"))
 
