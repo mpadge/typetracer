@@ -6,9 +6,19 @@ test_that("trace package", {
 
     package <- "checkmate"
 
-    expect_s3_class (x <- trace_package (package), "tbl_df")
+    expect_s3_class (x0 <- trace_package (package), "tbl_df")
 
-    expect_true (nrow (x) > 1000)
-    expect_identical (names (x),
+    expect_true (nrow (x0) > 500)
+    expect_identical (names (x0),
                       c ("function", "parameter", "storage_mode", "length"))
+
+    expect_s3_class (x1 <- trace_package (package,
+                                          types = c ("examples", "tests")),
+                     "tbl_df")
+    expect_true (nrow (x1) > 500)
+    expect_identical (names (x1),
+                      c ("function", "parameter", "storage_mode", "length"))
+
+    # installed packages have no tests, so traces are examples only:
+    expect_identical (nrow (x0), nrow (x1))
 })
