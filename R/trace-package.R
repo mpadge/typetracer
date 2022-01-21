@@ -37,7 +37,9 @@ trace_package <- function (package = NULL,
     pkg_env <- as.environment (p)
     for (f in fns) {
         f <- get (f, envir = pkg_env)
-        inject_tracer (f)
+        if (is.function (f)) {
+            inject_tracer (f)
+        }
     }
 
     clear_traces ()
@@ -56,7 +58,9 @@ trace_package <- function (package = NULL,
 
     for (f in fns) {
         f <- get (f, envir = pkg_env)
-        uninject_tracer (f)
+        if (is.function (f)) {
+            uninject_tracer (f)
+        }
     }
 
     unloadNamespace (package)
