@@ -24,7 +24,9 @@ get_types <- function () {
     for (p in par_names) {
 
         if (p %in% names (fn_env)) {
-            p_eval <- get (p, envir = fn_env)
+            p_eval <- tryCatch (
+                get (p, envir = fn_env),
+                error = function (e) NULL)
         } else if (p %in% names (pars)) {
             p_eval <- tryCatch (
                 eval (pars [[p]]),
