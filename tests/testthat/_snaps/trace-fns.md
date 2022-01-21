@@ -13,10 +13,9 @@
           pars <- as.list(fn_call[-1L])
           fn_env <- environment()
           fn <- match.fun(fn_name)
-          par_names <- formalArgs(fn)
+          par_names <- methods::formalArgs(fn)
           get_p <- function(p, fn_env) {
-              tryCatch(get(p, envir = fn_env, inherits = FALSE, silent = TRUE), 
-                  error = function(e) NULL)
+              tryCatch(get(p, envir = fn_env, inherits = FALSE), error = function(e) NULL)
           }
           eval_p <- function(p, pars) {
               tryCatch(eval(pars[[p]]), error = function(e) NULL)
