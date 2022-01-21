@@ -21,11 +21,11 @@ get_types <- function () {
     fn_env <- environment ()
 
     fn <- match.fun (fn_name)
-    par_names <- formalArgs (fn)
+    par_names <- methods::formalArgs (fn)
 
     get_p <- function (p, fn_env) {
         tryCatch (
-            get (p, envir = fn_env, inherits = FALSE, silent = TRUE),
+            get (p, envir = fn_env, inherits = FALSE),
             error = function (e) NULL)
     }
     eval_p <- function (p, pars) {
