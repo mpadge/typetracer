@@ -34,33 +34,28 @@ get_types <- function () {
             error = function (e) NULL)
     }
 
-    classes1 <- vapply (par_names, function (p) {
+    classes <- vapply (par_names, function (p) {
+
                             res <- eval_p (p, pars)
-                            if (is.null (res))
+                            if (is.null (res)) {
                                 res <- get_p (p, fn_env)
+                            }
+                            if (is.null (res)) {
+                                res <- eval_p (p, fn_env)
+                            }
+
                             c (class (res) [1],
                                storage.mode (res),
                                length (res))
             }, character (3))
-    classes1 <- t (classes1)
-    no_class <- which (classes1 [, 1] == "NULL")
 
-    classes2 <- vapply (par_names, function (p) {
-                            res <- eval_p (p, fn_env)
-                            c (class (res) [1],
-                               storage.mode (res),
-                               length (res))
-            }, character (3))
-    classes2 <- t (classes2)
-    classes1 [no_class, ] <- classes2 [no_class, ]
-
-    classes <- data.frame (classes1)
+    classes <- data.frame (t (classes))
     colnames (classes) <- c ("class", "storage.mode", "length")
     classes$fn_name <- as.character (fn_name)
     classes$p <- par_names
 
     classes <- classes [, c ("fn_name", "p", "storage.mode", "length")]
-    classes <- apply (classes, 1, function (i) {
+    apply (classes, 1, function (i) {
                           out <- paste0 (i, collapse = ",")
                           writeLines (out, typetracer_con)
             })
@@ -68,5 +63,5 @@ get_types <- function () {
 
     rm (td, nm, fn, fname, typetracer_con,
         fn_call, fn_name, fn_env, pars, par_names,
-        get_p, eval_p, classes1, classes2, no_class)
+        get_p, eval_p, classes)
 }
