@@ -54,7 +54,7 @@ get_types <- function () {
     classes$fn_name <- as.character (fn_name)
     classes$p <- par_names
 
-    classes <- classes [, c ("fn_name", "p", "storage.mode", "length")]
+    classes <- classes [, c ("fn_name", "p", "class", "storage.mode", "length")]
     apply (classes, 1, function (i) {
                           out <- paste0 (i, collapse = ",")
                           writeLines (out, typetracer_con)
