@@ -17,16 +17,13 @@
           get_p <- function(p, fn_env) {
               tryCatch(get(p, envir = fn_env, inherits = FALSE), error = function(e) NULL)
           }
-          eval_p <- function(p, pars) {
-              tryCatch(eval(pars[[p]]), error = function(e) NULL)
+          eval_p <- function(p, pars, fn_env) {
+              tryCatch(eval(pars[[p]], envir = fn_env), error = function(e) NULL)
           }
           classes <- vapply(par_names, function(p) {
-              res <- eval_p(p, pars)
+              res <- get_p(p, fn_env)
               if (is.null(res)) {
-                  res <- get_p(p, fn_env)
-              }
-              if (is.null(res)) {
-                  res <- eval_p(p, fn_env)
+                  res <- eval_p(p, pars, fn_env)
               }
               c(class(res)[1], storage.mode(res), length(res))
           }, character(3))
