@@ -23,28 +23,27 @@ get_types <- function () {
     fn <- match.fun (fn_name)
     par_names <- methods::formalArgs (fn)
 
-    get_p <- function (p, fn_env) {
-        tryCatch (
-            get (p, envir = fn_env, inherits = FALSE),
-            error = function (e) NULL)
-    }
-    eval_p <- function (p, pars, fn_env) {
-        tryCatch (
-            eval (pars [[p]], envir = fn_env),
-            error = function (e) NULL)
-    }
-
     classes <- vapply (par_names, function (p) {
 
-                            res <- get_p (p, fn_env)
-                            if (is.null (res)) {
-                                res <- eval_p (p, pars, fn_env)
-                            }
+        res <- NULL
 
-                            c (class (res) [1],
-                               storage.mode (res),
-                               length (res))
-            }, character (3))
+        if (p %in% ls (fn_env)) {
+            res <- tryCatch (
+                get (p, envir = fn_env, inherits = FALSE),
+                error = function (e) NULL)
+        }
+
+        if (is.null (res)) {
+            res <- tryCatch (
+                eval (pars [[p]], envir = fn_env),
+                error = function (e) NULL)
+        }
+
+        c (class (res) [1],
+           storage.mode (res),
+           length (res))
+
+    }, character (3))
 
     classes <- data.frame (t (classes))
     colnames (classes) <- c ("class", "storage.mode", "length")
@@ -58,7 +57,6 @@ get_types <- function () {
             })
     close (typetracer_con)
 
-    rm (td, nm, fn, fname, typetracer_con,
-        fn_call, fn_name, fn_env, pars, par_names,
-        get_p, eval_p, classes)
+    rm (td, nm, fn, fname, typetracer_con, fn_call,
+        fn_name, fn_env, pars, par_names, classes)
 }
