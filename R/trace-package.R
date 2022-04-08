@@ -64,9 +64,6 @@ trace_package <- function (package = NULL,
     }
 
     unloadNamespace (package)
-    if (pkg_attached) {
-        attachNamespace 
-    }
 
     return (traces)
 }
