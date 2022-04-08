@@ -31,3 +31,8 @@ test_that("reassign_function_body returns invisibly", {
     f1 <- function() 1
     expect_invisible(reassign_function_body(f1, 2))
 })
+
+test_that("package not installed error", {
+    expect_error (trace_package (package = "abc123"),
+                  "Package 'abc123' is not installed.")
+})
