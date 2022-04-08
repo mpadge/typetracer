@@ -78,6 +78,8 @@ trace_package <- function (package = NULL,
 trace_package_exs <- function (package) {
 
     exs <- get_pkg_examples (package)
+    exs <- unname (do.call (c, exs))
+
     if (is.null (exs)) {
         return ()
     }
@@ -152,8 +154,6 @@ get_pkg_examples <- function (package) {
         file.remove (f)
         return (out)
     })
-
-    exs <- unname (do.call (c, exs))
 
     return (exs)
 }
