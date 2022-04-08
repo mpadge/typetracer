@@ -115,6 +115,24 @@ get_pkg_examples <- function (package) {
 
     rd <- tools::Rd_db (package)
 
+    if (length (rd) == 0L & any (grepl (package, search ()))) {
+        # local load via devtools
+        e <- as.environment (paste0 ("package:", package))
+        path <- attr (e, "path")
+
+        if (is.null (path)) {
+            return (NULL)
+        }
+        if (!dir.exists (path)) {
+            return (NULL)
+        }
+
+        man_files <- list.files (file.path (path, "man"),
+                                 full.names = TRUE,
+                                 pattern = "\\.Rd$")
+        rd <- lapply (man_files, tools::parse_Rd)
+    }
+
     has_exs <- vapply (rd, function (i) {
                 out <- vapply (i, function (j)
                         any (attr (j, "Rd_tag") == "\\examples"),
