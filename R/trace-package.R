@@ -155,5 +155,12 @@ get_pkg_examples <- function (package) {
         return (out)
     })
 
+    nm_ptn <- "^\\#\\#\\#\\sName\\:\\s"
+    nms <- vapply (exs, function (i)
+                       gsub (nm_ptn, "",
+                             grep (nm_ptn, i, value = TRUE) [1]),
+                   character (1))
+    names (exs) <- nms
+
     return (exs)
 }
