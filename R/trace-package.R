@@ -100,10 +100,8 @@ trace_package_tests <- function (package, pkg_dir = NULL) {
     requireNamespace ("withr")
 
     if (is.null (pkg_dir)) {
-        ip <- utils::installed.packages ()
-        ip <- ip [ip [, 1] == package, ]
-        pkg_dir <- file.path (ip [which (names (ip) == "LibPath")],
-                              package)
+        e <- as.environment (paste0 ("package:", package))
+        pkg_dir <- attr (e, "path")
     }
     if (length (pkg_dir) == 0L) { # in test environments
         return (list ())
