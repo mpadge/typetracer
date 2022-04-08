@@ -74,6 +74,9 @@ trace_package <- function (package = NULL,
 trace_package_exs <- function (package) {
 
     exs <- get_pkg_examples (package)
+    if (is.null (exs)) {
+        return ()
+    }
 
     # suppress any plot output
     dev <- options ()$"device"
