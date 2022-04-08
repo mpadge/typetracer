@@ -20,7 +20,7 @@ load_traces <- function (quiet = FALSE) {
                        do.call (rbind, strsplit (xi, ","))
         })
     out <- do.call (rbind, out)
-    out <- tibble::tibble ("function"  = out [, 1],
+    out <- tibble::tibble ("fn_name"  = out [, 1],
                            "parameter" = out [, 2],
                            "class" = out [, 3],
                            "storage_mode" = out [, 4],

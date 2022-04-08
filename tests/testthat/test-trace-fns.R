@@ -56,7 +56,7 @@ test_that("trace call", {
     expect_equal (nrow (x), 2L) # x and y
     expect_equal (ncol (x), 5L)
     expect_identical (names (x),
-                      c ("function", "parameter", "class",
+                      c ("fn_name", "parameter", "class",
                          "storage_mode", "length"))
 })
 
