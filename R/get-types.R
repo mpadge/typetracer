@@ -9,30 +9,30 @@
 #' @noRd
 get_types <- function () {
 
-    typetracer_env <- new.env (parent = emptyenv ())
+    tt_env <- new.env (parent = emptyenv ())
 
     # temp file to dump trace:
-    typetracer_env$td <- options ("typetracedir")
-    typetracer_env$nm <- paste0 (sample (c (letters, LETTERS), 8),
+    tt_env$td <- options ("typetracedir")
+    tt_env$nm <- paste0 (sample (c (letters, LETTERS), 8),
                                  collapse = "")
-    typetracer_env$fname <- file.path (typetracer_env$td,
-        paste0 ("typetrace_", typetracer_env$nm, ".txt"))
-    typetracer_env$typetracer_con <- file (typetracer_env$fname, open = "at")
+    tt_env$fname <- file.path (tt_env$td,
+        paste0 ("typetrace_", tt_env$nm, ".txt"))
+    tt_env$typetracer_con <- file (tt_env$fname, open = "at")
 
     # Extract values. `match.call` returns the *expressions* submitted to the
     # call, while the evaluated versions of formalArgs are stored in the
     # environment. `get` is used for the latter to avoid re-`eval`-ing, but
     # `...` args are not eval'd on function entry.
-    typetracer_env$fn_call <- match.call (expand.dots = TRUE)
-    typetracer_env$fn_name <- typetracer_env$fn_call [[1]]
-    typetracer_env$pars <- as.list (typetracer_env$fn_call [-1L])
+    tt_env$fn_call <- match.call (expand.dots = TRUE)
+    tt_env$fn_name <- tt_env$fn_call [[1]]
+    tt_env$pars <- as.list (tt_env$fn_call [-1L])
 
     fn_env <- environment ()
 
-    typetracer_env$fn <- match.fun (typetracer_env$fn_name)
-    typetracer_env$par_names <- methods::formalArgs (typetracer_env$fn)
+    tt_env$fn <- match.fun (tt_env$fn_name)
+    tt_env$par_names <- methods::formalArgs (tt_env$fn)
 
-    typetracer_env$classes <- vapply (typetracer_env$par_names, function (p) {
+    tt_env$classes <- vapply (tt_env$par_names, function (p) {
 
         res <- NULL
 
@@ -44,7 +44,7 @@ get_types <- function () {
 
         if (is.null (res)) {
             res <- tryCatch (
-                eval (typetracer_env$pars [[p]], envir = fn_env),
+                eval (tt_env$pars [[p]], envir = fn_env),
                 error = function (e) NULL)
         }
 
@@ -54,19 +54,19 @@ get_types <- function () {
 
     }, character (3))
 
-    typetracer_env$classes <- data.frame (t (typetracer_env$classes))
-    colnames (typetracer_env$classes) <- c ("class", "storage.mode", "length")
-    typetracer_env$classes$fn_name <- as.character (typetracer_env$fn_name)
-    typetracer_env$classes$p <- typetracer_env$par_names
+    tt_env$classes <- data.frame (t (tt_env$classes))
+    colnames (tt_env$classes) <- c ("class", "storage.mode", "length")
+    tt_env$classes$fn_name <- as.character (tt_env$fn_name)
+    tt_env$classes$p <- tt_env$par_names
 
-    typetracer_env$cols <- c ("fn_name", "p", "class", "storage.mode", "length")
-    typetracer_env$classes <- typetracer_env$classes [, typetracer_env$cols]
+    tt_env$cols <- c ("fn_name", "p", "class", "storage.mode", "length")
+    tt_env$classes <- tt_env$classes [, tt_env$cols]
 
-    apply (typetracer_env$classes, 1, function (i) {
+    apply (tt_env$classes, 1, function (i) {
                           writeLines (paste0 (i, collapse = ","),
-                                      typetracer_env$typetracer_con)
+                                      tt_env$typetracer_con)
             })
-    close (typetracer_env$typetracer_con)
+    close (tt_env$typetracer_con)
 
-    rm (typetracer_env)
+    rm (tt_env)
 }
