@@ -17,7 +17,12 @@ load_traces <- function (quiet = FALSE) {
 
     out <- lapply (traces, function (i) {
                        xi <- brio::readLines (i)
-                       do.call (rbind, strsplit (xi, ","))
+                       xi <- strsplit (xi, ",")
+                       if (length (xi) > 6L) {
+                           xi [6:length (xi)] <-
+                               paste0 (xi [6:length (xi)], collapse = ";")
+                       }
+                       do.call (rbind, xi)
         })
     out <- do.call (rbind, out)
     out <- tibble::tibble ("fn_name"  = out [, 1],
