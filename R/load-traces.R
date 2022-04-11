@@ -15,25 +15,15 @@ load_traces <- function (quiet = FALSE) {
         return (NULL)
     }
 
-    out <- lapply (traces, function (i) {
-        xi <- brio::readLines (i)
-        xi <- lapply (strsplit (xi, ","), function (i) {
-            if (length (i) > 6L) {
-                index <- seq_along (i) [-(1:5)]
-                i [6] <- paste0 (i [index], collapse = ",")
-                i <- i [1:6]
-            }
-            return (i)
-            })
-        do.call (rbind, xi)
-    })
-    out <- do.call (rbind, out)
+    out <- do.call (rbind, lapply (traces, readRDS))
+
     out <- tibble::tibble ("fn_name"  = out [, 1],
                            "par_name" = out [, 2],
                            "class" = out [, 3],
                            "storage_mode" = out [, 4],
                            "length" = as.integer (out [, 5]),
-                           "par_uneval" = out [, 6])
+                           "par_uneval" = out [, 6],
+                           "value" = out [, 7])
 
     return (out)
 }
