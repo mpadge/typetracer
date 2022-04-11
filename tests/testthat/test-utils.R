@@ -1,5 +1,6 @@
 
 test_that("reassign_function_body changes function body", {
+
     f1 <- function(x) x
 
     attr(f1, "a") <- 1
@@ -23,11 +24,13 @@ test_that("reassign_function_body changes function body", {
 })
 
 test_that("reassign_function_body returns silently", {
+
     f1 <- function() 1
     expect_silent(reassign_function_body(f1, 2))
 })
 
 test_that("reassign_function_body returns invisibly", {
+
     f1 <- function() 1
     expect_invisible(reassign_function_body(f1, 2))
 })
