@@ -24,7 +24,7 @@
                   tryCatch(as.character(x), error = function(e) e)
               else paste(r, collapse = " ")
               r <- if (inherits(r, "error")) 
-                  tryCatch(capture.output(x), error = function(e) e)
+                  tryCatch(utils::capture.output(x), error = function(e) e)
               else paste(r, collapse = " ")
               substr(r, 1L, max.length)
           }
