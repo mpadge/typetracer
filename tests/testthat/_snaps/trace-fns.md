@@ -9,7 +9,7 @@
           typetracer_env$nm <- paste0(sample(c(letters, LETTERS), 8), 
               collapse = "")
           typetracer_env$fname <- file.path(typetracer_env$td, paste0("typetrace_", 
-              typetracer_env$nm, ".txt"))
+              typetracer_env$nm, ".Rds"))
           typetracer_env$fn_call <- match.call(expand.dots = TRUE)
           typetracer_env$fn_name <- typetracer_env$fn_call[[1]]
           typetracer_env$pars <- as.list(typetracer_env$fn_call[-1L])
@@ -47,22 +47,24 @@
                         s <- "NULL"
                       }
                   }
+                  val <- typetracer_env$get_str(res)
                   c(class(res)[1], storage.mode(res), length(res), 
-                      s)
-              }, character(4))
+                      s, val)
+              }, character(5))
           typetracer_env$classes <- data.frame(t(typetracer_env$classes))
           colnames(typetracer_env$classes) <- c("class", "storage.mode", 
-              "length", "structure")
+              "length", "structure", "value")
           typetracer_env$classes$fn_name <- as.character(typetracer_env$fn_name)
           typetracer_env$classes$p <- typetracer_env$par_names
           typetracer_env$cols <- c("fn_name", "p", "class", "storage.mode", 
-              "length", "structure")
+              "length", "structure", "value")
           typetracer_env$classes <- typetracer_env$classes[, typetracer_env$cols]
           write_output <- function(fname, classes) {
-              con <- file(fname, open = "at")
-              on.exit(close(con, type = "at"))
-              apply(classes, 1, function(i) writeLines(paste0(i, collapse = ","), 
-                  con = con))
+              out <- NULL
+              if (file.exists(fname)) {
+                  classes <- rbind(out, classes)
+              }
+              saveRDS(classes, file = fname)
           }
           write_output(typetracer_env$fname, typetracer_env$classes)
           rm(typetracer_env)
