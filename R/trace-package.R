@@ -30,7 +30,7 @@ trace_package <- function (package = NULL,
     p <- paste0 ("package:", package)
     pkg_attached <- p %in% search ()
     if (!pkg_attached) {
-        ip <- data.frame (installed.packages ())
+        ip <- data.frame (utils::installed.packages ())
         if (!package %in% ip$Package) {
             stop ("Package '", package, "' is not installed. Please ",
                   "install locally, or use 'devtools::load_all()' ",
