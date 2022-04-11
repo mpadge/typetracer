@@ -21,10 +21,11 @@ load_traces <- function (quiet = FALSE) {
         })
     out <- do.call (rbind, out)
     out <- tibble::tibble ("fn_name"  = out [, 1],
-                           "parameter" = out [, 2],
+                           "par_name" = out [, 2],
                            "class" = out [, 3],
                            "storage_mode" = out [, 4],
-                           "length" = as.integer (out [, 5]))
+                           "length" = as.integer (out [, 5]),
+                           "par_uneval" = out [, 6])
 
     return (out)
 }
