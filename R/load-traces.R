@@ -15,17 +15,33 @@ load_traces <- function (quiet = FALSE) {
         return (NULL)
     }
 
-    out <- do.call (rbind, lapply (traces, readRDS))
+    out <- lapply (traces, function (i) {
 
-    out <- tibble::tibble ("fn_name"  = out [, 1],
-                           "par_name" = out [, 2],
-                           "class" = out [, 3],
-                           "storage_mode" = out [, 4],
-                           "length" = as.integer (out [, 5]),
-                           "par_uneval" = out [, 6],
-                           "value" = out [, 7])
+        tr_i <- readRDS (i)
 
-    return (out)
+        fn_name <- tr_i$fn_name
+        tr_i <- tr_i [which (!names (tr_i) == "fn_name")]
+
+        # simple vector columns:
+        par_name <- vapply (tr_i, function (i) i$par, character (1))
+        storage_mode <- vapply (tr_i, function (i) i$storage_mode, character (1))
+        len <- vapply (tr_i, function (i) i$length, integer (1))
+        # list-columns:
+        classes <- I (lapply (tr_i, function (i) i$class))
+        par_uneval <- I (lapply (tr_i, function (i) i$par_uneval))
+        par_eval <- I (lapply (tr_i, function (i) i$par_eval))
+
+        tibble::tibble (
+            fn_name = fn_name,
+            par_name = par_name,
+            class = classes,
+            storage_mode = storage_mode,
+            length = len,
+            par_uneval = par_uneval,
+            par_eval = par_eval)
+        })
+
+    do.call (rbind, out)
 }
 
 #' Clear previous traces
