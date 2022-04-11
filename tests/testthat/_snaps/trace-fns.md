@@ -26,47 +26,31 @@
               else paste(r, collapse = " ")
               substr(r, 1L, max.length)
           }
-          typetracer_env$classes <- vapply(typetracer_env$par_names, 
-              function(p) {
-                  res <- NULL
-                  if (p %in% ls(fn_env)) {
-                      res <- tryCatch(get(p, envir = fn_env, inherits = FALSE), 
-                        error = function(e) NULL)
-                  }
-                  if (is.null(res)) {
-                      res <- tryCatch(eval(typetracer_env$pars[[p]], 
-                        envir = fn_env), error = function(e) NULL)
-                  }
-                  s <- "NULL"
-                  if (!is.null(res)) {
-                      s <- typetracer_env$get_str(typetracer_env$pars[[p]])
-                      if (length(s) > 1L) {
-                        s <- paste0(s, collapse = "; ")
-                      }
-                      if (is.null(s)) {
-                        s <- "NULL"
-                      }
-                  }
-                  val <- typetracer_env$get_str(res)
-                  c(class(res)[1], storage.mode(res), length(res), 
-                      s, val)
-              }, character(5))
-          typetracer_env$classes <- data.frame(t(typetracer_env$classes))
-          colnames(typetracer_env$classes) <- c("class", "storage.mode", 
-              "length", "structure", "value")
-          typetracer_env$classes$fn_name <- as.character(typetracer_env$fn_name)
-          typetracer_env$classes$p <- typetracer_env$par_names
-          typetracer_env$cols <- c("fn_name", "p", "class", "storage.mode", 
-              "length", "structure", "value")
-          typetracer_env$classes <- typetracer_env$classes[, typetracer_env$cols]
-          write_output <- function(fname, classes) {
-              out <- NULL
-              if (file.exists(fname)) {
-                  classes <- rbind(out, classes)
+          typetracer_env$data <- lapply(typetracer_env$par_names, function(p) {
+              res <- NULL
+              if (p %in% ls(fn_env)) {
+                  res <- tryCatch(get(p, envir = fn_env, inherits = FALSE), 
+                      error = function(e) NULL)
               }
-              saveRDS(classes, file = fname)
-          }
-          write_output(typetracer_env$fname, typetracer_env$classes)
+              if (is.null(res)) {
+                  res <- tryCatch(eval(typetracer_env$pars[[p]], envir = fn_env), 
+                      error = function(e) NULL)
+              }
+              s <- "NULL"
+              if (!is.null(res)) {
+                  s <- typetracer_env$get_str(typetracer_env$pars[[p]])
+                  if (length(s) > 1L) {
+                      s <- paste0(s, collapse = "; ")
+                  }
+                  if (is.null(s)) {
+                      s <- "NULL"
+                  }
+              }
+              list(par = p, class = class(res), storage_mode = storage.mode(res), 
+                  length = length(res), par_uneval = s, par_eval = res)
+          })
+          typetracer_env$data$fn_name <- as.character(typetracer_env$fn_name)
+          saveRDS(typetracer_env$data, typetracer_env$fname)
           rm(typetracer_env)
       }
 

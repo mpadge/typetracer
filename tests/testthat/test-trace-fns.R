@@ -58,7 +58,7 @@ test_that("trace call", {
     expect_identical (names (x),
                       c ("fn_name", "par_name", "class",
                          "storage_mode", "length", "par_uneval",
-                         "value"))
+                         "par_eval"))
 })
 
 test_that ("untrace call", {
