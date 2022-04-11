@@ -62,11 +62,14 @@ get_types <- function () {
                 eval (typetracer_env$pars [[p]], envir = fn_env),
                 error = function (e) NULL)
         }
-        s <- ""
+        s <- "NULL"
         if (!is.null (res)) {
             s <- typetracer_env$get_str (typetracer_env$pars [[p]])
             if (length (s) > 1L) {
                 s <- paste0 (s, collapse = "; ")
+            }
+            if (is.null (s)) {
+                s <- "NULL"
             }
         }
 
