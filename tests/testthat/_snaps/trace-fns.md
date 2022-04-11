@@ -18,6 +18,16 @@
           fn_env <- environment()
           typetracer_env$fn <- match.fun(typetracer_env$fn_name)
           typetracer_env$par_names <- methods::formalArgs(typetracer_env$fn)
+          typetracer_env$get_str <- function(x, max.length = 1000L) {
+              r <- tryCatch(format(x), error = function(e) e)
+              r <- if (inherits(r, "error")) 
+                  tryCatch(as.character(x), error = function(e) e)
+              else paste(r, collapse = " ")
+              r <- if (inherits(r, "error")) 
+                  tryCatch(capture.output(x), error = function(e) e)
+              else paste(r, collapse = " ")
+              substr(r, 1L, max.length)
+          }
           typetracer_env$classes <- vapply(typetracer_env$par_names, 
               function(p) {
                   res <- NULL
@@ -29,15 +39,26 @@
                       res <- tryCatch(eval(typetracer_env$pars[[p]], 
                         envir = fn_env), error = function(e) NULL)
                   }
-                  c(class(res)[1], storage.mode(res), length(res))
-              }, character(3))
+                  s <- "NULL"
+                  if (!is.null(res)) {
+                      s <- typetracer_env$get_str(typetracer_env$pars[[p]])
+                      if (length(s) > 1L) {
+                        s <- paste0(s, collapse = "; ")
+                      }
+                      if (is.null(s)) {
+                        s <- "NULL"
+                      }
+                  }
+                  c(class(res)[1], storage.mode(res), length(res), 
+                      s)
+              }, character(4))
           typetracer_env$classes <- data.frame(t(typetracer_env$classes))
           colnames(typetracer_env$classes) <- c("class", "storage.mode", 
-              "length")
+              "length", "structure")
           typetracer_env$classes$fn_name <- as.character(typetracer_env$fn_name)
           typetracer_env$classes$p <- typetracer_env$par_names
           typetracer_env$cols <- c("fn_name", "p", "class", "storage.mode", 
-              "length")
+              "length", "structure")
           typetracer_env$classes <- typetracer_env$classes[, typetracer_env$cols]
           apply(typetracer_env$classes, 1, function(i) {
               writeLines(paste0(i, collapse = ","), typetracer_env$typetracer_con)
