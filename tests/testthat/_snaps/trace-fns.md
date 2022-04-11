@@ -10,8 +10,6 @@
               collapse = "")
           typetracer_env$fname <- file.path(typetracer_env$td, paste0("typetrace_", 
               typetracer_env$nm, ".txt"))
-          typetracer_env$typetracer_con <- file(typetracer_env$fname, 
-              open = "at")
           typetracer_env$fn_call <- match.call(expand.dots = TRUE)
           typetracer_env$fn_name <- typetracer_env$fn_call[[1]]
           typetracer_env$pars <- as.list(typetracer_env$fn_call[-1L])
@@ -60,10 +58,13 @@
           typetracer_env$cols <- c("fn_name", "p", "class", "storage.mode", 
               "length", "structure")
           typetracer_env$classes <- typetracer_env$classes[, typetracer_env$cols]
-          apply(typetracer_env$classes, 1, function(i) {
-              writeLines(paste0(i, collapse = ","), typetracer_env$typetracer_con)
-          })
-          close(typetracer_env$typetracer_con)
+          write_output <- function(fname, classes) {
+              con <- file(fname, open = "at")
+              on.exit(close(con, type = "at"))
+              apply(classes, 1, function(i) writeLines(paste0(i, collapse = ","), 
+                  con = con))
+          }
+          write_output(typetracer_env$fname, typetracer_env$classes)
           rm(typetracer_env)
       }
 
