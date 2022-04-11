@@ -10,7 +10,7 @@ Trace function parameter types in R packages.
 
     library (typetracer)
 
-## Example #1
+## Example \#1
 
 Define a function, and use `inject_tracer` to inject parameter tracers
 used to trace parameter types on each call. The following function
@@ -20,7 +20,7 @@ along with `...` to allow passing of arbitrary parameter values.
     f <- function (x, y, z, ...) {
         x * x + y * y
     }
-    inject_tracer (f, .GlobalEnv)
+    inject_tracer (f)
 
 Calls to the function, `f`, will then trace each parameter of the
 function. The current demonstration-only version extracts values for
@@ -36,13 +36,13 @@ function. The current demonstration-only version extracts values for
     val <- f (x = 1:2, y = 3:4 + 0., a = "blah", b = list (a = 1, b = "b"))
     load_traces ()
 
-    ## # A tibble: 4 × 4
-    ##   `function` parameter storage_mode length
-    ##   <chr>      <chr>     <chr>         <int>
-    ## 1 f          x         integer           2
-    ## 2 f          y         double            2
-    ## 3 f          a         character         1
-    ## 4 f          b         list              2
+    ## # A tibble: 4 × 6
+    ##   fn_name par_name class   storage_mode length par_uneval
+    ##   <chr>   <chr>    <chr>   <chr>         <int> <chr>     
+    ## 1 f       x        integer integer           2 1:2       
+    ## 2 f       y        numeric double            2 3:4 + 0   
+    ## 3 f       z        NULL    NULL              0 NULL      
+    ## 4 f       ...      NULL    NULL              0 NULL
 
 Traces themselves are saved in the temporary directory of the current R
 session, and the `load_traces()` function simple loads all traces
@@ -50,7 +50,7 @@ created in that session. The function `clear_traces()` removes all
 traces, so that `load_traces()` will only load new traces produced after
 that time.
 
-## Example #2
+## Example \#2
 
 This section presents a more complex example tracing parameters for a
 selection of functions from the base R package.
@@ -66,7 +66,7 @@ Start with a selection of functions:
                        logical (1L))
     fns <- fns [which (!is_prim)]
     # Then reduce to a small sample of those:
-    fns <- grep ("^[[:alpha:]]", fns, value = TRUE) [1:50]
+    fns <- grep ("^[[:alpha:]]", fns, value = TRUE) [1:30]
 
 Then extract the example code for those functions from the `.Rd`
 database of the base package. For extra simplicity, the functions are
@@ -99,12 +99,12 @@ that injection is almost instantaneous.
     system.time ({
         for (f in fns) {
             f <- get (f, envir = pkg_env)
-            inject_tracer (f, pkg_env)
+            inject_tracer (f)
         }
     })
 
     ##    user  system elapsed 
-    ##   0.033   0.000   0.034
+    ##   0.003   0.000   0.003
 
 ### Run the example code
 
@@ -116,11 +116,6 @@ generation of plots and warning messages.
     o <- suppressWarnings (
         res <- eval (parse (text = exs))
         )
-
-    ## function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE, 
-    ##     pattern, sorted = TRUE)  
-    ## <simpleError in args("graphics::plot.default"): could not find function "graphics::plot.default">
-
     chk <- dev.off ()
 
 ### Load the traces
@@ -129,17 +124,17 @@ Finally, load the resultant type traces as above
 
     load_traces ()
 
-    ## # A tibble: 2,792 × 4
-    ##    `function` parameter storage_mode length
-    ##    <chr>      <chr>     <chr>         <int>
-    ##  1 append     x         list              3
-    ##  2 append     values    language          2
-    ##  3 append     x         list              1
-    ##  4 append     values    language          3
-    ##  5 append     x         list              0
-    ##  6 append     values    language          2
-    ##  7 append     x         list              4
-    ##  8 append     values    language          4
-    ##  9 append     x         list             11
-    ## 10 append     values    language          4
-    ## # … with 2,782 more rows
+    ## # A tibble: 1,833 × 6
+    ##    fn_name   par_name class    storage_mode length par_uneval  
+    ##    <chr>     <chr>    <chr>    <chr>         <int> <chr>       
+    ##  1 all.equal target   numeric  double          100 ..1         
+    ##  2 all.equal current  numeric  double          100 ..2         
+    ##  3 all.equal ...      NULL     NULL              0 NULL        
+    ##  4 all.equal target   function function          1 target[[i]] 
+    ##  5 all.equal current  CRoutine list              4 current[[i]]
+    ##  6 all.equal ...      NULL     NULL              0 NULL        
+    ##  7 all.equal target   function function          1 target[[i]] 
+    ##  8 all.equal current  function function          1 current[[i]]
+    ##  9 all.equal ...      NULL     NULL              0 NULL        
+    ## 10 all.equal target   function function          1 target[[i]] 
+    ## # … with 1,823 more rows

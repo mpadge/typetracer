@@ -32,7 +32,7 @@ allow passing of arbitrary parameter values.
 f <- function (x, y, z, ...) {
     x * x + y * y
 }
-inject_tracer (f, .GlobalEnv)
+inject_tracer (f)
 ```
 
 Calls to the function, `f`, will then trace each parameter of the function. The
@@ -70,7 +70,7 @@ is_prim <- vapply (fns, function (i) is.primitive (get (i, envir = pkg_env)),
                    logical (1L))
 fns <- fns [which (!is_prim)]
 # Then reduce to a small sample of those:
-fns <- grep ("^[[:alpha:]]", fns, value = TRUE) [1:50]
+fns <- grep ("^[[:alpha:]]", fns, value = TRUE) [1:30]
 ```
 
 Then extract the example code for those functions from the `.Rd` database of
@@ -109,7 +109,7 @@ injection is almost instantaneous.
 system.time ({
     for (f in fns) {
         f <- get (f, envir = pkg_env)
-        inject_tracer (f, pkg_env)
+        inject_tracer (f)
     }
 })
 ```
