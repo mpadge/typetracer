@@ -17,7 +17,6 @@ get_types <- function () {
                                  collapse = "")
     typetracer_env$fname <- file.path (typetracer_env$td,
         paste0 ("typetrace_", typetracer_env$nm, ".txt"))
-    typetracer_env$typetracer_con <- file (typetracer_env$fname, open = "at")
 
     # Extract values. `match.call` returns the *expressions* submitted to the
     # call, while the evaluated versions of formalArgs are stored in the
@@ -42,7 +41,7 @@ get_types <- function () {
              else paste (r, collapse = " ")
         r <- if (inherits (r, "error"))
                  tryCatch (utils::capture.output (x), error = function (e) e)
-             else paste (r, collapse=" ")
+             else paste (r, collapse = " ")
         substr (r, 1L, max.length)
     }
 
@@ -82,18 +81,22 @@ get_types <- function () {
     }, character (4))
 
     typetracer_env$classes <- data.frame (t (typetracer_env$classes))
-    colnames (typetracer_env$classes) <- c ("class", "storage.mode", "length", "structure")
+    colnames (typetracer_env$classes) <-
+        c ("class", "storage.mode", "length", "structure")
     typetracer_env$classes$fn_name <- as.character (typetracer_env$fn_name)
     typetracer_env$classes$p <- typetracer_env$par_names
 
-    typetracer_env$cols <- c ("fn_name", "p", "class", "storage.mode", "length", "structure")
+    typetracer_env$cols <-
+        c ("fn_name", "p", "class", "storage.mode", "length", "structure")
     typetracer_env$classes <- typetracer_env$classes [, typetracer_env$cols]
 
-    apply (typetracer_env$classes, 1, function (i) {
-                          writeLines (paste0 (i, collapse = ","),
-                                      typetracer_env$typetracer_con)
-            })
-    close (typetracer_env$typetracer_con)
+    write_output <- function (fname, classes) {
+        con <- file (fname, open = "at")
+        on.exit (close (con, type = "at"))
+        apply (classes, 1, function (i)
+                   writeLines (paste0 (i, collapse = ","), con = con))
+    }
+    write_output (typetracer_env$fname, typetracer_env$classes)
 
     rm (typetracer_env)
 }
