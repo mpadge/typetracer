@@ -16,14 +16,17 @@ load_traces <- function (quiet = FALSE) {
     }
 
     out <- lapply (traces, function (i) {
-                       xi <- brio::readLines (i)
-                       xi <- strsplit (xi, ",")
-                       if (length (xi) > 6L) {
-                           xi [6:length (xi)] <-
-                               paste0 (xi [6:length (xi)], collapse = ";")
-                       }
-                       do.call (rbind, xi)
-        })
+        xi <- brio::readLines (i)
+        xi <- lapply (strsplit (xi, ","), function (i) {
+            if (length (i) > 6L) {
+                index <- seq_along (i) [-(1:5)]
+                i [6] <- paste0 (i [index], collapse = ",")
+                i <- i [1:6]
+            }
+            return (i)
+            })
+        do.call (rbind, xi)
+    })
     out <- do.call (rbind, out)
     out <- tibble::tibble ("fn_name"  = out [, 1],
                            "par_name" = out [, 2],
