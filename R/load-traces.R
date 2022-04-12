@@ -20,17 +20,20 @@ load_traces <- function (quiet = FALSE) {
         tr_i <- readRDS (i)
 
         fn_name <- tr_i$fn_name
+        par_formals <- tr_i$formals
+        tr_i <- tr_i [which (!names (tr_i) %in% c ("fn_name", "formals"))]
+
         fn_call_hash <- paste0 (sample (c (letters,
                                            LETTERS,
                                            0:9),
                                         size = 8),
                                 collapse = "")
-        tr_i <- tr_i [which (!names (tr_i) == "fn_name")]
 
         # simple vector columns:
         par_name <- vapply (tr_i, function (i) i$par, character (1))
         storage_mode <- vapply (tr_i, function (i) i$storage_mode, character (1))
         len <- vapply (tr_i, function (i) i$length, integer (1))
+        fmls <- par_formals [match (par_name, names (par_formals))]
         # list-columns:
         classes <- I (lapply (tr_i, function (i) i$class))
         par_uneval <- I (lapply (tr_i, function (i) i$par_uneval))
@@ -43,6 +46,7 @@ load_traces <- function (quiet = FALSE) {
             class = classes,
             storage_mode = storage_mode,
             length = len,
+            par_formal = fmls,
             par_uneval = par_uneval,
             par_eval = par_eval)
         })

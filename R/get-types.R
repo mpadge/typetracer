@@ -30,6 +30,7 @@ get_types <- function () {
 
     typetracer_env$fn <- match.fun (typetracer_env$fn_name)
     typetracer_env$par_names <- methods::formalArgs (typetracer_env$fn)
+    typetracer_env$par_formals <- formals (typetracer_env$fn)
 
     # Return structure of parameters as character strings
     # https://rpubs.com/maechler/R_language_objs
@@ -83,6 +84,7 @@ get_types <- function () {
     })
 
     typetracer_env$data$fn_name <- as.character (typetracer_env$fn_name)
+    typetracer_env$data$formals <- typetracer_env$par_formals
 
     saveRDS (typetracer_env$data, typetracer_env$fname)
 
