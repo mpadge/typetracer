@@ -36,13 +36,13 @@ function. The current demonstration-only version extracts values for
     val <- f (x = 1:2, y = 3:4 + 0., a = "blah", b = list (a = 1, b = "b"))
     load_traces ()
 
-    ## # A tibble: 4 × 7
-    ##   fn_name par_name class   storage_mode length par_uneval value
-    ##   <chr>   <chr>    <chr>   <chr>         <int> <chr>      <chr>
-    ## 1 f       x        integer integer           2 1:2        1 2  
-    ## 2 f       y        numeric double            2 3:4 + 0    3 4  
-    ## 3 f       z        NULL    NULL              0 NULL       NULL 
-    ## 4 f       ...      NULL    NULL              0 NULL       NULL
+    ## # A tibble: 4 × 8
+    ##   fn_name fn_call_hash par_name class    storage_mode length par_uneval par_eval
+    ##   <chr>   <chr>        <chr>    <I<list> <chr>         <int> <I<list>>  <I<list>
+    ## 1 f       k3WrtgRJ     x        <chr>    integer           2 <chr [1]>  <int>   
+    ## 2 f       k3WrtgRJ     y        <chr>    double            2 <chr [1]>  <dbl>   
+    ## 3 f       k3WrtgRJ     z        <chr>    NULL              0 <chr [1]>  <NULL>  
+    ## 4 f       k3WrtgRJ     ...      <chr>    NULL              0 <chr [1]>  <NULL>
 
 Traces themselves are saved in the temporary directory of the current R
 session, and the `load_traces()` function simple loads all traces
@@ -104,7 +104,7 @@ that injection is almost instantaneous.
     })
 
     ##    user  system elapsed 
-    ##   0.004   0.001   0.004
+    ##   0.003   0.000   0.003
 
 ### Run the example code
 
@@ -124,17 +124,17 @@ Finally, load the resultant type traces as above
 
     load_traces ()
 
-    ## # A tibble: 1,833 × 7
-    ##    fn_name    par_name  class       storage_mode length par_uneval   value      
-    ##    <chr>      <chr>     <chr>       <chr>         <int> <chr>        <chr>      
-    ##  1 all.equal  target    character   character         8 target[[i]]  "holm     …
-    ##  2 all.equal  current   CallRoutine list              4 current[[i]] "pnbinom <…
-    ##  3 all.equal  ...       NULL        NULL              0 NULL         "NULL"     
-    ##  4 all.equal  target    numeric     double          100 ..1          " 0.1  0.2…
-    ##  5 all.equal  current   numeric     double          100 ..2          " 0.100000…
-    ##  6 all.equal  ...       NULL        NULL              0 NULL         "NULL"     
-    ##  7 all.equal  target    function    function          1 target[[i]]  "function …
-    ##  8 all.equal  current   CallRoutine list              4 current[[i]] "pgamma <p…
-    ##  9 all.equal  ...       NULL        NULL              0 NULL         "NULL"     
-    ## 10 abbreviate names.arg character   character        50 state.name   "Alabama  …
+    ## # A tibble: 1,833 × 8
+    ##    fn_name   fn_call_hash par_name class storage_mode length par_uneval par_eval
+    ##    <chr>     <chr>        <chr>    <I<l> <chr>         <int> <I<list>>  <I<list>
+    ##  1 abbrevia… sd6IlBm9     names.a… <chr> character        50 <chr [1]>  <chr>   
+    ##  2 abbrevia… sd6IlBm9     minleng… <chr> double            1 <chr [1]>  <dbl>   
+    ##  3 abbrevia… sd6IlBm9     use.cla… <chr> logical           1 <chr [1]>  <lgl>   
+    ##  4 abbrevia… sd6IlBm9     dot      <chr> logical           1 <chr [1]>  <lgl>   
+    ##  5 abbrevia… sd6IlBm9     strict   <chr> logical           1 <chr [1]>  <lgl>   
+    ##  6 abbrevia… sd6IlBm9     method   <chr> character         2 <chr [1]>  <chr>   
+    ##  7 abbrevia… sd6IlBm9     named    <chr> logical           1 <chr [1]>  <lgl>   
+    ##  8 abbrevia… zZFTtHyb     names.a… <chr> character        50 <chr [1]>  <chr>   
+    ##  9 abbrevia… zZFTtHyb     minleng… <chr> double            1 <chr [1]>  <dbl>   
+    ## 10 abbrevia… zZFTtHyb     use.cla… <chr> logical           1 <chr [1]>  <lgl>   
     ## # … with 1,823 more rows
