@@ -139,7 +139,7 @@ get_pkg_examples <- function (package) {
                                  full.names = TRUE,
                                  pattern = "\\.Rd$")
         rd <- lapply (man_files, tools::parse_Rd)
-        # nocov stop
+        # nocov end
     }
 
     has_exs <- vapply (rd, function (i) {
