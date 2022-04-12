@@ -36,13 +36,14 @@ function. The current demonstration-only version extracts values for
     val <- f (x = 1:2, y = 3:4 + 0., a = "blah", b = list (a = 1, b = "b"))
     load_traces ()
 
-    ## # A tibble: 4 × 8
-    ##   fn_name fn_call_hash par_name class    storage_mode length par_uneval par_eval
-    ##   <chr>   <chr>        <chr>    <I<list> <chr>         <int> <I<list>>  <I<list>
-    ## 1 f       6sKuvFGL     x        <chr>    integer           2 <chr [1]>  <int>   
-    ## 2 f       6sKuvFGL     y        <chr>    double            2 <chr [1]>  <dbl>   
-    ## 3 f       6sKuvFGL     z        <chr>    NULL              0 <chr [1]>  <NULL>  
-    ## 4 f       6sKuvFGL     ...      <chr>    NULL              0 <chr [1]>  <NULL>
+    ## # A tibble: 4 × 9
+    ##   fn_name fn_call_hash par_name class  storage_mode length par_formal par_uneval
+    ##   <chr>   <chr>        <chr>    <I<li> <chr>         <int> <named li> <I<list>> 
+    ## 1 f       FC4WGN6k     x        <chr>  integer           2 <missing>  <chr [1]> 
+    ## 2 f       FC4WGN6k     y        <chr>  double            2 <missing>  <chr [1]> 
+    ## 3 f       FC4WGN6k     z        <chr>  NULL              0 <missing>  <chr [1]> 
+    ## 4 f       FC4WGN6k     ...      <chr>  NULL              0 <missing>  <chr [1]> 
+    ## # … with 1 more variable: par_eval <I<list>>
 
 Traces themselves are saved in the temporary directory of the current R
 session, and the `load_traces()` function simple loads all traces
@@ -61,17 +62,18 @@ line traces function calls in all examples for the nominated package:
     res <- trace_package ("rematch")
     res
 
-    ## # A tibble: 8 × 8
-    ##   fn_name  fn_call_hash par_name class   storage_mode length par_uneval par_eval
-    ##   <chr>    <chr>        <chr>    <I<lis> <chr>         <int> <I<list>>  <I<list>
-    ## 1 re_match D3BjJE8V     pattern  <chr>   character         1 <chr [1]>  <chr>   
-    ## 2 re_match D3BjJE8V     text     <chr>   character         7 <chr [1]>  <chr>   
-    ## 3 re_match D3BjJE8V     perl     <chr>   logical           1 <chr [1]>  <lgl>   
-    ## 4 re_match D3BjJE8V     ...      <chr>   NULL              0 <chr [1]>  <NULL>  
-    ## 5 re_match ZjsyPBQc     pattern  <chr>   character         1 <chr [1]>  <chr>   
-    ## 6 re_match ZjsyPBQc     text     <chr>   character         7 <chr [1]>  <chr>   
-    ## 7 re_match ZjsyPBQc     perl     <chr>   logical           1 <chr [1]>  <lgl>   
-    ## 8 re_match ZjsyPBQc     ...      <chr>   NULL              0 <chr [1]>  <NULL>
+    ## # A tibble: 8 × 9
+    ##   fn_name  fn_call_hash par_name class storage_mode length par_formal par_uneval
+    ##   <chr>    <chr>        <chr>    <I<l> <chr>         <int> <named li> <I<list>> 
+    ## 1 re_match yYXdo9TV     pattern  <chr> character         1 <missing>  <chr [1]> 
+    ## 2 re_match yYXdo9TV     text     <chr> character         7 <missing>  <chr [1]> 
+    ## 3 re_match yYXdo9TV     perl     <chr> logical           1 <lgl [1]>  <chr [1]> 
+    ## 4 re_match yYXdo9TV     ...      <chr> NULL              0 <missing>  <chr [1]> 
+    ## 5 re_match oCvREUwT     pattern  <chr> character         1 <missing>  <chr [1]> 
+    ## 6 re_match oCvREUwT     text     <chr> character         7 <missing>  <chr [1]> 
+    ## 7 re_match oCvREUwT     perl     <chr> logical           1 <lgl [1]>  <chr [1]> 
+    ## 8 re_match oCvREUwT     ...      <chr> NULL              0 <missing>  <chr [1]> 
+    ## # … with 1 more variable: par_eval <I<list>>
 
 The result contains one line for every parameter passed to every
 function call in the examples. The `trace_package()` function also
@@ -189,4 +191,27 @@ unevaluated version, while evaluated versions remain identical.
     ## 
     ## [[3]]
     ## y ~ x
-    ## <environment: 0x55d6891e0d28>
+    ## <environment: 0x557d3ecacbc8>
+
+The traces produced by `typetracer` also include a column, `par_formal`,
+which contains the default values specified in the definition of
+`eval_x_late_standard()`:
+
+    res$par_formal
+
+    ## $x
+    ## y + 1
+    ## 
+    ## $y
+    ## 
+    ## 
+    ## $z
+    ## y ~ x
+
+Those three columns of `par_formal`, `par_uneval`, and `par_eval` thus
+contain all definitions for all parameters passed to the function
+environment, in the three possible states of:
+
+1.  Formal or default values (by definition, in an unevaluated state);
+2.  The unevaluated state of any specified parameters; and
+3.  The equivalent versions evaluated within the function environmental.

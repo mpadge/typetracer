@@ -128,3 +128,18 @@ res$par_name
 res$par_uneval
 res$par_eval
 ```
+
+The traces produced by `typetracer` also include a column, `par_formal`, which
+contains the default values specified in the definition of
+`eval_x_late_standard()`:
+
+```{r}
+res$par_formal
+```
+
+Those three columns of `par_formal`, `par_uneval`, and `par_eval` thus contain
+all definitions for all parameters passed to the function environment, in the three possible states of:
+
+1. Formal or default values (by definition, in an unevaluated state);
+2. The unevaluated state of any specified parameters; and
+3. The equivalent versions evaluated within the function environmental.
