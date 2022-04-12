@@ -1,6 +1,14 @@
 
 is_gh_cov <- identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage")
 
+test_that("errors", {
+    package <- "rematch"
+    pkg_dir <- file.path (tempdir (), "does_not_exist")
+    expect_error (
+        trace_package (package, pkg_dir = pkg_dir),
+        "Assertion on 'pkg_dir' failed")
+})
+
 
 test_that("trace package", {
 
