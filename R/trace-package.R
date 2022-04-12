@@ -122,6 +122,9 @@ get_pkg_examples <- function (package) {
 
     if (length (rd) == 0L & any (grepl (package, search ()))) {
         # local load via devtools
+        # This can't be tested because 'package' is in Suggests, which means it
+        # has `Rd_db` entries.
+        # nocov start
         e <- as.environment (paste0 ("package:", package))
         path <- attr (e, "path")
 
@@ -136,6 +139,7 @@ get_pkg_examples <- function (package) {
                                  full.names = TRUE,
                                  pattern = "\\.Rd$")
         rd <- lapply (man_files, tools::parse_Rd)
+        # nocov stop
     }
 
     has_exs <- vapply (rd, function (i) {
