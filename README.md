@@ -39,10 +39,10 @@ function. The current demonstration-only version extracts values for
     ## # A tibble: 4 × 8
     ##   fn_name fn_call_hash par_name class    storage_mode length par_uneval par_eval
     ##   <chr>   <chr>        <chr>    <I<list> <chr>         <int> <I<list>>  <I<list>
-    ## 1 f       k3WrtgRJ     x        <chr>    integer           2 <chr [1]>  <int>   
-    ## 2 f       k3WrtgRJ     y        <chr>    double            2 <chr [1]>  <dbl>   
-    ## 3 f       k3WrtgRJ     z        <chr>    NULL              0 <chr [1]>  <NULL>  
-    ## 4 f       k3WrtgRJ     ...      <chr>    NULL              0 <chr [1]>  <NULL>
+    ## 1 f       6sKuvFGL     x        <chr>    integer           2 <chr [1]>  <int>   
+    ## 2 f       6sKuvFGL     y        <chr>    double            2 <chr [1]>  <dbl>   
+    ## 3 f       6sKuvFGL     z        <chr>    NULL              0 <chr [1]>  <NULL>  
+    ## 4 f       6sKuvFGL     ...      <chr>    NULL              0 <chr [1]>  <NULL>
 
 Traces themselves are saved in the temporary directory of the current R
 session, and the `load_traces()` function simple loads all traces
@@ -53,88 +53,140 @@ that time.
 ## Example \#2
 
 This section presents a more complex example tracing parameters for a
-selection of functions from the base R package.
+selection of functions from [the `rematch`
+package](https://github.com/MangoTheCat/rematch), chosen because it has
+less code than almost any other package on CRAN. The following single
+line traces function calls in all examples for the nominated package:
 
-### Select functions and extract example code
+    res <- trace_package ("rematch")
+    res
 
-Start with a selection of functions:
+    ## # A tibble: 8 × 8
+    ##   fn_name  fn_call_hash par_name class   storage_mode length par_uneval par_eval
+    ##   <chr>    <chr>        <chr>    <I<lis> <chr>         <int> <I<list>>  <I<list>
+    ## 1 re_match D3BjJE8V     pattern  <chr>   character         1 <chr [1]>  <chr>   
+    ## 2 re_match D3BjJE8V     text     <chr>   character         7 <chr [1]>  <chr>   
+    ## 3 re_match D3BjJE8V     perl     <chr>   logical           1 <chr [1]>  <lgl>   
+    ## 4 re_match D3BjJE8V     ...      <chr>   NULL              0 <chr [1]>  <NULL>  
+    ## 5 re_match ZjsyPBQc     pattern  <chr>   character         1 <chr [1]>  <chr>   
+    ## 6 re_match ZjsyPBQc     text     <chr>   character         7 <chr [1]>  <chr>   
+    ## 7 re_match ZjsyPBQc     perl     <chr>   logical           1 <chr [1]>  <lgl>   
+    ## 8 re_match ZjsyPBQc     ...      <chr>   NULL              0 <chr [1]>  <NULL>
 
-    pkg <- "base"
-    fns <- ls (paste0 ("package:", pkg), all.names = TRUE)
-    pkg_env <- as.environment (paste0 ("package:", pkg))
-    is_prim <- vapply (fns, function (i) is.primitive (get (i, envir = pkg_env)),
-                       logical (1L))
-    fns <- fns [which (!is_prim)]
-    # Then reduce to a small sample of those:
-    fns <- grep ("^[[:alpha:]]", fns, value = TRUE) [1:30]
+The result contains one line for every parameter passed to every
+function call in the examples. The `trace_package()` function also
+includes an additional parameter, `types`, which defaults to
+`c ("examples", "tests")`, so that traces are also by default generated
+for all tests included with local source packages.
 
-Then extract the example code for those functions from the `.Rd`
-database of the base package. For extra simplicity, the functions are
-reduced to only those with matching `.Rd` names.
+The final two columns of the result hold the unevaluated and evaluated
+representations of each parameter. The first two values of each
+demonstrate the difference:
 
-    rd <- tools::Rd_db (pkg)
-    fns <- fns [which (fns %in% gsub ("\\.Rd$", "", names (rd)))]
-    rd <- rd [which (gsub ("\\.Rd$", "", names (rd)) %in% fns)]
+    res$par_uneval [1:2]
 
-The following lines extract the example code from those `.Rd` entries:
+    ## [[1]]
+    ## [1] "isodate"
+    ## 
+    ## [[2]]
+    ## [1] "dates"
 
-    exs <- lapply (rd, function (i) {
-        f <- tempfile ()
-        tools::Rd2ex (i, out = f)
-        if (!file.exists (f)) { # no examples
-            return (NULL)
-        }
-        
-        out <- brio::read_lines (f)
-        file.remove (f)
-        return (out)
-    })
-    exs <- unname (do.call (c, exs))
+    res$par_eval [1:2]
 
-### Inject type tracers in all of those functions
+    ## [[1]]
+    ## [1] "([0-9]{4})-([0-1][0-9])-([0-3][0-9])"
+    ## 
+    ## [[2]]
+    ## [1] "2016-04-20"       "1977-08-08"       "not a date"       "2016"            
+    ## [5] "76-03-02"         "2012-06-30"       "2015-01-21 19:58"
 
-The `system.time` call at the start of the following code demonstrations
-that injection is almost instantaneous.
+The example first assigns a variable `isodaten` to the first of the
+evaluated values, and then calls the function with `pattern = isodaten`.
+The second constructs the vector called `dates` with the second of the
+evaluated values, then calls the function with `test = dates`.
 
-    system.time ({
-        for (f in fns) {
-            f <- get (f, envir = pkg_env)
-            inject_tracer (f)
-        }
-    })
+## Examples \#3
 
-    ##    user  system elapsed 
-    ##   0.003   0.000   0.003
+This example briefly illustrates some examples of tracing parameters
+evaluated in non-standards ways. This first examples demonstrates that
+parameter values are captured at the initial point of function entry.
 
-### Run the example code
+    eval_x_late_NSE <- function (x, y) {
+        y <- 10 * y
+        eval (substitute (x))
+    }
+    inject_tracer (eval_x_late_NSE)
+    eval_x_late_NSE (y + 1, 2:3)
 
-Examples can be run through a simple `eval` call, but this must
-generally be wrapped like in the following example to suppress
-generation of plots and warning messages.
+    ## [1] 21 31
 
-    pdf (file = NULL)
-    o <- suppressWarnings (
-        res <- eval (parse (text = exs))
-        )
-    chk <- dev.off ()
+    res <- load_traces ()
+    res$par_name
 
-### Load the traces
+    ##         
+    ## "x" "y"
 
-Finally, load the resultant type traces as above
+    res$par_uneval
 
-    load_traces ()
+    ## [[1]]
+    ## [1] "y + 1"
+    ## 
+    ## [[2]]
+    ## [1] "2:3"
 
-    ## # A tibble: 1,833 × 8
-    ##    fn_name   fn_call_hash par_name class storage_mode length par_uneval par_eval
-    ##    <chr>     <chr>        <chr>    <I<l> <chr>         <int> <I<list>>  <I<list>
-    ##  1 abbrevia… sd6IlBm9     names.a… <chr> character        50 <chr [1]>  <chr>   
-    ##  2 abbrevia… sd6IlBm9     minleng… <chr> double            1 <chr [1]>  <dbl>   
-    ##  3 abbrevia… sd6IlBm9     use.cla… <chr> logical           1 <chr [1]>  <lgl>   
-    ##  4 abbrevia… sd6IlBm9     dot      <chr> logical           1 <chr [1]>  <lgl>   
-    ##  5 abbrevia… sd6IlBm9     strict   <chr> logical           1 <chr [1]>  <lgl>   
-    ##  6 abbrevia… sd6IlBm9     method   <chr> character         2 <chr [1]>  <chr>   
-    ##  7 abbrevia… sd6IlBm9     named    <chr> logical           1 <chr [1]>  <lgl>   
-    ##  8 abbrevia… zZFTtHyb     names.a… <chr> character        50 <chr [1]>  <chr>   
-    ##  9 abbrevia… zZFTtHyb     minleng… <chr> double            1 <chr [1]>  <dbl>   
-    ## 10 abbrevia… zZFTtHyb     use.cla… <chr> logical           1 <chr [1]>  <lgl>   
-    ## # … with 1,823 more rows
+    res$par_eval
+
+    ## [[1]]
+    ## [1] 3 4
+    ## 
+    ## [[2]]
+    ## [1] 2 3
+
+The parameter `x` is evaluated at the point of function entry as `y + 1`
+which, with a value of `y = 2:3`, gives the expected evaluated result of
+`x = 3:4`, while the function ultimately returns the expected values of
+`(10 * 2:3) + 1`, or `21 31`, because the first line of `y <- 10 * y` is
+evaluated prior to substituting the value passed for `x` of `y + 1`.
+
+The second example specifies a default value of `x = y + 1`, with the
+actual call passing no value, and thus having `"NULL"` in the
+unevaluated version, while evaluated versions remain identical.
+
+    clear_traces () # clear all preceding traces
+    eval_x_late_standard <- function (x = y + 1, y, z = y ~ x) {
+        y <- 10 * y
+        x
+    }
+    inject_tracer (eval_x_late_standard)
+    eval_x_late_standard (, 2:3)
+
+    ## [1] 3 4
+
+    res <- load_traces ()
+    res$par_name
+
+    ##             
+    ## "x" "y" "z"
+
+    res$par_uneval
+
+    ## [[1]]
+    ## [1] "NULL"
+    ## 
+    ## [[2]]
+    ## [1] "2:3"
+    ## 
+    ## [[3]]
+    ## [1] "NULL"
+
+    res$par_eval
+
+    ## [[1]]
+    ## [1] 3 4
+    ## 
+    ## [[2]]
+    ## [1] 2 3
+    ## 
+    ## [[3]]
+    ## y ~ x
+    ## <environment: 0x55d6891e0d28>
