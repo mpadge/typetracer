@@ -10,7 +10,7 @@ test_that("errors", {
 })
 
 
-test_that("trace package", {
+test_that("trace installed package", {
 
     # test pkg selected based on smallest installed size plus latest update >
     # 2015 or so. "praise" is also an option
@@ -35,4 +35,27 @@ test_that("trace package", {
 
     # installed packages have no tests, so traces are examples only:
     expect_identical (nrow (x0), nrow (x1))
+})
+
+test_that ("trace source package", {
+    tarball <- file.path ("..", "rematch_1.0.1.tar.gz")
+    skip_if (!file.exists (tarball))
+
+    if (utils::untar (tarball, exdir = tempdir (), tar = "internal") != 0) {
+        stop ("Unable to extract tarball to 'tempdir'")
+    }
+
+    package <- "rematch"
+    path <- normalizePath (file.path (tempdir (), package))
+    requireNamespace (package)
+
+    expect_s3_class (
+        x0 <- trace_package (package, pkg_dir = path, types = "examples"),
+        "tbl_df")
+
+    expect_true (nrow (x0) > 5) # arbitrarily low number
+    expect_identical (names (x0),
+                      c ("fn_name", "par_name", "class",
+                         "storage_mode", "length", "par_uneval",
+                         "par_eval"))
 })
