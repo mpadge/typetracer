@@ -47,7 +47,11 @@ load_traces <- function (quiet = FALSE) {
             par_eval = par_eval)
         })
 
-    do.call (rbind, out)
+    out <- do.call (rbind, out)
+    out <- out [order (out$fn_name), ]
+    rownames (out) <- NULL
+
+    return (out)
 }
 
 #' Clear previous traces
