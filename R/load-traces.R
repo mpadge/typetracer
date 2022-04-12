@@ -20,6 +20,11 @@ load_traces <- function (quiet = FALSE) {
         tr_i <- readRDS (i)
 
         fn_name <- tr_i$fn_name
+        fn_call_hash <- paste0 (sample (c (letters,
+                                           LETTERS,
+                                           0:9),
+                                        size = 8),
+                                collapse = "")
         tr_i <- tr_i [which (!names (tr_i) == "fn_name")]
 
         # simple vector columns:
@@ -33,6 +38,7 @@ load_traces <- function (quiet = FALSE) {
 
         tibble::tibble (
             fn_name = fn_name,
+            fn_call_hash = fn_call_hash,
             par_name = par_name,
             class = classes,
             storage_mode = storage_mode,

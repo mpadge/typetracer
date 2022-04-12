@@ -20,18 +20,16 @@ test_that("trace installed package", {
 
     expect_true (nrow (x0) > 5) # arbitrarily low number
     expect_identical (names (x0),
-                      c ("fn_name", "par_name", "class",
-                         "storage_mode", "length", "par_uneval",
-                         "par_eval"))
+                      c ("fn_name", "fn_call_hash", "par_name", "class",
+                         "storage_mode", "length", "par_uneval", "par_eval"))
 
     expect_s3_class (x1 <- trace_package (package,
                                           types = c ("examples", "tests")),
                      "tbl_df")
     expect_true (nrow (x1) > 5)
     expect_identical (names (x1),
-                      c ("fn_name", "par_name", "class",
-                         "storage_mode", "length", "par_uneval",
-                         "par_eval"))
+                      c ("fn_name", "fn_call_hash", "par_name", "class",
+                         "storage_mode", "length", "par_uneval", "par_eval"))
 
     # installed packages have no tests, so traces are examples only:
     expect_identical (nrow (x0), nrow (x1))
@@ -62,7 +60,6 @@ test_that ("trace source package", {
 
     expect_true (nrow (x0) > 5) # arbitrarily low number
     expect_identical (names (x0),
-                      c ("fn_name", "par_name", "class",
-                         "storage_mode", "length", "par_uneval",
-                         "par_eval"))
+                      c ("fn_name", "fn_call_hash", "par_name", "class",
+                         "storage_mode", "length", "par_uneval", "par_eval"))
 })
