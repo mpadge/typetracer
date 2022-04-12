@@ -39,10 +39,10 @@ function. The current demonstration-only version extracts values for
     ## # A tibble: 4 × 9
     ##   fn_name fn_call_hash par_name class  storage_mode length par_formal par_uneval
     ##   <chr>   <chr>        <chr>    <I<li> <chr>         <int> <named li> <I<list>> 
-    ## 1 f       FC4WGN6k     x        <chr>  integer           2 <missing>  <chr [1]> 
-    ## 2 f       FC4WGN6k     y        <chr>  double            2 <missing>  <chr [1]> 
-    ## 3 f       FC4WGN6k     z        <chr>  NULL              0 <missing>  <chr [1]> 
-    ## 4 f       FC4WGN6k     ...      <chr>  NULL              0 <missing>  <chr [1]> 
+    ## 1 f       cQHD9bPx     x        <chr>  integer           2 <missing>  <chr [1]> 
+    ## 2 f       cQHD9bPx     y        <chr>  double            2 <missing>  <chr [1]> 
+    ## 3 f       cQHD9bPx     z        <chr>  NULL              0 <missing>  <chr [1]> 
+    ## 4 f       cQHD9bPx     ...      <chr>  NULL              0 <missing>  <chr [1]> 
     ## # … with 1 more variable: par_eval <I<list>>
 
 Traces themselves are saved in the temporary directory of the current R
@@ -65,14 +65,14 @@ line traces function calls in all examples for the nominated package:
     ## # A tibble: 8 × 9
     ##   fn_name  fn_call_hash par_name class storage_mode length par_formal par_uneval
     ##   <chr>    <chr>        <chr>    <I<l> <chr>         <int> <named li> <I<list>> 
-    ## 1 re_match yYXdo9TV     pattern  <chr> character         1 <missing>  <chr [1]> 
-    ## 2 re_match yYXdo9TV     text     <chr> character         7 <missing>  <chr [1]> 
-    ## 3 re_match yYXdo9TV     perl     <chr> logical           1 <lgl [1]>  <chr [1]> 
-    ## 4 re_match yYXdo9TV     ...      <chr> NULL              0 <missing>  <chr [1]> 
-    ## 5 re_match oCvREUwT     pattern  <chr> character         1 <missing>  <chr [1]> 
-    ## 6 re_match oCvREUwT     text     <chr> character         7 <missing>  <chr [1]> 
-    ## 7 re_match oCvREUwT     perl     <chr> logical           1 <lgl [1]>  <chr [1]> 
-    ## 8 re_match oCvREUwT     ...      <chr> NULL              0 <missing>  <chr [1]> 
+    ## 1 re_match gi4UbAzj     pattern  <chr> character         1 <missing>  <chr [1]> 
+    ## 2 re_match gi4UbAzj     text     <chr> character         7 <missing>  <chr [1]> 
+    ## 3 re_match gi4UbAzj     perl     <chr> logical           1 <lgl [1]>  <chr [1]> 
+    ## 4 re_match gi4UbAzj     ...      <chr> NULL              0 <missing>  <chr [1]> 
+    ## 5 re_match N7dSvbBK     pattern  <chr> character         1 <missing>  <chr [1]> 
+    ## 6 re_match N7dSvbBK     text     <chr> character         7 <missing>  <chr [1]> 
+    ## 7 re_match N7dSvbBK     perl     <chr> logical           1 <lgl [1]>  <chr [1]> 
+    ## 8 re_match N7dSvbBK     ...      <chr> NULL              0 <missing>  <chr [1]> 
     ## # … with 1 more variable: par_eval <I<list>>
 
 The result contains one line for every parameter passed to every
@@ -87,18 +87,18 @@ demonstrate the difference:
 
     res$par_uneval [1:2]
 
-    ## [[1]]
-    ## [1] "isodate"
+    ## $pattern
+    ## [1] "isodaten"
     ## 
-    ## [[2]]
+    ## $text
     ## [1] "dates"
 
     res$par_eval [1:2]
 
-    ## [[1]]
-    ## [1] "([0-9]{4})-([0-1][0-9])-([0-3][0-9])"
+    ## $pattern
+    ## [1] "(?<year>[0-9]{4})-(?<month>[0-1][0-9])-(?<day>[0-3][0-9])"
     ## 
-    ## [[2]]
+    ## $text
     ## [1] "2016-04-20"       "1977-08-08"       "not a date"       "2016"            
     ## [5] "76-03-02"         "2012-06-30"       "2015-01-21 19:58"
 
@@ -125,23 +125,22 @@ parameter values are captured at the initial point of function entry.
     res <- load_traces ()
     res$par_name
 
-    ##         
-    ## "x" "y"
+    ## [1] "x" "y"
 
     res$par_uneval
 
-    ## [[1]]
+    ## $x
     ## [1] "y + 1"
     ## 
-    ## [[2]]
+    ## $y
     ## [1] "2:3"
 
     res$par_eval
 
-    ## [[1]]
+    ## $x
     ## [1] 3 4
     ## 
-    ## [[2]]
+    ## $y
     ## [1] 2 3
 
 The parameter `x` is evaluated at the point of function entry as `y + 1`
@@ -167,31 +166,30 @@ unevaluated version, while evaluated versions remain identical.
     res <- load_traces ()
     res$par_name
 
-    ##             
-    ## "x" "y" "z"
+    ## [1] "x" "y" "z"
 
     res$par_uneval
 
-    ## [[1]]
+    ## $x
     ## [1] "NULL"
     ## 
-    ## [[2]]
+    ## $y
     ## [1] "2:3"
     ## 
-    ## [[3]]
+    ## $z
     ## [1] "NULL"
 
     res$par_eval
 
-    ## [[1]]
+    ## $x
     ## [1] 3 4
     ## 
-    ## [[2]]
+    ## $y
     ## [1] 2 3
     ## 
-    ## [[3]]
+    ## $z
     ## y ~ x
-    ## <environment: 0x557d3ecacbc8>
+    ## <environment: 0x55b07c78d620>
 
 The traces produced by `typetracer` also include a column, `par_formal`,
 which contains the default values specified in the definition of
