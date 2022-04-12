@@ -22,7 +22,7 @@ trace_package <- function (package = NULL,
     if (!is.null (pkg_dir)) {
         checkmate::assert_character (pkg_dir)
         checkmate::assert_scalar (pkg_dir)
-        if (!checkmate::check_directory_exists (pkg_dir)) {
+        if (!checkmate::assert_directory_exists (pkg_dir)) {
             stop ("Directory [", pkg_dir, "] does not exist")
         }
     }
