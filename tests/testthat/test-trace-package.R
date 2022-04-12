@@ -38,6 +38,13 @@ test_that("trace installed package", {
 })
 
 test_that ("trace source package", {
+
+    # note that this is from the source
+    # https://github.com/MangoTheCat/rematch
+    # which is different from the CRAN version, and includes `re_match_all()`.
+    # Running tests only works with the version installed via devtools.
+    # It's not worth adding that huge pkg to 'Suggests' just to increase test
+    # coverage by a couple of lines.
     tarball <- file.path ("..", "rematch_1.0.1.tar.gz")
     skip_if (!file.exists (tarball))
 
