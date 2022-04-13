@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://mpadge.github.io/typetracer/404.html</loc>
+  </url>
+  <url>
+    <loc>https://mpadge.github.io/typetracer/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://mpadge.github.io/typetracer/authors.html</loc>
+  </url>
+  <url>
+    <loc>https://mpadge.github.io/typetracer/index.html</loc>
+  </url>
+  <url>
+    <loc>https://mpadge.github.io/typetracer/reference/clear_traces.html</loc>
+  </url>
+  <url>
+    <loc>https://mpadge.github.io/typetracer/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://mpadge.github.io/typetracer/reference/inject_tracer.html</loc>
+  </url>
+  <url>
+    <loc>https://mpadge.github.io/typetracer/reference/load_traces.html</loc>
+  </url>
+  <url>
+    <loc>https://mpadge.github.io/typetracer/reference/trace_package.html</loc>
+  </url>
+  <url>
+    <loc>https://mpadge.github.io/typetracer/reference/uninject_tracer.html</loc>
+  </url>
+</urlset>
