@@ -60,7 +60,9 @@ This section presents a more complex example tracing all function calls
 from [the `rematch` package](https://github.com/MangoTheCat/rematch),
 chosen because it has less code than almost any other package on CRAN.
 The following single line traces function calls in all examples for the
-nominated package:
+nominated package. The `trace_package()` function automatically injects
+tracing code into every function within the package, so there is no need
+to explicitly call the `inject_tracer()` function.
 
     res <- trace_package ("rematch")
     res
@@ -68,14 +70,14 @@ nominated package:
     ## # A tibble: 8 × 9
     ##   fn_name  fn_call_hash par_name class     storage_mode length formal     uneval
     ##   <chr>    <chr>        <chr>    <I<list>> <chr>         <int> <named li> <I<li>
-    ## 1 re_match f6hXTC9p     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 2 re_match f6hXTC9p     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 3 re_match f6hXTC9p     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 4 re_match f6hXTC9p     ...      <chr [1]> NULL              0 <missing>  <chr> 
-    ## 5 re_match xQNA3X5z     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 6 re_match xQNA3X5z     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 7 re_match xQNA3X5z     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 8 re_match xQNA3X5z     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 1 re_match yVqgsc2Z     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 2 re_match yVqgsc2Z     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 3 re_match yVqgsc2Z     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 4 re_match yVqgsc2Z     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 5 re_match UmNqvcDn     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 6 re_match UmNqvcDn     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 7 re_match UmNqvcDn     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 8 re_match UmNqvcDn     ...      <chr [1]> NULL              0 <missing>  <chr> 
     ## # … with 1 more variable: eval <I<list>>
 
 The result contains one line for every parameter passed to every
@@ -192,7 +194,7 @@ unevaluated version, while evaluated versions remain identical.
     ## 
     ## $z
     ## y ~ x
-    ## <environment: 0x5604bd289c98>
+    ## <environment: 0x56431593f748>
 
 The traces produced by `typetracer` also include a column, `formal`,
 which contains the default values specified in the definition of

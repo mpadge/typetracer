@@ -74,7 +74,10 @@ that session. The function `clear_traces()` removes all traces, so that
 This section presents a more complex example tracing all function calls from
 [the `rematch` package](https://github.com/MangoTheCat/rematch), chosen because
 it has less code than almost any other package on CRAN. The following single
-line traces function calls in all examples for the nominated package:
+line traces function calls in all examples for the nominated package. The
+`trace_package()` function automatically injects tracing code into every
+function within the package, so there is no need to explicitly call the
+`inject_tracer()` function.
 
 ```{r trace-rematch, message = FALSE}
 res <- trace_package ("rematch")
