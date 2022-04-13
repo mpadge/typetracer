@@ -1,16 +1,17 @@
 
 is_gh_cov <- identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage")
 
-test_that("errors", {
+test_that ("errors", {
     package <- "rematch"
     pkg_dir <- file.path (tempdir (), "does_not_exist")
     expect_error (
         trace_package (package, pkg_dir = pkg_dir),
-        "Assertion on 'pkg_dir' failed")
+        "Assertion on 'pkg_dir' failed"
+    )
 })
 
 
-test_that("trace installed package", {
+test_that ("trace installed package", {
 
     # test pkg selected based on smallest installed size plus latest update >
     # 2015 or so. "praise" is also an option
@@ -19,19 +20,30 @@ test_that("trace installed package", {
     expect_s3_class (x0 <- trace_package (package), "tbl_df")
 
     expect_true (nrow (x0) > 5) # arbitrarily low number
-    expect_identical (names (x0),
-                      c ("fn_name", "fn_call_hash", "par_name",
-                         "class", "storage_mode", "length",
-                         "formal", "uneval", "eval"))
+    expect_identical (
+        names (x0),
+        c (
+            "fn_name", "fn_call_hash", "par_name",
+            "class", "storage_mode", "length",
+            "formal", "uneval", "eval"
+        )
+    )
 
-    expect_s3_class (x1 <- trace_package (package,
-                                          types = c ("examples", "tests")),
-                     "tbl_df")
+    expect_s3_class (
+        x1 <- trace_package (package,
+            types = c ("examples", "tests")
+        ),
+        "tbl_df"
+    )
     expect_true (nrow (x1) > 5)
-    expect_identical (names (x1),
-                      c ("fn_name", "fn_call_hash", "par_name",
-                         "class", "storage_mode", "length",
-                         "formal", "uneval", "eval"))
+    expect_identical (
+        names (x1),
+        c (
+            "fn_name", "fn_call_hash", "par_name",
+            "class", "storage_mode", "length",
+            "formal", "uneval", "eval"
+        )
+    )
 
     # installed packages have no tests, so traces are examples only:
     expect_identical (nrow (x0), nrow (x1))
@@ -58,11 +70,16 @@ test_that ("trace source package", {
 
     expect_s3_class (
         x0 <- trace_package (package, pkg_dir = path, types = "examples"),
-        "tbl_df")
+        "tbl_df"
+    )
 
     expect_true (nrow (x0) > 5) # arbitrarily low number
-    expect_identical (names (x0),
-                      c ("fn_name", "fn_call_hash", "par_name",
-                         "class", "storage_mode", "length",
-                         "formal", "uneval", "eval"))
+    expect_identical (
+        names (x0),
+        c (
+            "fn_name", "fn_call_hash", "par_name",
+            "class", "storage_mode", "length",
+            "formal", "uneval", "eval"
+        )
+    )
 })

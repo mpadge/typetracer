@@ -1,4 +1,4 @@
-library(testthat)
-library(typetracer)
+library (testthat)
+library (typetracer)
 
-test_check("typetracer")
+test_check ("typetracer")

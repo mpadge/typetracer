@@ -36,6 +36,8 @@ test_that ("reassign_function_body returns invisibly", {
 })
 
 test_that ("package not installed error", {
-    expect_error  (trace_package (package = "abc123"),
-                  "Package 'abc123' is not installed.")
+    expect_error (
+        trace_package (package = "abc123"),
+        "Package 'abc123' is not installed."
+    )
 })
