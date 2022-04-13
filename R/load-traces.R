@@ -46,9 +46,9 @@ load_traces <- function (quiet = FALSE) {
             class = classes,
             storage_mode = storage_mode,
             length = len,
-            par_formal = fmls,
-            par_uneval = par_uneval,
-            par_eval = par_eval)
+            formal = fmls,
+            uneval = par_uneval,
+            eval = par_eval)
         })
 
     out <- do.call (rbind, out)
@@ -56,8 +56,7 @@ load_traces <- function (quiet = FALSE) {
     rownames (out) <- NULL
 
     names (out$par_name) <- NULL
-    names (out$par_uneval) <- out$par_name
-    names (out$par_eval) <- out$par_name
+    names (out$uneval) <- names (out$eval) <- out$par_name
 
     return (out)
 }

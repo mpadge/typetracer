@@ -22,7 +22,7 @@ test_that("trace installed package", {
     expect_identical (names (x0),
                       c ("fn_name", "fn_call_hash", "par_name",
                          "class", "storage_mode", "length",
-                         "par_formal", "par_uneval", "par_eval"))
+                         "formal", "uneval", "eval"))
 
     expect_s3_class (x1 <- trace_package (package,
                                           types = c ("examples", "tests")),
@@ -31,7 +31,7 @@ test_that("trace installed package", {
     expect_identical (names (x1),
                       c ("fn_name", "fn_call_hash", "par_name",
                          "class", "storage_mode", "length",
-                         "par_formal", "par_uneval", "par_eval"))
+                         "formal", "uneval", "eval"))
 
     # installed packages have no tests, so traces are examples only:
     expect_identical (nrow (x0), nrow (x1))
@@ -64,5 +64,5 @@ test_that ("trace source package", {
     expect_identical (names (x0),
                       c ("fn_name", "fn_call_hash", "par_name",
                          "class", "storage_mode", "length",
-                         "par_formal", "par_uneval", "par_eval"))
+                         "formal", "uneval", "eval"))
 })
