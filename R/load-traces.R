@@ -31,7 +31,9 @@ load_traces <- function (quiet = FALSE) {
 
         # simple vector columns:
         par_name <- vapply (tr_i, function (i) i$par, character (1))
-        storage_mode <- vapply (tr_i, function (i) i$storage_mode, character (1))
+        storage_mode <- vapply (tr_i, function (i)
+                                i$storage_mode,
+                                character (1))
         len <- vapply (tr_i, function (i) i$length, integer (1))
         fmls <- par_formals [match (par_name, names (par_formals))]
         # list-columns:
