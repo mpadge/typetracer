@@ -28,9 +28,11 @@ Then loaded for use by calling `library`:
 ## Example \#1 - A Single Function
 
 `typetracer` works by “injecting” tracing code into the body of a
-function using the `inject_tracer()` function. The following function
-includes four parameters, including `...` to allow passing of additional
-and entirely arbitrary parameter types and values.
+function using [the `inject_tracer()`
+function](https://mpadge.github.io/typetracer/reference/inject_tracer.html).
+The following function includes four parameters, including `...` to
+allow passing of additional and entirely arbitrary parameter types and
+values.
 
     f <- function (x, y, z, ...) {
         x * x + y * y
@@ -40,7 +42,8 @@ and entirely arbitrary parameter types and values.
 After injecting the `typetracer` code, calls to the function, `f`, will
 “trace” each parameter of the function, by capturing both unevaluated
 and evaluated representation at the point at which the function is first
-called. These values can be accessed with the `load_traces` function,
+called. These values can be accessed with [the `load_traces`
+function](https://mpadge.github.io/typetracer/reference/load_traces.html),
 which returns a `data.frame` object (in [`tibble`
 format](https://tibble.tidyverse.org) with one row for each parameter
 from each function call.
@@ -52,12 +55,12 @@ from each function call.
     ## # A tibble: 6 × 9
     ##   fn_name fn_call_hash par_name class     storage_mode length formal      uneval
     ##   <chr>   <chr>        <chr>    <I<list>> <chr>         <int> <named lis> <I<li>
-    ## 1 f       Aio6RZb2     x        <chr [1]> integer           2 <missing>   <chr> 
-    ## 2 f       Aio6RZb2     y        <chr [1]> double            2 <missing>   <chr> 
-    ## 3 f       Aio6RZb2     z        <chr [1]> NULL              0 <missing>   <chr> 
-    ## 4 f       Aio6RZb2     ...      <chr [1]> NULL              0 <missing>   <chr> 
-    ## 5 f       Aio6RZb2     a        <chr [1]> character         1 <NULL>      <chr> 
-    ## 6 f       Aio6RZb2     b        <chr [1]> list              2 <NULL>      <chr> 
+    ## 1 f       ov85cLpl     x        <chr [1]> integer           2 <missing>   <chr> 
+    ## 2 f       ov85cLpl     y        <chr [1]> double            2 <missing>   <chr> 
+    ## 3 f       ov85cLpl     z        <chr [1]> NULL              0 <missing>   <chr> 
+    ## 4 f       ov85cLpl     ...      <chr [1]> NULL              0 <missing>   <chr> 
+    ## 5 f       ov85cLpl     a        <chr [1]> character         1 <NULL>      <chr> 
+    ## 6 f       ov85cLpl     b        <chr [1]> list              2 <NULL>      <chr> 
     ## # … with 1 more variable: eval <I<list>>
 
 That results shows that all parameters of the function, `f()`, were
@@ -87,10 +90,13 @@ they are not part of the formal arguments to the function.
     ## [1] "b"
 
 Traces themselves are saved in the temporary directory of the current R
-session, and the `load_traces()` function simple loads all traces
-created in that session. The function `clear_traces()` removes all
-traces, so that `load_traces()` will only load new traces produced after
-that time.
+session, and [the `load_traces()`
+function](https://mpadge.github.io/typetracer/reference/load_traces.html)
+simply loads all traces created in that session. [The function
+`clear_traces()`](https://mpadge.github.io/typetracer/reference/clear_traces.html)
+removes all traces, so that
+[`load_traces()`](https://mpadge.github.io/typetracer/reference/load_traces.html)
+will only load new traces produced after that time.
 
 ## Example \#2 - Tracing a Package
 
@@ -98,9 +104,11 @@ This section presents a more complex example tracing all function calls
 from [the `rematch` package](https://github.com/MangoTheCat/rematch),
 chosen because it has less code than almost any other package on CRAN.
 The following single line traces function calls in all examples for the
-nominated package. The `trace_package()` function automatically injects
-tracing code into every function within the package, so there is no need
-to explicitly call the `inject_tracer()` function.
+nominated package. [The `trace_package()`
+function](https://mpadge.github.io/typetracer/reference/trace_package.html)
+automatically injects tracing code into every function within the
+package, so there is no need to explicitly call [the `inject_tracer()`
+function](https://mpadge.github.io/typetracer/reference/inject_tracer).
 
     res <- trace_package ("rematch")
     res
@@ -108,19 +116,20 @@ to explicitly call the `inject_tracer()` function.
     ## # A tibble: 8 × 9
     ##   fn_name  fn_call_hash par_name class     storage_mode length formal     uneval
     ##   <chr>    <chr>        <chr>    <I<list>> <chr>         <int> <named li> <I<li>
-    ## 1 re_match V0I368y1     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 2 re_match V0I368y1     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 3 re_match V0I368y1     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 4 re_match V0I368y1     ...      <chr [1]> NULL              0 <missing>  <chr> 
-    ## 5 re_match SGUfFXh6     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 6 re_match SGUfFXh6     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 7 re_match SGUfFXh6     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 8 re_match SGUfFXh6     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 1 re_match DZp0IjSm     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 2 re_match DZp0IjSm     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 3 re_match DZp0IjSm     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 4 re_match DZp0IjSm     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 5 re_match OKLbR8U1     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 6 re_match OKLbR8U1     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 7 re_match OKLbR8U1     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 8 re_match OKLbR8U1     ...      <chr [1]> NULL              0 <missing>  <chr> 
     ## # … with 1 more variable: eval <I<list>>
 
 The result contains one line for every parameter passed to every
-function call in the examples. The `trace_package()` function also
-includes an additional parameter, `types`, which defaults to
+function call in the examples. [The `trace_package()`
+function](https://mpadge.github.io/typetracer/reference/trace_package.html)
+also includes an additional parameter, `types`, which defaults to
 `c ("examples", "tests")`, so that traces are also by default generated
 for all tests included with local source packages.
 
@@ -131,7 +140,7 @@ demonstrate the difference:
     res$uneval [1:2]
 
     ## $pattern
-    ## [1] "isodaten"
+    ## [1] "isodate"
     ## 
     ## $text
     ## [1] "dates"
@@ -139,7 +148,7 @@ demonstrate the difference:
     res$eval [1:2]
 
     ## $pattern
-    ## [1] "(?<year>[0-9]{4})-(?<month>[0-1][0-9])-(?<day>[0-3][0-9])"
+    ## [1] "([0-9]{4})-([0-1][0-9])-([0-3][0-9])"
     ## 
     ## $text
     ## [1] "2016-04-20"       "1977-08-08"       "not a date"       "2016"            
@@ -232,7 +241,7 @@ unevaluated version, while evaluated versions remain identical.
     ## 
     ## $z
     ## y ~ x
-    ## <environment: 0x558b881577d0>
+    ## <environment: 0x56481889cd70>
 
 The traces produced by `typetracer` also include a column, `formal`,
 which contains the default values specified in the definition of

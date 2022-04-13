@@ -41,9 +41,10 @@ library (typetracer)
 ## Example #1 - A Single Function
 
 `typetracer` works by "injecting" tracing code into the body of a function
-using the `inject_tracer()` function. The following function includes four
-parameters, including `...` to allow passing of additional and entirely
-arbitrary parameter types and values.
+using [the `inject_tracer()`
+function](https://mpadge.github.io/typetracer/reference/inject_tracer.html).
+The following function includes four parameters, including `...` to allow
+passing of additional and entirely arbitrary parameter types and values.
 
 ```{r inject}
 f <- function (x, y, z, ...) {
@@ -55,9 +56,11 @@ inject_tracer (f)
 After injecting the `typetracer` code, calls to the function, `f`, will "trace"
 each parameter of the function, by capturing both unevaluated and evaluated
 representation at the point at which the function is first called. These values
-can be accessed with the `load_traces` function, which returns a `data.frame`
-object (in [`tibble` format](https://tibble.tidyverse.org) with one row for
-each parameter from each function call.
+can be accessed with [the `load_traces`
+function](https://mpadge.github.io/typetracer/reference/load_traces.html),
+which returns a `data.frame` object (in [`tibble`
+format](https://tibble.tidyverse.org) with one row for each parameter from each
+function call.
 
 ```{r trace1}
 val <- f (x = 1:2, y = 3:4 + 0., a = "blah", b = list (a = 1, b = "b"))
@@ -77,19 +80,26 @@ x$eval [x$par_name %in% c ("a", "b")]
 ```
 
 Traces themselves are saved in the temporary directory of the current R
-session, and the `load_traces()` function simple loads all traces created in
-that session. The function `clear_traces()` removes all traces, so that
-`load_traces()` will only load new traces produced after that time.
+session, and [the `load_traces()`
+function](https://mpadge.github.io/typetracer/reference/load_traces.html)
+simply loads all traces created in that session. [The function
+`clear_traces()`](https://mpadge.github.io/typetracer/reference/clear_traces.html)
+removes all traces, so that
+[`load_traces()`](https://mpadge.github.io/typetracer/reference/load_traces.html)
+will only load new traces produced after that time.
 
 ## Example #2 - Tracing a Package
 
 This section presents a more complex example tracing all function calls from
 [the `rematch` package](https://github.com/MangoTheCat/rematch), chosen because
 it has less code than almost any other package on CRAN. The following single
-line traces function calls in all examples for the nominated package. The
-`trace_package()` function automatically injects tracing code into every
-function within the package, so there is no need to explicitly call the
-`inject_tracer()` function.
+line traces function calls in all examples for the nominated package. [The
+`trace_package()`
+function](https://mpadge.github.io/typetracer/reference/trace_package.html)
+automatically injects tracing code into every
+function within the package, so there is no need to explicitly call [the
+`inject_tracer()`
+function](https://mpadge.github.io/typetracer/reference/inject_tracer).
 
 ```{r trace-rematch, message = FALSE}
 res <- trace_package ("rematch")
@@ -97,10 +107,11 @@ res
 ```
 
 The result contains one line for every parameter passed to every function call
-in the examples. The `trace_package()` function also includes an additional
-parameter, `types`, which defaults to `c ("examples", "tests")`, so that traces
-are also by default generated for all tests included with local source
-packages.
+in the examples. [The `trace_package()`
+function](https://mpadge.github.io/typetracer/reference/trace_package.html)
+also includes an additional parameter, `types`, which defaults to `c
+("examples", "tests")`, so that traces are also by default generated for all
+tests included with local source packages.
 
 The final two columns of the result hold the unevaluated and evaluated
 representations of each parameter. The first two values of each demonstrate the
