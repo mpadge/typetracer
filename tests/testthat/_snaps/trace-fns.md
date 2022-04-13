@@ -19,12 +19,18 @@
           typetracer_env$par_formals <- formals(typetracer_env$fn)
           typetracer_env$get_str <- function(x, max.length = 1000L) {
               r <- tryCatch(format(x), error = function(e) e)
-              r <- if (inherits(r, "error")) 
+              r <- if (inherits(r, "error")) {
                   tryCatch(as.character(x), error = function(e) e)
-              else paste(r, collapse = " ")
-              r <- if (inherits(r, "error")) 
+              }
+              else {
+                  paste(r, collapse = " ")
+              }
+              r <- if (inherits(r, "error")) {
                   tryCatch(utils::capture.output(x), error = function(e) e)
-              else paste(r, collapse = " ")
+              }
+              else {
+                  paste(r, collapse = " ")
+              }
               substr(r, 1L, max.length)
           }
           typetracer_env$data <- lapply(typetracer_env$par_names, function(p) {

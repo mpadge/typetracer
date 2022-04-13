@@ -14,9 +14,12 @@ get_types <- function () {
     # temp file to dump trace:
     typetracer_env$td <- options ("typetracedir")
     typetracer_env$nm <- paste0 (sample (c (letters, LETTERS), 8),
-                                 collapse = "")
-    typetracer_env$fname <- file.path (typetracer_env$td,
-        paste0 ("typetrace_", typetracer_env$nm, ".Rds"))
+        collapse = ""
+    )
+    typetracer_env$fname <- file.path (
+        typetracer_env$td,
+        paste0 ("typetrace_", typetracer_env$nm, ".Rds")
+    )
 
     # Extract values. `match.call` returns the *expressions* submitted to the
     # call, while the evaluated versions of formalArgs are stored in the
@@ -34,15 +37,19 @@ get_types <- function () {
 
     # Return structure of parameters as character strings
     # https://rpubs.com/maechler/R_language_objs
-    typetracer_env$get_str <- function (x, max.length= 1000L) {
+    typetracer_env$get_str <- function (x, max.length = 1000L) {
 
         r <- tryCatch (format (x), error = function (e) e)
-        r <- if (inherits (r, "error"))
-                 tryCatch (as.character (x), error = function (e) e)
-             else paste (r, collapse = " ")
-        r <- if (inherits (r, "error"))
-                 tryCatch (utils::capture.output (x), error = function (e) e)
-             else paste (r, collapse = " ")
+        r <- if (inherits (r, "error")) {
+            tryCatch (as.character (x), error = function (e) e)
+        } else {
+            paste (r, collapse = " ")
+        }
+        r <- if (inherits (r, "error")) {
+            tryCatch (utils::capture.output (x), error = function (e) e)
+        } else {
+            paste (r, collapse = " ")
+        }
         substr (r, 1L, max.length)
     }
 
@@ -54,14 +61,16 @@ get_types <- function () {
         if (p %in% ls (fn_env)) {
             res <- tryCatch (
                 get (p, envir = fn_env, inherits = FALSE),
-                error = function (e) NULL)
+                error = function (e) NULL
+            )
         }
 
         # non-standard evaluation:
         if (is.null (res)) {
             res <- tryCatch (
                 eval (typetracer_env$pars [[p]], envir = fn_env),
-                error = function (e) NULL)
+                error = function (e) NULL
+            )
         }
         s <- "NULL"
         if (!is.null (res)) {
@@ -74,12 +83,14 @@ get_types <- function () {
             }
         }
 
-        list (par = p,
-              class = class (res),
-              storage_mode = storage.mode (res),
-              length = length (res),
-              par_uneval = s,
-              par_eval = res)
+        list (
+            par = p,
+            class = class (res),
+            storage_mode = storage.mode (res),
+            length = length (res),
+            par_uneval = s,
+            par_eval = res
+        )
 
     })
 
