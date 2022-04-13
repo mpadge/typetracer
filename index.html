@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">typetracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.069</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.070</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,12 +73,12 @@
 <div class="section level2">
 <h2 id="example-1---a-single-function">Example #1 - A Single Function<a class="anchor" aria-label="anchor" href="#example-1---a-single-function"></a>
 </h2>
-<p><code>typetracer</code> works by “injecting” tracing code into the body of a function using the <code><a href="reference/inject_tracer.html">inject_tracer()</a></code> function. The following function includes four parameters, including <code>...</code> to allow passing of additional and entirely arbitrary parameter types and values.</p>
+<p><code>typetracer</code> works by “injecting” tracing code into the body of a function using <a href="https://mpadge.github.io/typetracer/reference/inject_tracer.html">the <code>inject_tracer()</code> function</a>. The following function includes four parameters, including <code>...</code> to allow passing of additional and entirely arbitrary parameter types and values.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>f &lt;-<span class="st"> </span><span class="cf">function</span> (x, y, z, ...) {</span>
 <span id="cb3-2"><a href="#cb3-2"></a>    x <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>y <span class="op">*</span><span class="st"> </span>y</span>
 <span id="cb3-3"><a href="#cb3-3"></a>}</span>
 <span id="cb3-4"><a href="#cb3-4"></a><span class="kw">inject_tracer</span> (f)</span></code></pre></div>
-<p>After injecting the <code>typetracer</code> code, calls to the function, <code>f</code>, will “trace” each parameter of the function, by capturing both unevaluated and evaluated representation at the point at which the function is first called. These values can be accessed with the <code>load_traces</code> function, which returns a <code>data.frame</code> object (in <a href="https://tibble.tidyverse.org" class="external-link"><code>tibble</code> format</a> with one row for each parameter from each function call.</p>
+<p>After injecting the <code>typetracer</code> code, calls to the function, <code>f</code>, will “trace” each parameter of the function, by capturing both unevaluated and evaluated representation at the point at which the function is first called. These values can be accessed with <a href="https://mpadge.github.io/typetracer/reference/load_traces.html">the <code>load_traces</code> function</a>, which returns a <code>data.frame</code> object (in <a href="https://tibble.tidyverse.org" class="external-link"><code>tibble</code> format</a> with one row for each parameter from each function call.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>val &lt;-<span class="st"> </span><span class="kw">f</span> (<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">y =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.</span>, <span class="dt">a =</span> <span class="st">"blah"</span>, <span class="dt">b =</span> <span class="kw">list</span> (<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="st">"b"</span>))</span>
 <span id="cb4-2"><a href="#cb4-2"></a>x &lt;-<span class="st"> </span><span class="kw">load_traces</span> ()</span>
 <span id="cb4-3"><a href="#cb4-3"></a>x</span>
@@ -86,12 +86,12 @@
 <span id="cb4-5"><a href="#cb4-5"></a><span class="co">## # A tibble: 6 × 9</span></span>
 <span id="cb4-6"><a href="#cb4-6"></a><span class="co">##   fn_name fn_call_hash par_name class     storage_mode length formal      uneval</span></span>
 <span id="cb4-7"><a href="#cb4-7"></a><span class="co">##   &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;list&gt;&gt; &lt;chr&gt;         &lt;int&gt; &lt;named lis&gt; &lt;I&lt;li&gt;</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co">## 1 f       Aio6RZb2     x        &lt;chr [1]&gt; integer           2 &lt;missing&gt;   &lt;chr&gt; </span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co">## 2 f       Aio6RZb2     y        &lt;chr [1]&gt; double            2 &lt;missing&gt;   &lt;chr&gt; </span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co">## 3 f       Aio6RZb2     z        &lt;chr [1]&gt; NULL              0 &lt;missing&gt;   &lt;chr&gt; </span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">## 4 f       Aio6RZb2     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;   &lt;chr&gt; </span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co">## 5 f       Aio6RZb2     a        &lt;chr [1]&gt; character         1 &lt;NULL&gt;      &lt;chr&gt; </span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">## 6 f       Aio6RZb2     b        &lt;chr [1]&gt; list              2 &lt;NULL&gt;      &lt;chr&gt; </span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">## 1 f       ov85cLpl     x        &lt;chr [1]&gt; integer           2 &lt;missing&gt;   &lt;chr&gt; </span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">## 2 f       ov85cLpl     y        &lt;chr [1]&gt; double            2 &lt;missing&gt;   &lt;chr&gt; </span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">## 3 f       ov85cLpl     z        &lt;chr [1]&gt; NULL              0 &lt;missing&gt;   &lt;chr&gt; </span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">## 4 f       ov85cLpl     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;   &lt;chr&gt; </span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">## 5 f       ov85cLpl     a        &lt;chr [1]&gt; character         1 &lt;NULL&gt;      &lt;chr&gt; </span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">## 6 f       ov85cLpl     b        &lt;chr [1]&gt; list              2 &lt;NULL&gt;      &lt;chr&gt; </span></span>
 <span id="cb4-14"><a href="#cb4-14"></a><span class="co">## # … with 1 more variable: eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
 <p>That results shows that all parameters of the function, <code>f()</code>, were successfully traced, including the additional parameters, <code>a</code> and <code>b</code>, passed as part of the <code>...</code> argument. Such additional parameters can be identified through having a <code>"formal"</code> entry of <code>NULL</code>, indicating that they are not part of the formal arguments to the function.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>x<span class="op">$</span>uneval [x<span class="op">$</span>par_name <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span> (<span class="st">"a"</span>, <span class="st">"b"</span>)]</span>
@@ -113,33 +113,33 @@
 <span id="cb5-17"><a href="#cb5-17"></a><span class="co">## </span></span>
 <span id="cb5-18"><a href="#cb5-18"></a><span class="co">## $b$b</span></span>
 <span id="cb5-19"><a href="#cb5-19"></a><span class="co">## [1] "b"</span></span></code></pre></div>
-<p>Traces themselves are saved in the temporary directory of the current R session, and the <code><a href="reference/load_traces.html">load_traces()</a></code> function simple loads all traces created in that session. The function <code><a href="reference/clear_traces.html">clear_traces()</a></code> removes all traces, so that <code><a href="reference/load_traces.html">load_traces()</a></code> will only load new traces produced after that time.</p>
+<p>Traces themselves are saved in the temporary directory of the current R session, and <a href="https://mpadge.github.io/typetracer/reference/load_traces.html">the <code>load_traces()</code> function</a> simply loads all traces created in that session. <a href="https://mpadge.github.io/typetracer/reference/clear_traces.html">The function <code>clear_traces()</code></a> removes all traces, so that <a href="https://mpadge.github.io/typetracer/reference/load_traces.html"><code>load_traces()</code></a> will only load new traces produced after that time.</p>
 </div>
 <div class="section level2">
 <h2 id="example-2---tracing-a-package">Example #2 - Tracing a Package<a class="anchor" aria-label="anchor" href="#example-2---tracing-a-package"></a>
 </h2>
-<p>This section presents a more complex example tracing all function calls from <a href="https://github.com/MangoTheCat/rematch" class="external-link">the <code>rematch</code> package</a>, chosen because it has less code than almost any other package on CRAN. The following single line traces function calls in all examples for the nominated package. The <code><a href="reference/trace_package.html">trace_package()</a></code> function automatically injects tracing code into every function within the package, so there is no need to explicitly call the <code><a href="reference/inject_tracer.html">inject_tracer()</a></code> function.</p>
+<p>This section presents a more complex example tracing all function calls from <a href="https://github.com/MangoTheCat/rematch" class="external-link">the <code>rematch</code> package</a>, chosen because it has less code than almost any other package on CRAN. The following single line traces function calls in all examples for the nominated package. <a href="https://mpadge.github.io/typetracer/reference/trace_package.html">The <code>trace_package()</code> function</a> automatically injects tracing code into every function within the package, so there is no need to explicitly call <a href="https://mpadge.github.io/typetracer/reference/inject_tracer">the <code>inject_tracer()</code> function</a>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>res &lt;-<span class="st"> </span><span class="kw">trace_package</span> (<span class="st">"rematch"</span>)</span>
 <span id="cb6-2"><a href="#cb6-2"></a>res</span>
 <span id="cb6-3"><a href="#cb6-3"></a></span>
 <span id="cb6-4"><a href="#cb6-4"></a><span class="co">## # A tibble: 8 × 9</span></span>
 <span id="cb6-5"><a href="#cb6-5"></a><span class="co">##   fn_name  fn_call_hash par_name class     storage_mode length formal     uneval</span></span>
 <span id="cb6-6"><a href="#cb6-6"></a><span class="co">##   &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;list&gt;&gt; &lt;chr&gt;         &lt;int&gt; &lt;named li&gt; &lt;I&lt;li&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co">## 1 re_match V0I368y1     pattern  &lt;chr [1]&gt; character         1 &lt;missing&gt;  &lt;chr&gt; </span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co">## 2 re_match V0I368y1     text     &lt;chr [1]&gt; character         7 &lt;missing&gt;  &lt;chr&gt; </span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="co">## 3 re_match V0I368y1     perl     &lt;chr [1]&gt; logical           1 &lt;lgl [1]&gt;  &lt;chr&gt; </span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">## 4 re_match V0I368y1     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;  &lt;chr&gt; </span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">## 5 re_match SGUfFXh6     pattern  &lt;chr [1]&gt; character         1 &lt;missing&gt;  &lt;chr&gt; </span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="co">## 6 re_match SGUfFXh6     text     &lt;chr [1]&gt; character         7 &lt;missing&gt;  &lt;chr&gt; </span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="co">## 7 re_match SGUfFXh6     perl     &lt;chr [1]&gt; logical           1 &lt;lgl [1]&gt;  &lt;chr&gt; </span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="co">## 8 re_match SGUfFXh6     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">## 1 re_match DZp0IjSm     pattern  &lt;chr [1]&gt; character         1 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">## 2 re_match DZp0IjSm     text     &lt;chr [1]&gt; character         7 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co">## 3 re_match DZp0IjSm     perl     &lt;chr [1]&gt; logical           1 &lt;lgl [1]&gt;  &lt;chr&gt; </span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">## 4 re_match DZp0IjSm     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">## 5 re_match OKLbR8U1     pattern  &lt;chr [1]&gt; character         1 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">## 6 re_match OKLbR8U1     text     &lt;chr [1]&gt; character         7 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">## 7 re_match OKLbR8U1     perl     &lt;chr [1]&gt; logical           1 &lt;lgl [1]&gt;  &lt;chr&gt; </span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">## 8 re_match OKLbR8U1     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;  &lt;chr&gt; </span></span>
 <span id="cb6-15"><a href="#cb6-15"></a><span class="co">## # … with 1 more variable: eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
-<p>The result contains one line for every parameter passed to every function call in the examples. The <code><a href="reference/trace_package.html">trace_package()</a></code> function also includes an additional parameter, <code>types</code>, which defaults to <code>c ("examples", "tests")</code>, so that traces are also by default generated for all tests included with local source packages.</p>
+<p>The result contains one line for every parameter passed to every function call in the examples. <a href="https://mpadge.github.io/typetracer/reference/trace_package.html">The <code>trace_package()</code> function</a> also includes an additional parameter, <code>types</code>, which defaults to <code>c ("examples", "tests")</code>, so that traces are also by default generated for all tests included with local source packages.</p>
 <p>The final two columns of the result hold the unevaluated and evaluated representations of each parameter. The first two values of each demonstrate the difference:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>res<span class="op">$</span>uneval [<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span>
 <span id="cb7-2"><a href="#cb7-2"></a></span>
 <span id="cb7-3"><a href="#cb7-3"></a><span class="co">## $pattern</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="co">## [1] "isodaten"</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">## [1] "isodate"</span></span>
 <span id="cb7-5"><a href="#cb7-5"></a><span class="co">## </span></span>
 <span id="cb7-6"><a href="#cb7-6"></a><span class="co">## $text</span></span>
 <span id="cb7-7"><a href="#cb7-7"></a><span class="co">## [1] "dates"</span></span>
@@ -147,7 +147,7 @@
 <span id="cb7-9"><a href="#cb7-9"></a>res<span class="op">$</span>eval [<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span>
 <span id="cb7-10"><a href="#cb7-10"></a></span>
 <span id="cb7-11"><a href="#cb7-11"></a><span class="co">## $pattern</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a><span class="co">## [1] "(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;[0-1][0-9])-(?&lt;day&gt;[0-3][0-9])"</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="co">## [1] "([0-9]{4})-([0-1][0-9])-([0-3][0-9])"</span></span>
 <span id="cb7-13"><a href="#cb7-13"></a><span class="co">## </span></span>
 <span id="cb7-14"><a href="#cb7-14"></a><span class="co">## $text</span></span>
 <span id="cb7-15"><a href="#cb7-15"></a><span class="co">## [1] "2016-04-20"       "1977-08-08"       "not a date"       "2016"            </span></span>
@@ -225,7 +225,7 @@
 <span id="cb9-34"><a href="#cb9-34"></a><span class="co">## </span></span>
 <span id="cb9-35"><a href="#cb9-35"></a><span class="co">## $z</span></span>
 <span id="cb9-36"><a href="#cb9-36"></a><span class="co">## y ~ x</span></span>
-<span id="cb9-37"><a href="#cb9-37"></a><span class="co">## &lt;environment: 0x558b881577d0&gt;</span></span></code></pre></div>
+<span id="cb9-37"><a href="#cb9-37"></a><span class="co">## &lt;environment: 0x56481889cd70&gt;</span></span></code></pre></div>
 <p>The traces produced by <code>typetracer</code> also include a column, <code>formal</code>, which contains the default values specified in the definition of <code>eval_x_late_standard()</code>:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>res<span class="op">$</span>formal</span>
 <span id="cb10-2"><a href="#cb10-2"></a></span>
