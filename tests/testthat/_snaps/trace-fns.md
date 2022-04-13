@@ -17,6 +17,13 @@
           typetracer_env$fn <- match.fun(typetracer_env$fn_name)
           typetracer_env$par_names <- methods::formalArgs(typetracer_env$fn)
           typetracer_env$par_formals <- formals(typetracer_env$fn)
+          if ("..." %in% typetracer_env$par_names) {
+              typetracer_env$dot_names <- names(typetracer_env$fn_call)
+              typetracer_env$dot_names <- typetracer_env$dot_names[which(nzchar(typetracer_env$dot_names) & 
+                  !typetracer_env$dot_names %in% typetracer_env$par_names)]
+              typetracer_env$par_names <- c(typetracer_env$par_names, 
+                  typetracer_env$dot_names)
+          }
           typetracer_env$get_str <- function(x, max.length = 1000L) {
               r <- tryCatch(format(x), error = function(e) e)
               r <- if (inherits(r, "error")) {

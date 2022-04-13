@@ -66,7 +66,7 @@ load_traces <- function (quiet = FALSE) {
     rownames (out) <- NULL
 
     names (out$par_name) <- NULL
-    names (out$uneval) <- names (out$eval) <- out$par_name
+    names (out$formal) <- names (out$uneval) <- names (out$eval) <- out$par_name
 
     return (out)
 }
