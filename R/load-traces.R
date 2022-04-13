@@ -23,17 +23,24 @@ load_traces <- function (quiet = FALSE) {
         par_formals <- tr_i$formals
         tr_i <- tr_i [which (!names (tr_i) %in% c ("fn_name", "formals"))]
 
-        fn_call_hash <- paste0 (sample (c (letters,
-                                           LETTERS,
-                                           0:9),
-                                        size = 8),
-                                collapse = "")
+        fn_call_hash <- paste0 (sample (c (
+            letters,
+            LETTERS,
+            0:9
+        ),
+        size = 8
+        ),
+        collapse = ""
+        )
 
         # simple vector columns:
         par_name <- vapply (tr_i, function (i) i$par, character (1))
-        storage_mode <- vapply (tr_i, function (i)
-                                i$storage_mode,
-                                character (1))
+        storage_mode <- vapply (
+            tr_i, function (i) {
+                i$storage_mode
+            },
+            character (1)
+        )
         len <- vapply (tr_i, function (i) i$length, integer (1))
         fmls <- par_formals [match (par_name, names (par_formals))]
         # list-columns:
@@ -50,8 +57,9 @@ load_traces <- function (quiet = FALSE) {
             length = len,
             formal = fmls,
             uneval = par_uneval,
-            eval = par_eval)
-        })
+            eval = par_eval
+        )
+    })
 
     out <- do.call (rbind, out)
     out <- out [order (out$fn_name), ]

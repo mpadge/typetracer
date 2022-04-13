@@ -15,7 +15,8 @@ trace_package <- function (package = NULL,
                            pkg_dir = NULL) {
 
     types <- match.arg (types, c ("examples", "tests"),
-                        several.ok = TRUE)
+        several.ok = TRUE
+    )
 
     checkmate::assert_character (package)
     checkmate::assert_scalar (package)
@@ -30,10 +31,12 @@ trace_package <- function (package = NULL,
     if (!pkg_attached) {
         ip <- data.frame (utils::installed.packages ())
         if (!package %in% ip$Package) {
-            stop ("Package '", package, "' is not installed. Please ",
-                  "install locally, or use 'devtools::load_all()' ",
-                  "before calling 'trace_package()'",
-                  call. = FALSE)
+            stop (
+                "Package '", package, "' is not installed. Please ",
+                "install locally, or use 'devtools::load_all()' ",
+                "before calling 'trace_package()'",
+                call. = FALSE
+            )
         }
         attachNamespace (package)
     }
@@ -53,8 +56,10 @@ trace_package <- function (package = NULL,
         res <- trace_package_exs (package)
     }
     if ("tests" %in% types) {
-        res <- c (res,
-                  trace_package_tests (package, pkg_dir))
+        res <- c (
+            res,
+            trace_package_tests (package, pkg_dir)
+        )
     }
 
     traces <- load_traces (quiet = TRUE)
@@ -88,7 +93,8 @@ trace_package_exs <- function (package) {
     o <- suppressWarnings (
         out <- tryCatch (
             eval (parse (text = exs)),
-            error = function (e) NULL)
+            error = function (e) NULL
+        )
     )
     options (device = dev)
 }
@@ -112,8 +118,10 @@ trace_package_tests <- function (package, pkg_dir = NULL) {
         return (list ()) # test_check returns list
     }
 
-    withr::with_dir (test_dir,
-                     testthat::test_check (package))
+    withr::with_dir (
+        test_dir,
+        testthat::test_check (package)
+    )
 }
 
 get_pkg_examples <- function (package) {
@@ -135,18 +143,23 @@ get_pkg_examples <- function (package) {
             return (NULL)
         }
 
-        man_files <- list.files (file.path (path, "man"),
-                                 full.names = TRUE,
-                                 pattern = "\\.Rd$")
+        man_files <- list.files (
+            file.path (path, "man"),
+            full.names = TRUE,
+            pattern = "\\.Rd$"
+        )
         rd <- lapply (man_files, tools::parse_Rd)
         # nocov end
     }
 
     has_exs <- vapply (rd, function (i) {
-                out <- vapply (i, function (j)
-                        any (attr (j, "Rd_tag") == "\\examples"),
-                        logical (1))
-                any (out)
+        out <- vapply (
+            i, function (j) {
+                any (attr (j, "Rd_tag") == "\\examples")
+            },
+            logical (1)
+        )
+        any (out)
     }, logical (1))
 
     exs <- lapply (rd [which (has_exs)], function (i) {
@@ -158,10 +171,15 @@ get_pkg_examples <- function (package) {
     })
 
     nm_ptn <- "^\\#\\#\\#\\sName\\:\\s"
-    nms <- vapply (exs, function (i)
-                       gsub (nm_ptn, "",
-                             grep (nm_ptn, i, value = TRUE) [1]),
-                   character (1))
+    nms <- vapply (
+        exs, function (i) {
+            gsub (
+                nm_ptn, "",
+                grep (nm_ptn, i, value = TRUE) [1]
+            )
+        },
+        character (1)
+    )
     names (exs) <- nms
 
     return (exs)

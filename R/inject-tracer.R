@@ -39,16 +39,22 @@ inject_tracer <- function (f) {
 
 cache_file_name <- function (f, f_name) {
 
-    cache_dir <- file.path (getOption ("typetracedir"),
-                            "fn_bodies")
+    cache_dir <- file.path (
+        getOption ("typetracedir"),
+        "fn_bodies"
+    )
     if (!dir.exists (cache_dir)) {
         dir.create (cache_dir, recursive = TRUE)
     }
 
-    file.path (cache_dir,
-               paste0 ("typetrace--",
-                       f_name,
-                       ".Rds"))
+    file.path (
+        cache_dir,
+        paste0 (
+            "typetrace--",
+            f_name,
+            ".Rds"
+        )
+    )
 }
 
 
