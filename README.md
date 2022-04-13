@@ -47,6 +47,44 @@ from each function call.
 
     val <- f (x = 1:2, y = 3:4 + 0., a = "blah", b = list (a = 1, b = "b"))
     x <- load_traces ()
+    x
+
+    ## # A tibble: 6 × 9
+    ##   fn_name fn_call_hash par_name class     storage_mode length formal      uneval
+    ##   <chr>   <chr>        <chr>    <I<list>> <chr>         <int> <named lis> <I<li>
+    ## 1 f       Aio6RZb2     x        <chr [1]> integer           2 <missing>   <chr> 
+    ## 2 f       Aio6RZb2     y        <chr [1]> double            2 <missing>   <chr> 
+    ## 3 f       Aio6RZb2     z        <chr [1]> NULL              0 <missing>   <chr> 
+    ## 4 f       Aio6RZb2     ...      <chr [1]> NULL              0 <missing>   <chr> 
+    ## 5 f       Aio6RZb2     a        <chr [1]> character         1 <NULL>      <chr> 
+    ## 6 f       Aio6RZb2     b        <chr [1]> list              2 <NULL>      <chr> 
+    ## # … with 1 more variable: eval <I<list>>
+
+That results shows that all parameters of the function, `f()`, were
+successfully traced, including the additional parameters, `a` and `b`,
+passed as part of the `...` argument. Such additional parameters can be
+identified through having a `"formal"` entry of `NULL`, indicating that
+they are not part of the formal arguments to the function.
+
+    x$uneval [x$par_name %in% c ("a", "b")]
+
+    ## $a
+    ## [1] "blah"
+    ## 
+    ## $b
+    ## [1] "list(a = 1, b = \"b\")"
+
+    x$eval [x$par_name %in% c ("a", "b")]
+
+    ## $a
+    ## [1] "blah"
+    ## 
+    ## $b
+    ## $b$a
+    ## [1] 1
+    ## 
+    ## $b$b
+    ## [1] "b"
 
 Traces themselves are saved in the temporary directory of the current R
 session, and the `load_traces()` function simple loads all traces
@@ -70,14 +108,14 @@ to explicitly call the `inject_tracer()` function.
     ## # A tibble: 8 × 9
     ##   fn_name  fn_call_hash par_name class     storage_mode length formal     uneval
     ##   <chr>    <chr>        <chr>    <I<list>> <chr>         <int> <named li> <I<li>
-    ## 1 re_match yVqgsc2Z     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 2 re_match yVqgsc2Z     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 3 re_match yVqgsc2Z     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 4 re_match yVqgsc2Z     ...      <chr [1]> NULL              0 <missing>  <chr> 
-    ## 5 re_match UmNqvcDn     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 6 re_match UmNqvcDn     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 7 re_match UmNqvcDn     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 8 re_match UmNqvcDn     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 1 re_match V0I368y1     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 2 re_match V0I368y1     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 3 re_match V0I368y1     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 4 re_match V0I368y1     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 5 re_match SGUfFXh6     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 6 re_match SGUfFXh6     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 7 re_match SGUfFXh6     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 8 re_match SGUfFXh6     ...      <chr [1]> NULL              0 <missing>  <chr> 
     ## # … with 1 more variable: eval <I<list>>
 
 The result contains one line for every parameter passed to every
@@ -194,7 +232,7 @@ unevaluated version, while evaluated versions remain identical.
     ## 
     ## $z
     ## y ~ x
-    ## <environment: 0x56431593f748>
+    ## <environment: 0x558b881577d0>
 
 The traces produced by `typetracer` also include a column, `formal`,
 which contains the default values specified in the definition of

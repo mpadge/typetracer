@@ -62,6 +62,18 @@ each parameter from each function call.
 ```{r trace1}
 val <- f (x = 1:2, y = 3:4 + 0., a = "blah", b = list (a = 1, b = "b"))
 x <- load_traces ()
+x
+```
+
+That results shows that all parameters of the function, `f()`, were
+successfully traced, including the additional parameters, `a` and `b`, passed
+as part of the `...` argument. Such additional parameters can be identified
+through having a `"formal"` entry of `NULL`, indicating that they are not part
+of the formal arguments to the function.
+
+```{r}
+x$uneval [x$par_name %in% c ("a", "b")]
+x$eval [x$par_name %in% c ("a", "b")]
 ```
 
 Traces themselves are saved in the temporary directory of the current R
