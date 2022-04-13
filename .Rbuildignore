@@ -12,3 +12,6 @@
 ^\.hooks$
 ^codemeta\.json$
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

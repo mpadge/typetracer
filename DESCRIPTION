@@ -1,6 +1,6 @@
 Package: typetracer
 Title: Trace Function Parameter Types
-Version: 0.0.1.068
+Version: 0.0.1.069
 Authors@R: c(
     person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2172-5265")),
@@ -9,7 +9,8 @@ Authors@R: c(
   )
 Description: Trace function parameter types.
 License: MIT + file LICENSE
-URL: https://github.com/mpadge/typetracer
+URL: https://github.com/mpadge/typetracer,
+    https://mpadge.github.io/typetracer/
 BugReports: https://github.com/mpadge/typetracer/issues
 Imports:
     brio,
