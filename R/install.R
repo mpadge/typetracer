@@ -2,7 +2,7 @@
 #'
 #' @param path Local path to package source
 #' @param quiet If `FALSE`, display progress information on screen.
-#' @return Path to temporary location where pacakge is installed from
+#' @return Path to temporary location where package is installed from
 #' @note Largely based on `covr` code.
 #' @noRd
 pre_install <- function (path, quiet = FALSE) {
