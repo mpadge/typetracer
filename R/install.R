@@ -1,41 +1,64 @@
 #' Pre-install package in temporary `libPath`
 #'
-#' @param path Local path to package source
+#' @param path Local path to package source.
 #' @param quiet If `FALSE`, display progress information on screen.
-#' @return Path to temporary location where package is installed from
-#' @note Largely based on `covr` code.
+#' @return Path to temporary location where package is installed from.
+#' @note The code inside `is.null(path)` is largely based on 'covr' code.
 #' @noRd
-pre_install <- function (path, quiet = FALSE) {
+pre_install <- function (package, path = NULL, quiet = FALSE) {
 
-    flag_types <- c (
-        "CFLAGS",
-        "CXXFLAGS",
-        "CXX1XFLAGS",
-        "CXX11FLAGS",
-        "CXX14FLAGS",
-        "CXX17FLAGS",
-        "CXX20FLAGS"
-    )
-    flags <- "-O0" # No compiler optimsation; strict code correctness only
-    flags <- rep (flags, length (flag_types))
-    names (flags) <- flag_types
+    p <- paste0 ("package:", package)
+    pkg_attached <- p %in% search ()
+    if (pkg_attached) {
+        unloadNamespace (package)
+        pkg_attached <- p %in% search () # FALSE
+    }
 
-    install_path <- tempfile (pattern = "R_LIBS")
-    dir.create (install_path)
+    libs <- .libPaths ()
 
-    withr::with_makevars(flags, assignment = "+=",
-        utils::install.packages(repos = NULL,
-                                lib = install_path,
-                                path,
-                                type = "source",
-                                INSTALL_opts = c("--example",
-                                                 "--install-tests",
-                                                 "--with-keep.source",
-                                                 "--with-keep.parse.data",
-                                                 "--no-staged-install",
-                                                 "--no-multiarch"),
-                                quiet = quiet)
-    )
+    if (!is.null (path)) {
 
-    return (install_path)
+        flag_types <- c (
+            "CFLAGS",
+            "CXXFLAGS",
+            "CXX1XFLAGS",
+            "CXX11FLAGS",
+            "CXX14FLAGS",
+            "CXX17FLAGS",
+            "CXX20FLAGS"
+        )
+        flags <- "-O0" # No compiler optimsation; strict code correctness only
+        flags <- rep (flags, length (flag_types))
+        names (flags) <- flag_types
+
+        install_path <- tempfile (pattern = "R_LIBS")
+        dir.create (install_path)
+
+        withr::with_makevars(flags, assignment = "+=",
+            utils::install.packages(repos = NULL,
+                                    lib = install_path,
+                                    path,
+                                    type = "source",
+                                    INSTALL_opts = c("--example",
+                                                     "--install-tests",
+                                                     "--with-keep.source",
+                                                     "--with-keep.parse.data",
+                                                     "--no-staged-install",
+                                                     "--no-multiarch"),
+                                    quiet = quiet)
+        )
+
+        libs <- c (install_path, libs)
+    }
+
+    if (!pkg_attached) { # always
+
+        lib_path <- get_pkg_lib_path (package, libs)
+        loadNamespace (package, lib.loc = lib_path, keep.source = TRUE)
+        attachNamespace (package)
+    }
+
+    lib_path <- get_pkg_lib_path (package, libs)
+
+    return (lib_path)
 }

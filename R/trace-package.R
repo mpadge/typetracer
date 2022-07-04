@@ -14,49 +14,13 @@ trace_package <- function (package = NULL,
                            types = c ("examples", "tests"),
                            pkg_dir = NULL) {
 
-    # -------- ASSERTIONS
-    types <- match.arg (types, c ("examples", "tests"),
-        several.ok = TRUE
-    )
-
-    if (!is.null (pkg_dir)) {
-
-        checkmate::assert_character (pkg_dir)
-        checkmate::assert_scalar (pkg_dir)
-        checkmate::assert_directory_exists (pkg_dir)
-
-        if (is.null (package)) {
-            package <- pkg_name_from_desc (pkg_dir)
-        }
-    }
-
-    checkmate::assert_character (package)
-    checkmate::assert_scalar (package)
+    package <- assert_trace_package_inputs (package, types, pkg_dir)
 
     # -------- PRE_INSTALLATION
-    p <- paste0 ("package:", package)
-    pkg_attached <- p %in% search ()
-    if (pkg_attached) {
-        unloadNamespace (package)
-        pkg_attached <- p %in% search () # FALSE
-    }
-
-    libs <- .libPaths ()
-    if (!is.null (pkg_dir)) {
-        install_path <- pre_install (pkg_dir)
-        libs <- c (install_path, libs)
-    }
-
-    if (!pkg_attached) { # always
-
-        lib_path <- get_pkg_lib_path (package, libs)
-        loadNamespace (package, lib.loc = lib_path, keep.source = TRUE)
-        attachNamespace (package)
-    }
-
-    lib_path <- get_pkg_lib_path (package, libs)
+    lib_path <- pre_install (package, pkg_dir, quiet = FALSE)
 
     # -------- TRACING
+    p <- paste0 ("package:", package)
     fns <- ls (p, all.names = TRUE)
     pkg_env <- as.environment (p)
     for (f in fns) {
@@ -95,6 +59,31 @@ trace_package <- function (package = NULL,
     return (traces)
 }
 
+assert_trace_package_inputs <- function (package = NULL,
+                                         types = c ("examples", "tests"),
+                                         pkg_dir = NULL) {
+
+    types <- match.arg (types, c ("examples", "tests"),
+        several.ok = TRUE
+    )
+
+    if (!is.null (pkg_dir)) {
+
+        checkmate::assert_character (pkg_dir)
+        checkmate::assert_scalar (pkg_dir)
+        checkmate::assert_directory_exists (pkg_dir)
+
+        if (is.null (package)) {
+            package <- pkg_name_from_desc (pkg_dir)
+        }
+    }
+
+    checkmate::assert_character (package)
+    checkmate::assert_scalar (package)
+
+    return (package)
+}
+
 trace_package_exs <- function (package) {
 
     exs <- get_pkg_examples (package)
@@ -107,8 +96,8 @@ trace_package_exs <- function (package) {
     # suppress any plot output
     dev <- options ()$"device"
     options (device = NULL)
-    o <- suppressWarnings (
-        out <- tryCatch (
+    o <- suppressWarnings ( # nolint - variable assigned but not used
+        out <- tryCatch ( # nolint - variable assigned but not used
             eval (parse (text = exs)),
             error = function (e) NULL
         )
