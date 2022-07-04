@@ -4,16 +4,17 @@
   "identifier": "typetracer",
   "description": "Trace function parameter types.",
   "name": "typetracer: Trace Function Parameter Types",
+  "relatedLink": "https://mpadge.github.io/typetracer/",
   "codeRepository": "https://github.com/mpadge/typetracer",
   "issueTracker": "https://github.com/mpadge/typetracer/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.1.070",
+  "version": "0.0.1.71",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
+  "runtimePlatform": "R version 4.2.0 (2022-04-22)",
   "author": [
     {
       "@type": "Person",
@@ -62,18 +63,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=testthat"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "withr",
-      "name": "withr",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=withr"
     }
   ],
   "softwareRequirements": {
@@ -118,13 +107,22 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tibble"
     },
-    "SystemRequirements": {}
+    "5": {
+      "@type": "SoftwareApplication",
+      "identifier": "withr",
+      "name": "withr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=withr"
+    },
+    "SystemRequirements": null
   },
-  "fileSize": "45.247KB",
+  "fileSize": "65.206KB",
   "readme": "https://github.com/mpadge/typetracer/blob/main/README.md",
-  "contIntegration": [
-    "https://github.com/mpadge/typetracer/actions",
-    "https://codecov.io/gh/mpadge/typetracer"
-  ],
+  "contIntegration": ["https://github.com/mpadge/typetracer/actions", "https://codecov.io/gh/mpadge/typetracer"],
   "keywords": "r"
 }
