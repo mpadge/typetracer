@@ -34,29 +34,27 @@ trace_package <- function (package = NULL,
     checkmate::assert_scalar (package)
 
     # -------- PRE_INSTALLATION
+    p <- paste0 ("package:", package)
+    pkg_attached <- p %in% search ()
+    if (pkg_attached) {
+        unloadNamespace (package)
+        pkg_attached <- p %in% search () # FALSE
+    }
+
     libs <- .libPaths ()
     if (!is.null (pkg_dir)) {
         install_path <- pre_install (pkg_dir)
         libs <- c (install_path, libs)
     }
 
-    p <- paste0 ("package:", package)
-    pkg_attached <- p %in% search ()
-    if (!pkg_attached) {
-        lib_path <- tryCatch (
-            find.package (package, lib.loc = libs),
-            error = function (e) NULL
-        )
-        if (is.null (lib_path)) {
-            stop (
-                "Package '", package, "' is not installed. Please ",
-                "install locally, or use 'devtools::load_all()' ",
-                "before calling 'trace_package()'",
-                call. = FALSE
-            )
-        }
+    if (!pkg_attached) { # always
+
+        lib_path <- get_pkg_lib_path (package, libs)
+        loadNamespace (package, lib.loc = lib_path, keep.source = TRUE)
         attachNamespace (package)
     }
+
+    lib_path <- get_pkg_lib_path (package, libs)
 
     # -------- TRACING
     fns <- ls (p, all.names = TRUE)
@@ -92,6 +90,7 @@ trace_package <- function (package = NULL,
     }
 
     unloadNamespace (package)
+    reload_pkg (package, lib_path)
 
     return (traces)
 }
@@ -201,4 +200,22 @@ get_pkg_examples <- function (package) {
     names (exs) <- nms
 
     return (exs)
+}
+
+# Directly modified from covr:::run_commands:
+reload_pkg <- function (pkg_name, lib) {
+
+    outfile <- file.path (lib, paste0 (pkg_name, "-reload.Rout"))
+    cat(
+        "library ('", pkg_name, "')\n",
+        file = outfile, sep = "")
+    cmd <- paste (shQuote (file.path (R.home ("bin"), "R")),
+                 "CMD BATCH --vanilla --no-timing",
+                 shQuote (outfile))
+    res <- system (cmd)
+    if (res != 0L) {
+        stop ("Command failed", call. = FALSE)
+    }
+
+    return (res == 0L)
 }
