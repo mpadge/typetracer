@@ -34,16 +34,17 @@ trace_package <- function (package = NULL,
     checkmate::assert_scalar (package)
 
     # -------- PRE_INSTALLATION
+    libs <- .libPaths ()
     if (!is.null (pkg_dir)) {
         install_path <- pre_install (pkg_dir)
-        libs <- paste0 (c (install_path, .libPaths ()), collapse = ":")
+        libs <- c (install_path, libs)
     }
 
     p <- paste0 ("package:", package)
     pkg_attached <- p %in% search ()
     if (!pkg_attached) {
         lib_path <- tryCatch (
-            find.package (package),
+            find.package (package, lib.loc = libs),
             error = function (e) NULL
         )
         if (is.null (lib_path)) {
