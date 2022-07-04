@@ -18,13 +18,19 @@ trace_package <- function (package = NULL,
         several.ok = TRUE
     )
 
-    checkmate::assert_character (package)
-    checkmate::assert_scalar (package)
     if (!is.null (pkg_dir)) {
+
         checkmate::assert_character (pkg_dir)
         checkmate::assert_scalar (pkg_dir)
         checkmate::assert_directory_exists (pkg_dir)
+
+        if (is.null (package)) {
+            package <- pkg_name_from_desc (pkg_dir)
+        }
     }
+
+    checkmate::assert_character (package)
+    checkmate::assert_scalar (package)
 
     p <- paste0 ("package:", package)
     pkg_attached <- p %in% search ()
