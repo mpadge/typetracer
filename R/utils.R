@@ -1,7 +1,3 @@
-reassign_function_body <- function (fun, body) {
-    invisible (.Call (reassign_function_body_, fun, body))
-}
-
 pkg_name_from_desc <- function (path) {
 
     desc <- list.files (
