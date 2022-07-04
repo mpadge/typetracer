@@ -1,5 +1,5 @@
 
-# Modified from 'injectr' by Filip Krikava
+# Modified from original 'injectr' code by Filip Krikava
 # https://github.com/PRL-PRG/injectr
 
 prepend_code <- function (orig_code, code, use_primitive) {
