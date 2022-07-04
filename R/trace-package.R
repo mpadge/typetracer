@@ -14,6 +14,7 @@ trace_package <- function (package = NULL,
                            types = c ("examples", "tests"),
                            pkg_dir = NULL) {
 
+    # -------- ASSERTIONS
     types <- match.arg (types, c ("examples", "tests"),
         several.ok = TRUE
     )
@@ -31,6 +32,12 @@ trace_package <- function (package = NULL,
 
     checkmate::assert_character (package)
     checkmate::assert_scalar (package)
+
+    # -------- PRE_INSTALLATION
+    if (!is.null (pkg_dir)) {
+        install_path <- pre_install (pkg_dir)
+        libs <- paste0 (c (install_path, .libPaths ()), collapse = ":")
+    }
 
     p <- paste0 ("package:", package)
     pkg_attached <- p %in% search ()
@@ -50,6 +57,7 @@ trace_package <- function (package = NULL,
         attachNamespace (package)
     }
 
+    # -------- TRACING
     fns <- ls (p, all.names = TRUE)
     pkg_env <- as.environment (p)
     for (f in fns) {
