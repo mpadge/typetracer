@@ -22,6 +22,9 @@ trace_package <- function (package = NULL,
 
     # -------- PRE_INSTALLATION
     lib_path <- pre_install (package, pkg_dir, quiet = FALSE)
+    if (is.null (pkg_dir)) {
+        pkg_dir <- file.path (lib_path, package)
+    }
 
     # -------- TRACING
     p <- paste0 ("package:", package)
