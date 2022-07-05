@@ -190,22 +190,3 @@ get_pkg_examples <- function (package) {
 
     return (exs)
 }
-
-# Directly modified from covr:::run_commands:
-reload_pkg <- function (pkg_name, lib) {
-
-    infile <- file.path (lib, paste0 (pkg_name, "-reload.Rout"))
-    outfile <- file.path (lib, paste0 (pkg_name, "-reload-out.Rout"))
-    cat(
-        "library ('", pkg_name, "')\n",
-        file = infile, sep = "")
-    cmd <- paste (shQuote (file.path (R.home ("bin"), "R")),
-                 "CMD BATCH --vanilla --no-timing",
-                 shQuote (infile), shQuote (outfile))
-    res <- system (cmd)
-    if (res != 0L) {
-        stop ("Command failed", call. = FALSE)
-    }
-
-    return (res == 0L)
-}

@@ -64,3 +64,40 @@ pre_install <- function (package, path = NULL, quiet = FALSE) {
 
     return (lib_path)
 }
+
+#' Reload package from default library location
+#'
+#' @param pkg_name Name of package to be re-loaded
+#' @param lib_path Path to temporary library location from which package was
+#' installed.
+#'
+#' @note This is directly modified from covr:::run_commands. Here, it just
+#' re-loads the package from the default library location, ensuring that the
+#' modified version is removed.
+#'
+#' @noRd
+reload_pkg <- function (pkg_name, lib_path) {
+
+    lib_path <- tryCatch (
+                          find.package (package, lib.loc = .libPaths ()),
+                          error = function (e) NULL
+    )
+    if (is.null (lib_path)) {
+        return (FALSE)
+    }
+
+    infile <- file.path (lib_path, paste0 (pkg_name, "-reload.Rout"))
+    outfile <- file.path (lib_path, paste0 (pkg_name, "-reload-out.Rout"))
+    cat(
+        "library ('", pkg_name, "')\n",
+        file = infile, sep = "")
+    cmd <- paste (shQuote (file.path (R.home ("bin"), "R")),
+                 "CMD BATCH --vanilla --no-timing",
+                 shQuote (infile), shQuote (outfile))
+    res <- system (cmd)
+    if (res != 0L) {
+        stop ("Command failed", call. = FALSE)
+    }
+
+    return (res == 0L)
+}
