@@ -1,11 +1,13 @@
 Package: typetracer
 Title: Trace Function Parameter Types
-Version: 0.0.1.084
+Version: 0.0.1.085
 Authors@R: c(
     person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2172-5265")),
     person("Filip", "Krikava", role = "aut",
-           comment = "Author of original 'injectr' code on which this package builds; https://github.com/PRL-PRG/injectr")
+           comment = "Author of original 'injectr' code on which this package builds; https://github.com/PRL-PRG/injectr"),
+    person("covr authors", role = "cph",
+            comment = "Original authors of sections of code from 'covr' package included here in modified form.")
   )
 Description: Trace function parameter types.
 License: MIT + file LICENSE
