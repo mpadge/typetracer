@@ -12,8 +12,8 @@ pre_install <- function (package, path = NULL, quiet = FALSE) {
     libs <- .libPaths ()
 
     if (is.null (path)) {
-        # installed packages without local source. 
-        # If pacakges are not installed, `find.pacakge()` errors with
+        # installed packages without local source. If pacakges are not
+        # installed, `find.pacakge()` errors with,
         # "there is no package called '...'".
         path <- find.package (package, lib.loc = libs)
     }
