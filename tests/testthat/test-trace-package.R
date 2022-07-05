@@ -57,7 +57,7 @@ test_that ("trace source package", {
     # Running tests only works with the version installed via devtools.
     # It's not worth adding that huge pkg to 'Suggests' just to increase test
     # coverage by a couple of lines.
-    tarball <- file.path ("..", "rematch_1.0.1.tar.gz")
+    tarball <- testthat::test_path ("..", "rematch_1.0.1.tar.gz")
     skip_if (!file.exists (tarball))
 
     if (utils::untar (tarball, exdir = tempdir (), tar = "internal") != 0) {
