@@ -66,18 +66,17 @@ test_that ("trace source package", {
 
     package <- "rematch"
     path <- normalizePath (file.path (tempdir (), package))
-    requireNamespace (package)
+    attachNamespace (package)
 
     expect_s3_class (
         x0 <- trace_package (
             package,
             pkg_dir = path,
-            # types = c ("examples", "tests")
-            # The 'tests' directory fails on GitHub test-coverage workflows.
-            types = c ("examples")
+            types = c ("examples", "tests")
         ),
         "tbl_df"
     )
+    unloadNamespace (package)
 
     expect_true (nrow (x0) > 5) # arbitrarily low number
     expect_identical (
