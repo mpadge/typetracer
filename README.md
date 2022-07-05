@@ -55,12 +55,12 @@ from each function call.
     ## # A tibble: 6 × 9
     ##   fn_name fn_call_hash par_name class     storage_mode length formal      uneval
     ##   <chr>   <chr>        <chr>    <I<list>> <chr>         <int> <named lis> <I<li>
-    ## 1 f       ov85cLpl     x        <chr [1]> integer           2 <missing>   <chr> 
-    ## 2 f       ov85cLpl     y        <chr [1]> double            2 <missing>   <chr> 
-    ## 3 f       ov85cLpl     z        <chr [1]> NULL              0 <missing>   <chr> 
-    ## 4 f       ov85cLpl     ...      <chr [1]> NULL              0 <missing>   <chr> 
-    ## 5 f       ov85cLpl     a        <chr [1]> character         1 <NULL>      <chr> 
-    ## 6 f       ov85cLpl     b        <chr [1]> list              2 <NULL>      <chr> 
+    ## 1 f       Ml7VmU5d     x        <chr [1]> integer           2 <missing>   <chr> 
+    ## 2 f       Ml7VmU5d     y        <chr [1]> double            2 <missing>   <chr> 
+    ## 3 f       Ml7VmU5d     z        <chr [1]> NULL              0 <missing>   <chr> 
+    ## 4 f       Ml7VmU5d     ...      <chr [1]> NULL              0 <missing>   <chr> 
+    ## 5 f       Ml7VmU5d     a        <chr [1]> character         1 <NULL>      <chr> 
+    ## 6 f       Ml7VmU5d     b        <chr [1]> list              2 <NULL>      <chr> 
     ## # … with 1 more variable: eval <I<list>>
 
 That results shows that all parameters of the function, `f()`, were
@@ -98,6 +98,19 @@ removes all traces, so that
 [`load_traces()`](https://mpadge.github.io/typetracer/reference/load_traces.html)
 will only load new traces produced after that time.
 
+### Uninjecting Traces
+
+It is important after applying [the `inject_tracer()`
+function](https://mpadge.github.io/typetracer/reference/inject_tracer.html)
+to restore the functions back to their original form through calling
+[the obverse `uninject_tracer()`
+function](https://mpadge.github.io/typetracer/reference/uninject_tracer.html).
+For the function, `r`, above, this simply requires,
+
+    uninject_tracer (f)
+
+    ## [1] TRUE
+
 ## Example \#2 - Tracing a Package
 
 This section presents a more complex example tracing all function calls
@@ -116,14 +129,14 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     ## # A tibble: 8 × 9
     ##   fn_name  fn_call_hash par_name class     storage_mode length formal     uneval
     ##   <chr>    <chr>        <chr>    <I<list>> <chr>         <int> <named li> <I<li>
-    ## 1 re_match DZp0IjSm     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 2 re_match DZp0IjSm     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 3 re_match DZp0IjSm     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 4 re_match DZp0IjSm     ...      <chr [1]> NULL              0 <missing>  <chr> 
-    ## 5 re_match OKLbR8U1     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 6 re_match OKLbR8U1     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 7 re_match OKLbR8U1     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 8 re_match OKLbR8U1     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 1 re_match va9TgViI     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 2 re_match va9TgViI     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 3 re_match va9TgViI     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 4 re_match va9TgViI     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 5 re_match i3B9C8Yz     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 6 re_match i3B9C8Yz     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 7 re_match i3B9C8Yz     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 8 re_match i3B9C8Yz     ...      <chr [1]> NULL              0 <missing>  <chr> 
     ## # … with 1 more variable: eval <I<list>>
 
 The result contains one line for every parameter passed to every
@@ -140,7 +153,7 @@ demonstrate the difference:
     res$uneval [1:2]
 
     ## $pattern
-    ## [1] "isodate"
+    ## [1] "isodaten"
     ## 
     ## $text
     ## [1] "dates"
@@ -148,7 +161,7 @@ demonstrate the difference:
     res$eval [1:2]
 
     ## $pattern
-    ## [1] "([0-9]{4})-([0-1][0-9])-([0-3][0-9])"
+    ## [1] "(?<year>[0-9]{4})-(?<month>[0-1][0-9])-(?<day>[0-3][0-9])"
     ## 
     ## $text
     ## [1] "2016-04-20"       "1977-08-08"       "not a date"       "2016"            
@@ -241,7 +254,7 @@ unevaluated version, while evaluated versions remain identical.
     ## 
     ## $z
     ## y ~ x
-    ## <environment: 0x56481889cd70>
+    ## <environment: 0x5565b3ee8e70>
 
 The traces produced by `typetracer` also include a column, `formal`,
 which contains the default values specified in the definition of

@@ -88,6 +88,20 @@ removes all traces, so that
 [`load_traces()`](https://mpadge.github.io/typetracer/reference/load_traces.html)
 will only load new traces produced after that time.
 
+### Uninjecting Traces
+
+It is important after applying [the `inject_tracer()`
+function](https://mpadge.github.io/typetracer/reference/inject_tracer.html) to
+restore the functions back to their original form through calling [the obverse
+`uninject_tracer()`
+function](https://mpadge.github.io/typetracer/reference/uninject_tracer.html).
+For the function, `r`, above, this simply requires,
+
+```{r}
+uninject_tracer (f)
+```
+
+
 ## Example #2 - Tracing a Package
 
 This section presents a more complex example tracing all function calls from
