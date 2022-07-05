@@ -41,3 +41,16 @@ test_that ("package not installed error", {
         "there is no package called"
     )
 })
+
+test_that ("utils functions", {
+    package <- "rematch"
+    lib_path <- pre_install (package)
+    pkg_dir <- file.path (lib_path, package)
+
+    expect_equal (package, pkg_name_from_desc (pkg_dir))
+
+    expect_error (
+        get_pkg_lib_path ("abc123"),
+        "Package 'abc123' is not installed."
+    )
+})
