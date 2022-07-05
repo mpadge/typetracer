@@ -37,13 +37,10 @@ trace_package <- function (package = NULL,
     clear_traces ()
 
     if ("examples" %in% types) {
-        res <- trace_package_exs (package)
+        check <- trace_package_exs (package) # returns dummy logical value
     }
     if ("tests" %in% types) {
-        res <- c (
-            res,
-            trace_package_tests (package, pkg_dir)
-        )
+        check <- trace_package_tests (package, pkg_dir)
     }
 
     traces <- load_traces (quiet = TRUE)
@@ -58,7 +55,7 @@ trace_package <- function (package = NULL,
     }
 
     unloadNamespace (package)
-    reload_pkg (package, lib_path)
+    check <- reload_pkg (package, lib_path)
 
     return (traces)
 }
@@ -107,6 +104,8 @@ trace_package_exs <- function (package) {
         )
     )
     options (device = dev)
+
+    return (TRUE)
 }
 
 # adapted from tools::testInstalledPackages
@@ -132,6 +131,8 @@ trace_package_tests <- function (package, pkg_dir = NULL) {
         test_dir,
         testthat::test_check (package)
     )
+
+    return (TRUE)
 }
 
 get_pkg_examples <- function (package) {
