@@ -118,11 +118,7 @@ trace_package_tests <- function (package, pkg_dir = NULL) {
     requireNamespace ("withr")
 
     if (is.null (pkg_dir)) {
-        e <- as.environment (paste0 ("package:", package))
-        pkg_dir <- attr (e, "path")
-    }
-    if (length (pkg_dir) == 0L) { # in test environments
-        return (list ())
+        return (list ()) # nocov
     }
     test_dir <- file.path (pkg_dir, "tests")
 
