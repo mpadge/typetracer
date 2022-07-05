@@ -3,7 +3,9 @@
 #' @param path Local path to package source.
 #' @param quiet If `FALSE`, display progress information on screen.
 #' @return Path to temporary location where package is installed from.
-#' @note The code inside `is.null(path)` is largely based on 'covr' code.
+#' @note The code inside `is.null(path)` is largely based on 'covr' code,
+#' from the `covr.R` file in that package. This original code is distributed
+#' under MIT License, with copyright held by 'covr authors'
 #' @noRd
 pre_install <- function (package, path = NULL, quiet = FALSE) {
 
