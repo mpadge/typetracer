@@ -15,6 +15,10 @@ trace_package <- function (package = NULL,
                            pkg_dir = NULL) {
 
     package <- assert_trace_package_inputs (package, types, pkg_dir)
+    pkg_was_attached <- any (grepl (paste0 ("package:", package), search ()))
+    if (pkg_was_attached) {
+        on.exit (attachNamespace (package))
+    }
 
     # -------- PRE_INSTALLATION
     lib_path <- pre_install (package, pkg_dir, quiet = FALSE)
