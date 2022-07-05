@@ -79,8 +79,8 @@ pre_install <- function (package, path = NULL, quiet = FALSE) {
 reload_pkg <- function (pkg_name, lib_path) {
 
     lib_path <- tryCatch (
-                          find.package (package, lib.loc = .libPaths ()),
-                          error = function (e) NULL
+        find.package (package, lib.loc = .libPaths ()),
+        error = function (e) NULL
     )
     if (is.null (lib_path)) {
         return (FALSE)
