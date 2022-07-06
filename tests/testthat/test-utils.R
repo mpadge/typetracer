@@ -42,6 +42,8 @@ test_that ("package not installed error", {
     )
 })
 
+skip_on_os ("windows") # sometimes fails to install 'rematch' package
+
 test_that ("utils functions", {
     package <- "rematch"
     lib_path <- pre_install (package)
