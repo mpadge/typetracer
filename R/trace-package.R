@@ -45,7 +45,7 @@ trace_package <- function (package = NULL,
     clear_traces ()
 
     if ("examples" %in% types) {
-        check <- trace_package_exs (package) # returns dummy logical value
+        check <- trace_package_exs (package, functions) # returns dummy logical value
     }
     if ("tests" %in% types) {
         check <- trace_package_tests (package, pkg_dir)
@@ -93,24 +93,41 @@ assert_trace_package_inputs <- function (package = NULL,
     return (package)
 }
 
-trace_package_exs <- function (package) {
+trace_package_exs <- function (package, functions = NULL) {
 
     exs <- get_pkg_examples (package)
-    exs <- unname (do.call (c, exs))
 
     if (is.null (exs)) {
         return ()
     }
 
+    if (!is.null (functions)) {
+        # Reduce examples down to only those which call specified functions
+        has_functions <- vapply (exs, function (i) {
+            p <- getParseData (parse (text = i))
+            fn_names <- p$text [p$token == "SYMBOL_FUNCTION_CALL"]
+            any (functions %in% fn_names)
+        }, logical (1L))
+
+        exs <- exs [which (has_functions)]
+    }
+
     # suppress any plot output
     dev <- options ()$"device"
     options (device = NULL)
-    o <- suppressWarnings ( # nolint - variable assigned but not used
-        out <- tryCatch ( # nolint - variable assigned but not used
-            eval (parse (text = exs)),
-            error = function (e) NULL
+
+    # Evaluate each example separately, to avoid aborting evaluation process
+    # when only one example errors
+    out <- lapply (exs, function (ex) {
+
+        suppressWarnings ( # nolint - variable assigned but not used
+            tryCatch ( # nolint - variable assigned but not used
+                eval (parse (text = ex)),
+                error = function (e) NULL
+            )
         )
-    )
+    })
+
     options (device = dev)
 
     return (TRUE)
