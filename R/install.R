@@ -96,8 +96,11 @@ reload_pkg <- function (pkg_name, lib_path) {
         return (FALSE)
     }
 
-    infile <- file.path (lib_path, paste0 (pkg_name, "-reload.Rout"))
-    outfile <- file.path (lib_path, paste0 (pkg_name, "-reload-out.Rout"))
+    fpath <- ifelse (grepl (tempdir (), lib_path),
+                     lib_path,
+                     tempdir ())
+    infile <- file.path (fpath, paste0 (pkg_name, "-reload.Rout"))
+    outfile <- file.path (fpath, paste0 (pkg_name, "-reload-out.Rout"))
     cat(
         "library ('", pkg_name, "')\n",
         file = infile, sep = "")
