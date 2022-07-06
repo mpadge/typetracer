@@ -15,6 +15,19 @@ parameters. `typetracer` identifies the types of parameters passed to R
 functions. The package can trace individual functions or entire
 packages, as demonstrated below.
 
+## Future development
+
+There is currently no plan to release this package on CRAN. It has been
+primarily developed to serve as the tracing engine for [the `autotest`
+package](https://docs.ropensci.org/autotest/), with all code from here
+included directly in that package. Future development of this package
+will only be in response to changes or bug fixes implemented in
+`autotest`.
+
+If you see a direct use for this `typetracer` package, and would like to
+see it released on CRAN, feel free to open an issue here, or contact
+@mpadge directly, and we’ll see what can be done.
+
 ## Installation
 
 The package can be installed with the following command:
@@ -62,13 +75,13 @@ from each function call.
     ## # A tibble: 7 × 9
     ##   fn_name fn_call_hash par_name class     storage_mode length formal      uneval
     ##   <chr>   <chr>        <chr>    <I<list>> <chr>         <int> <named lis> <I<li>
-    ## 1 f       DWqERlrs     x        <chr [1]> integer           2 <missing>   <chr> 
-    ## 2 f       DWqERlrs     y        <chr [1]> double            2 <missing>   <chr> 
-    ## 3 f       DWqERlrs     z        <chr [1]> NULL              0 <missing>   <chr> 
-    ## 4 f       DWqERlrs     ...      <chr [1]> NULL              0 <missing>   <chr> 
-    ## 5 f       DWqERlrs     a        <chr [1]> character         1 <NULL>      <chr> 
-    ## 6 f       DWqERlrs     b        <chr [1]> list              2 <NULL>      <chr> 
-    ## 7 f       DWqERlrs     f        <chr [1]> language          3 <NULL>      <chr> 
+    ## 1 f       k29OspWu     x        <chr [1]> integer           2 <missing>   <chr> 
+    ## 2 f       k29OspWu     y        <chr [1]> double            2 <missing>   <chr> 
+    ## 3 f       k29OspWu     z        <chr [1]> NULL              0 <missing>   <chr> 
+    ## 4 f       k29OspWu     ...      <chr [1]> NULL              0 <missing>   <chr> 
+    ## 5 f       k29OspWu     a        <chr [1]> character         1 <NULL>      <chr> 
+    ## 6 f       k29OspWu     b        <chr [1]> list              2 <NULL>      <chr> 
+    ## 7 f       k29OspWu     f        <chr [1]> language          3 <NULL>      <chr> 
     ## # … with 1 more variable: eval <I<list>>
 
 That results shows that all parameters of the function, `f()`, were
@@ -160,14 +173,14 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     ## # A tibble: 8 × 9
     ##   fn_name  fn_call_hash par_name class     storage_mode length formal     uneval
     ##   <chr>    <chr>        <chr>    <I<list>> <chr>         <int> <named li> <I<li>
-    ## 1 re_match HufnxdXR     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 2 re_match HufnxdXR     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 3 re_match HufnxdXR     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 4 re_match HufnxdXR     ...      <chr [1]> NULL              0 <missing>  <chr> 
-    ## 5 re_match NluIn8Lr     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 6 re_match NluIn8Lr     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 7 re_match NluIn8Lr     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 8 re_match NluIn8Lr     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 1 re_match BPbLW9sD     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 2 re_match BPbLW9sD     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 3 re_match BPbLW9sD     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 4 re_match BPbLW9sD     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 5 re_match 81XsubEe     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 6 re_match 81XsubEe     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 7 re_match 81XsubEe     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 8 re_match 81XsubEe     ...      <chr [1]> NULL              0 <missing>  <chr> 
     ## # … with 1 more variable: eval <I<list>>
 
 The result contains one line for every parameter passed to every
