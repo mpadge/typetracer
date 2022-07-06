@@ -30,9 +30,10 @@ Then loaded for use by calling `library`:
 `typetracer` works by “injecting” tracing code into the body of a
 function using [the `inject_tracer()`
 function](https://mpadge.github.io/typetracer/reference/inject_tracer.html).
-The following function includes four parameters, including `...` to
-allow passing of additional and entirely arbitrary parameter types and
-values.
+Locally-defined functions can be traced by simply passing the functions
+directly to `inject_tracer()`. The following example includes four
+parameters, including `...` to allow passing of additional and entirely
+arbitrary parameter types and values.
 
     f <- function (x, y, z, ...) {
         x * x + y * y
@@ -41,26 +42,33 @@ values.
 
 After injecting the `typetracer` code, calls to the function, `f`, will
 “trace” each parameter of the function, by capturing both unevaluated
-and evaluated representation at the point at which the function is first
-called. These values can be accessed with [the `load_traces`
+and evaluated representations at the point at which the function is
+first called. These values can be accessed with [the `load_traces`
 function](https://mpadge.github.io/typetracer/reference/load_traces.html),
 which returns a `data.frame` object (in [`tibble`
-format](https://tibble.tidyverse.org) with one row for each parameter
+format](https://tibble.tidyverse.org)) with one row for each parameter
 from each function call.
 
-    val <- f (x = 1:2, y = 3:4 + 0., a = "blah", b = list (a = 1, b = "b"))
+    val <- f (
+        x = 1:2,
+        y = 3:4 + 0.,
+        a = "blah",
+        b = list (a = 1, b = "b"),
+        f = a ~ b
+    )
     x <- load_traces ()
     x
 
-    ## # A tibble: 6 × 9
+    ## # A tibble: 7 × 9
     ##   fn_name fn_call_hash par_name class     storage_mode length formal      uneval
     ##   <chr>   <chr>        <chr>    <I<list>> <chr>         <int> <named lis> <I<li>
-    ## 1 f       fi4uBd3C     x        <chr [1]> integer           2 <missing>   <chr> 
-    ## 2 f       fi4uBd3C     y        <chr [1]> double            2 <missing>   <chr> 
-    ## 3 f       fi4uBd3C     z        <chr [1]> NULL              0 <missing>   <chr> 
-    ## 4 f       fi4uBd3C     ...      <chr [1]> NULL              0 <missing>   <chr> 
-    ## 5 f       fi4uBd3C     a        <chr [1]> character         1 <NULL>      <chr> 
-    ## 6 f       fi4uBd3C     b        <chr [1]> list              2 <NULL>      <chr> 
+    ## 1 f       lpiSKPAJ     x        <chr [1]> integer           2 <missing>   <chr> 
+    ## 2 f       lpiSKPAJ     y        <chr [1]> double            2 <missing>   <chr> 
+    ## 3 f       lpiSKPAJ     z        <chr [1]> NULL              0 <missing>   <chr> 
+    ## 4 f       lpiSKPAJ     ...      <chr [1]> NULL              0 <missing>   <chr> 
+    ## 5 f       lpiSKPAJ     a        <chr [1]> character         1 <NULL>      <chr> 
+    ## 6 f       lpiSKPAJ     b        <chr [1]> list              2 <NULL>      <chr> 
+    ## 7 f       lpiSKPAJ     f        <chr [1]> language          3 <NULL>      <chr> 
     ## # … with 1 more variable: eval <I<list>>
 
 That results shows that all parameters of the function, `f()`, were
@@ -68,6 +76,11 @@ successfully traced, including the additional parameters, `a` and `b`,
 passed as part of the `...` argument. Such additional parameters can be
 identified through having a `"formal"` entry of `NULL`, indicating that
 they are not part of the formal arguments to the function.
+
+The result also includes columns for all parameters both in unevaluated
+and evaluated forms. The former captures the parameters as passed to the
+function call, while the latter are the equivalent evaluated versions.
+The following examples illustrate the differences.
 
     x$uneval [x$par_name %in% c ("a", "b")]
 
@@ -88,6 +101,18 @@ they are not part of the formal arguments to the function.
     ## 
     ## $b$b
     ## [1] "b"
+
+Unevaluated parameters are generally converted to equivalent character
+expressions. The `class` and `storage.mode` columns of traces can be
+used to convert these back to the type of parameter passed to the
+function call. The following code demonstrates how to recover the
+formula argument, `f = a ~ b`:
+
+    i <- which (x$storage_mode == "language") # 7
+    convert_fn <- paste0 ("as.", x$class [i]) # "as.formula"
+    do.call (convert_fn, list (x$uneval [[i]]))
+
+    ## a ~ b
 
 Traces themselves are saved in the temporary directory of the current R
 session, and [the `load_traces()`
@@ -129,14 +154,14 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     ## # A tibble: 8 × 9
     ##   fn_name  fn_call_hash par_name class     storage_mode length formal     uneval
     ##   <chr>    <chr>        <chr>    <I<list>> <chr>         <int> <named li> <I<li>
-    ## 1 re_match Z2OJe6bC     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 2 re_match Z2OJe6bC     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 3 re_match Z2OJe6bC     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 4 re_match Z2OJe6bC     ...      <chr [1]> NULL              0 <missing>  <chr> 
-    ## 5 re_match R4HqZIkO     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 6 re_match R4HqZIkO     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 7 re_match R4HqZIkO     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 8 re_match R4HqZIkO     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 1 re_match is95l4Uk     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 2 re_match is95l4Uk     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 3 re_match is95l4Uk     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 4 re_match is95l4Uk     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 5 re_match woLaZPqW     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 6 re_match woLaZPqW     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 7 re_match woLaZPqW     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 8 re_match woLaZPqW     ...      <chr [1]> NULL              0 <missing>  <chr> 
     ## # … with 1 more variable: eval <I<list>>
 
 The result contains one line for every parameter passed to every
