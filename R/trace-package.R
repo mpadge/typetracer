@@ -62,7 +62,10 @@ trace_package <- function (package = NULL,
         }
     }
 
-    unloadNamespace (package)
+    tryCatch (
+        unloadNamespace (package),
+        error = function (e) NULL
+    )
     check <- reload_pkg (package, lib_path)
 
     return (traces)
