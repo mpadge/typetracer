@@ -77,10 +77,10 @@ x
 ```
 
 That results shows that all parameters of the function, `f()`, were
-successfully traced, including the additional parameters, `a` and `b`, passed
-as part of the `...` argument. Such additional parameters can be identified
-through having a `"formal"` entry of `NULL`, indicating that they are not part
-of the formal arguments to the function.
+successfully traced, including the additional parameters, `a`, `b`, and `f`,
+passed as part of the `...` argument. Such additional parameters can be
+identified through having a `"formal"` entry of `NULL`, indicating that they
+are not part of the formal arguments to the function.
 
 The result also includes columns for all parameters both in unevaluated and
 evaluated forms. The former captures the parameters as passed to the function
@@ -124,6 +124,10 @@ For the function, `r`, above, this simply requires,
 ```{r}
 uninject_tracer (f)
 ```
+
+Because `typetracer` modifies the internal code of functions as defined within
+a current R session, we strongly recommend restarting your R session after
+using `typetracer`, to ensure expected function behaviour is restored.
 
 
 ## Example #2 - Tracing a Package

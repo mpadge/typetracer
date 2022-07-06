@@ -62,20 +62,21 @@ from each function call.
     ## # A tibble: 7 × 9
     ##   fn_name fn_call_hash par_name class     storage_mode length formal      uneval
     ##   <chr>   <chr>        <chr>    <I<list>> <chr>         <int> <named lis> <I<li>
-    ## 1 f       lpiSKPAJ     x        <chr [1]> integer           2 <missing>   <chr> 
-    ## 2 f       lpiSKPAJ     y        <chr [1]> double            2 <missing>   <chr> 
-    ## 3 f       lpiSKPAJ     z        <chr [1]> NULL              0 <missing>   <chr> 
-    ## 4 f       lpiSKPAJ     ...      <chr [1]> NULL              0 <missing>   <chr> 
-    ## 5 f       lpiSKPAJ     a        <chr [1]> character         1 <NULL>      <chr> 
-    ## 6 f       lpiSKPAJ     b        <chr [1]> list              2 <NULL>      <chr> 
-    ## 7 f       lpiSKPAJ     f        <chr [1]> language          3 <NULL>      <chr> 
+    ## 1 f       DWqERlrs     x        <chr [1]> integer           2 <missing>   <chr> 
+    ## 2 f       DWqERlrs     y        <chr [1]> double            2 <missing>   <chr> 
+    ## 3 f       DWqERlrs     z        <chr [1]> NULL              0 <missing>   <chr> 
+    ## 4 f       DWqERlrs     ...      <chr [1]> NULL              0 <missing>   <chr> 
+    ## 5 f       DWqERlrs     a        <chr [1]> character         1 <NULL>      <chr> 
+    ## 6 f       DWqERlrs     b        <chr [1]> list              2 <NULL>      <chr> 
+    ## 7 f       DWqERlrs     f        <chr [1]> language          3 <NULL>      <chr> 
     ## # … with 1 more variable: eval <I<list>>
 
 That results shows that all parameters of the function, `f()`, were
-successfully traced, including the additional parameters, `a` and `b`,
-passed as part of the `...` argument. Such additional parameters can be
-identified through having a `"formal"` entry of `NULL`, indicating that
-they are not part of the formal arguments to the function.
+successfully traced, including the additional parameters, `a`, `b`, and
+`f`, passed as part of the `...` argument. Such additional parameters
+can be identified through having a `"formal"` entry of `NULL`,
+indicating that they are not part of the formal arguments to the
+function.
 
 The result also includes columns for all parameters both in unevaluated
 and evaluated forms. The former captures the parameters as passed to the
@@ -136,6 +137,11 @@ For the function, `r`, above, this simply requires,
 
     ## [1] TRUE
 
+Because `typetracer` modifies the internal code of functions as defined
+within a current R session, we strongly recommend restarting your R
+session after using `typetracer`, to ensure expected function behaviour
+is restored.
+
 ## Example \#2 - Tracing a Package
 
 This section presents a more complex example tracing all function calls
@@ -154,14 +160,14 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     ## # A tibble: 8 × 9
     ##   fn_name  fn_call_hash par_name class     storage_mode length formal     uneval
     ##   <chr>    <chr>        <chr>    <I<list>> <chr>         <int> <named li> <I<li>
-    ## 1 re_match is95l4Uk     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 2 re_match is95l4Uk     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 3 re_match is95l4Uk     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 4 re_match is95l4Uk     ...      <chr [1]> NULL              0 <missing>  <chr> 
-    ## 5 re_match woLaZPqW     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 6 re_match woLaZPqW     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 7 re_match woLaZPqW     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 8 re_match woLaZPqW     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 1 re_match HufnxdXR     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 2 re_match HufnxdXR     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 3 re_match HufnxdXR     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 4 re_match HufnxdXR     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 5 re_match NluIn8Lr     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 6 re_match NluIn8Lr     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 7 re_match NluIn8Lr     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 8 re_match NluIn8Lr     ...      <chr [1]> NULL              0 <missing>  <chr> 
     ## # … with 1 more variable: eval <I<list>>
 
 The result contains one line for every parameter passed to every
