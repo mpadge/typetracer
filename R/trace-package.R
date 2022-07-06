@@ -107,7 +107,7 @@ trace_package_exs <- function (package, functions = NULL) {
     if (!is.null (functions)) {
         # Reduce examples down to only those which call specified functions
         has_functions <- vapply (exs, function (i) {
-            p <- getParseData (parse (text = i))
+            p <- utils::getParseData (parse (text = i))
             fn_names <- p$text [p$token == "SYMBOL_FUNCTION_CALL"]
             any (functions %in% fn_names)
         }, logical (1L))
