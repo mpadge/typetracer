@@ -30,12 +30,15 @@ trace_package <- function (package = NULL,
     }
 
     # -------- TRACING
+    # The original `functions = NULL` has to be passed through to
+    # `trace_package_exs`, so modified here as `trace_fns`:
+    trace_fns <- functions
     p <- paste0 ("package:", package)
-    if (is.null (functions)) {
-        functions <- ls (p, all.names = TRUE)
+    if (is.null (trace_fns)) {
+        trace_fns <- ls (p, all.names = TRUE)
     }
     pkg_env <- as.environment (p)
-    for (f in functions) {
+    for (f in trace_fns) {
         f <- get (f, envir = pkg_env)
         if (is.function (f)) {
             inject_tracer (f)
@@ -55,7 +58,7 @@ trace_package <- function (package = NULL,
 
     clear_traces ()
 
-    for (f in functions) {
+    for (f in trace_fns) {
         f <- get (f, envir = pkg_env)
         if (is.function (f)) {
             uninject_tracer (f)
@@ -105,6 +108,7 @@ trace_package_exs <- function (package, functions = NULL) {
     }
 
     if (!is.null (functions)) {
+
         # Reduce examples down to only those which call specified functions
         has_functions <- vapply (exs, function (i) {
             p <- utils::getParseData (parse (text = i))
