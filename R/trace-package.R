@@ -119,6 +119,10 @@ trace_package_exs <- function (package, functions = NULL) {
         exs <- exs [which (has_functions)]
     }
 
+    if (length (exs) == 0L) {
+        return (TRUE)
+    }
+
     # suppress any plot output
     dev <- options ()$"device"
     options (device = NULL)
