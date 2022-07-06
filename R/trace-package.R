@@ -45,7 +45,7 @@ trace_package <- function (package = NULL,
     clear_traces ()
 
     if ("examples" %in% types) {
-        check <- trace_package_exs (package, functions) # returns dummy logical value
+        check <- trace_package_exs (package, functions) # dummy logical value
     }
     if ("tests" %in% types) {
         check <- trace_package_tests (package, pkg_dir)
@@ -163,7 +163,7 @@ get_pkg_examples <- function (package) {
 
     rd <- tools::Rd_db (package)
 
-    if (length (rd) == 0L & any (grepl (package, search ()))) {
+    if (length (rd) == 0L && any (grepl (package, search ()))) {
         # local load via devtools
         # This can't be tested because 'package' is in Suggests, which means it
         # has `Rd_db` entries.
