@@ -16,14 +16,14 @@ pkg_name_from_desc <- function (path) {
     as.character (read.dcf (desc) [, "Package"])
 }
 
-get_pkg_lib_path <- function (package, libs) {
+get_pkg_lib_path <- function (package, lib_paths) {
 
-    lib_path <- tryCatch (
-                          find.package (package, lib.loc = libs),
-                          error = function (e) NULL
+    pkg_path <- tryCatch (
+        find.package (package, lib.loc = lib_paths),
+        error = function (e) NULL
     )
 
-    if (is.null (lib_path)) {
+    if (is.null (pkg_path)) {
         stop (
               "Package '", package, "' is not installed. Please ",
               "install locally, or use 'devtools::load_all()' ",
@@ -32,5 +32,7 @@ get_pkg_lib_path <- function (package, libs) {
         )
     }
 
-    return (gsub (paste0 (.Platform$file.sep, package), "", lib_path))
+    lib_path <- normalizePath (file.path (pkg_path, ".."))
+
+    return (lib_path)
 }
