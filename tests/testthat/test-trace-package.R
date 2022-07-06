@@ -10,6 +10,8 @@ test_that ("errors", {
     )
 })
 
+skip_on_os ("windows") # sometimes fails to install 'rematch' package
+
 
 test_that ("trace installed package", {
 
