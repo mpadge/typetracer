@@ -141,6 +141,65 @@ values, and then calls the function with `pattern = isodaten`. The second
 constructs the vector called `dates` with the second of the evaluated values,
 then calls the function with `test = dates`.
 
+### Example #2(a) - Specifying Functions to Trace
+
+[The `trace_package()`
+function](https://mpadge.github.io/typetracer/reference/trace_package.html)
+also accepts an argument, `functions`, specifying which functions from a
+package should be traced. For example,
+
+```{r trace-stats, eval = FALSE}
+x <- trace_package ("stats", functions = c ("sd", "var"))
+```
+```{r stats-output, echo = FALSE}
+par_name <- c ("x", "na.rm", "x", "y", "na.rm",
+               "use", "x", "y", "na.rm", "use")
+storage.mode <- c ("integer", "logical", "integer", "NULL", "logical",
+                   "NULL", "integer", "NULL", "logical", "NULL")
+# Create an empty list for formal params. "empty" means an empty name or symbol
+# object, which can be conveniently constructed with 'substitute()':
+formal <- pairlist (
+    x = substitute (),
+    na.rm = FALSE,
+    y = NULL,
+    use = substitute ()
+)
+formal <- formal [match (par_name, names (formal))]
+
+uneval <- as.list (letters [1:10])
+names (uneval) <- par_name
+eval <- pairlist (
+    x = 1:2,
+    na.rm = FALSE,
+    x = 1:2,
+    y = NULL,
+    na.rm = FALSE,
+    use = NULL,
+    x = 1:10,
+    y = NULL,
+    na.rm = FALSE,
+    y = NULL
+)
+
+
+x <- tibble::tibble (
+    fn_name = c (rep ("sd", 2L), rep ("var", 8L)),
+    fn_call_hash = c (
+        rep ("nNbBzFCg", 2L), rep ("kwTgNeUZ", 4L), rep ("risTCGmw", 4L)),
+    par_name = c ("x", "na.rm", "x", "y", "na.rm",
+                  "use", "x", "y", "na.rm", "use"),
+    class = I (as.list (storage.mode)),
+    storage.mode = storage.mode,
+    length = as.integer (c (2, 1, 2, 0, 1, 0, 10, 0, 1, 0)),
+    formal = formal,
+    uneval = I (uneval),
+    eval = I (as.list (eval))
+)
+x
+```
+
+
+
 ## Examples #3 - Non-standard Evaluation
 
 This example briefly illustrates some examples of tracing parameters evaluated

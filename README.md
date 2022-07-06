@@ -55,12 +55,12 @@ from each function call.
     ## # A tibble: 6 × 9
     ##   fn_name fn_call_hash par_name class     storage_mode length formal      uneval
     ##   <chr>   <chr>        <chr>    <I<list>> <chr>         <int> <named lis> <I<li>
-    ## 1 f       Ml7VmU5d     x        <chr [1]> integer           2 <missing>   <chr> 
-    ## 2 f       Ml7VmU5d     y        <chr [1]> double            2 <missing>   <chr> 
-    ## 3 f       Ml7VmU5d     z        <chr [1]> NULL              0 <missing>   <chr> 
-    ## 4 f       Ml7VmU5d     ...      <chr [1]> NULL              0 <missing>   <chr> 
-    ## 5 f       Ml7VmU5d     a        <chr [1]> character         1 <NULL>      <chr> 
-    ## 6 f       Ml7VmU5d     b        <chr [1]> list              2 <NULL>      <chr> 
+    ## 1 f       RWDvToa4     x        <chr [1]> integer           2 <missing>   <chr> 
+    ## 2 f       RWDvToa4     y        <chr [1]> double            2 <missing>   <chr> 
+    ## 3 f       RWDvToa4     z        <chr [1]> NULL              0 <missing>   <chr> 
+    ## 4 f       RWDvToa4     ...      <chr [1]> NULL              0 <missing>   <chr> 
+    ## 5 f       RWDvToa4     a        <chr [1]> character         1 <NULL>      <chr> 
+    ## 6 f       RWDvToa4     b        <chr [1]> list              2 <NULL>      <chr> 
     ## # … with 1 more variable: eval <I<list>>
 
 That results shows that all parameters of the function, `f()`, were
@@ -129,14 +129,14 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     ## # A tibble: 8 × 9
     ##   fn_name  fn_call_hash par_name class     storage_mode length formal     uneval
     ##   <chr>    <chr>        <chr>    <I<list>> <chr>         <int> <named li> <I<li>
-    ## 1 re_match va9TgViI     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 2 re_match va9TgViI     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 3 re_match va9TgViI     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 4 re_match va9TgViI     ...      <chr [1]> NULL              0 <missing>  <chr> 
-    ## 5 re_match i3B9C8Yz     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 6 re_match i3B9C8Yz     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 7 re_match i3B9C8Yz     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 8 re_match i3B9C8Yz     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 1 re_match Ior3kRig     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 2 re_match Ior3kRig     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 3 re_match Ior3kRig     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 4 re_match Ior3kRig     ...      <chr [1]> NULL              0 <missing>  <chr> 
+    ## 5 re_match JQa7ofcP     pattern  <chr [1]> character         1 <missing>  <chr> 
+    ## 6 re_match JQa7ofcP     text     <chr [1]> character         7 <missing>  <chr> 
+    ## 7 re_match JQa7ofcP     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 8 re_match JQa7ofcP     ...      <chr [1]> NULL              0 <missing>  <chr> 
     ## # … with 1 more variable: eval <I<list>>
 
 The result contains one line for every parameter passed to every
@@ -153,7 +153,7 @@ demonstrate the difference:
     res$uneval [1:2]
 
     ## $pattern
-    ## [1] "isodaten"
+    ## [1] "isodate"
     ## 
     ## $text
     ## [1] "dates"
@@ -161,7 +161,7 @@ demonstrate the difference:
     res$eval [1:2]
 
     ## $pattern
-    ## [1] "(?<year>[0-9]{4})-(?<month>[0-1][0-9])-(?<day>[0-3][0-9])"
+    ## [1] "([0-9]{4})-([0-1][0-9])-([0-3][0-9])"
     ## 
     ## $text
     ## [1] "2016-04-20"       "1977-08-08"       "not a date"       "2016"            
@@ -171,6 +171,30 @@ The example first assigns a variable `isodaten` to the first of the
 evaluated values, and then calls the function with `pattern = isodaten`.
 The second constructs the vector called `dates` with the second of the
 evaluated values, then calls the function with `test = dates`.
+
+### Example \#2(a) - Specifying Functions to Trace
+
+[The `trace_package()`
+function](https://mpadge.github.io/typetracer/reference/trace_package.html)
+also accepts an argument, `functions`, specifying which functions from a
+package should be traced. For example,
+
+    x <- trace_package ("stats", functions = c ("sd", "var"))
+
+    ## # A tibble: 10 × 9
+    ##    fn_name fn_call_hash par_name class     storage.mode length formal     uneval
+    ##    <chr>   <chr>        <chr>    <I<list>> <chr>         <int> <named li> <I<li>
+    ##  1 sd      nNbBzFCg     x        <chr [1]> integer           2 <missing>  <chr> 
+    ##  2 sd      nNbBzFCg     na.rm    <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ##  3 var     kwTgNeUZ     x        <chr [1]> integer           2 <missing>  <chr> 
+    ##  4 var     kwTgNeUZ     y        <chr [1]> NULL              0 <NULL>     <chr> 
+    ##  5 var     kwTgNeUZ     na.rm    <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ##  6 var     kwTgNeUZ     use      <chr [1]> NULL              0 <missing>  <chr> 
+    ##  7 var     risTCGmw     x        <chr [1]> integer          10 <missing>  <chr> 
+    ##  8 var     risTCGmw     y        <chr [1]> NULL              0 <NULL>     <chr> 
+    ##  9 var     risTCGmw     na.rm    <chr [1]> logical           1 <lgl [1]>  <chr> 
+    ## 10 var     risTCGmw     use      <chr [1]> NULL              0 <missing>  <chr> 
+    ## # … with 1 more variable: eval <I<list>>
 
 ## Examples \#3 - Non-standard Evaluation
 
@@ -254,7 +278,7 @@ unevaluated version, while evaluated versions remain identical.
     ## 
     ## $z
     ## y ~ x
-    ## <environment: 0x5565b3ee8e70>
+    ## <environment: 0x562a316f71b8>
 
 The traces produced by `typetracer` also include a column, `formal`,
 which contains the default values specified in the definition of
