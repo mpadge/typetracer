@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">typetracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.122</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.123</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,15 +98,15 @@
 <span id="cb4-11"><a href="#cb4-11"></a><span class="co">## # A tibble: 7 × 9</span></span>
 <span id="cb4-12"><a href="#cb4-12"></a><span class="co">##   fn_name fn_call_hash par_name class     storage_mode length formal      uneval</span></span>
 <span id="cb4-13"><a href="#cb4-13"></a><span class="co">##   &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;list&gt;&gt; &lt;chr&gt;         &lt;int&gt; &lt;named lis&gt; &lt;I&lt;li&gt;</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">## 1 f       lpiSKPAJ     x        &lt;chr [1]&gt; integer           2 &lt;missing&gt;   &lt;chr&gt; </span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">## 2 f       lpiSKPAJ     y        &lt;chr [1]&gt; double            2 &lt;missing&gt;   &lt;chr&gt; </span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## 3 f       lpiSKPAJ     z        &lt;chr [1]&gt; NULL              0 &lt;missing&gt;   &lt;chr&gt; </span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co">## 4 f       lpiSKPAJ     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;   &lt;chr&gt; </span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## 5 f       lpiSKPAJ     a        &lt;chr [1]&gt; character         1 &lt;NULL&gt;      &lt;chr&gt; </span></span>
-<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## 6 f       lpiSKPAJ     b        &lt;chr [1]&gt; list              2 &lt;NULL&gt;      &lt;chr&gt; </span></span>
-<span id="cb4-20"><a href="#cb4-20"></a><span class="co">## 7 f       lpiSKPAJ     f        &lt;chr [1]&gt; language          3 &lt;NULL&gt;      &lt;chr&gt; </span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">## 1 f       DWqERlrs     x        &lt;chr [1]&gt; integer           2 &lt;missing&gt;   &lt;chr&gt; </span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">## 2 f       DWqERlrs     y        &lt;chr [1]&gt; double            2 &lt;missing&gt;   &lt;chr&gt; </span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## 3 f       DWqERlrs     z        &lt;chr [1]&gt; NULL              0 &lt;missing&gt;   &lt;chr&gt; </span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">## 4 f       DWqERlrs     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;   &lt;chr&gt; </span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## 5 f       DWqERlrs     a        &lt;chr [1]&gt; character         1 &lt;NULL&gt;      &lt;chr&gt; </span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## 6 f       DWqERlrs     b        &lt;chr [1]&gt; list              2 &lt;NULL&gt;      &lt;chr&gt; </span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">## 7 f       DWqERlrs     f        &lt;chr [1]&gt; language          3 &lt;NULL&gt;      &lt;chr&gt; </span></span>
 <span id="cb4-21"><a href="#cb4-21"></a><span class="co">## # … with 1 more variable: eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
-<p>That results shows that all parameters of the function, <code>f()</code>, were successfully traced, including the additional parameters, <code>a</code> and <code>b</code>, passed as part of the <code>...</code> argument. Such additional parameters can be identified through having a <code>"formal"</code> entry of <code>NULL</code>, indicating that they are not part of the formal arguments to the function.</p>
+<p>That results shows that all parameters of the function, <code>f()</code>, were successfully traced, including the additional parameters, <code>a</code>, <code>b</code>, and <code>f</code>, passed as part of the <code>...</code> argument. Such additional parameters can be identified through having a <code>"formal"</code> entry of <code>NULL</code>, indicating that they are not part of the formal arguments to the function.</p>
 <p>The result also includes columns for all parameters both in unevaluated and evaluated forms. The former captures the parameters as passed to the function call, while the latter are the equivalent evaluated versions. The following examples illustrate the differences.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>x<span class="op">$</span>uneval [x<span class="op">$</span>par_name <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span> (<span class="st">"a"</span>, <span class="st">"b"</span>)]</span>
 <span id="cb5-2"><a href="#cb5-2"></a></span>
@@ -141,6 +141,7 @@
 <div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">uninject_tracer</span> (f)</span>
 <span id="cb7-2"><a href="#cb7-2"></a></span>
 <span id="cb7-3"><a href="#cb7-3"></a><span class="co">## [1] TRUE</span></span></code></pre></div>
+<p>Because <code>typetracer</code> modifies the internal code of functions as defined within a current R session, we strongly recommend restarting your R session after using <code>typetracer</code>, to ensure expected function behaviour is restored.</p>
 </div>
 </div>
 <div class="section level2">
@@ -153,14 +154,14 @@
 <span id="cb8-4"><a href="#cb8-4"></a><span class="co">## # A tibble: 8 × 9</span></span>
 <span id="cb8-5"><a href="#cb8-5"></a><span class="co">##   fn_name  fn_call_hash par_name class     storage_mode length formal     uneval</span></span>
 <span id="cb8-6"><a href="#cb8-6"></a><span class="co">##   &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;list&gt;&gt; &lt;chr&gt;         &lt;int&gt; &lt;named li&gt; &lt;I&lt;li&gt;</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="co">## 1 re_match is95l4Uk     pattern  &lt;chr [1]&gt; character         1 &lt;missing&gt;  &lt;chr&gt; </span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="co">## 2 re_match is95l4Uk     text     &lt;chr [1]&gt; character         7 &lt;missing&gt;  &lt;chr&gt; </span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="co">## 3 re_match is95l4Uk     perl     &lt;chr [1]&gt; logical           1 &lt;lgl [1]&gt;  &lt;chr&gt; </span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">## 4 re_match is95l4Uk     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;  &lt;chr&gt; </span></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="co">## 5 re_match woLaZPqW     pattern  &lt;chr [1]&gt; character         1 &lt;missing&gt;  &lt;chr&gt; </span></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="co">## 6 re_match woLaZPqW     text     &lt;chr [1]&gt; character         7 &lt;missing&gt;  &lt;chr&gt; </span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="co">## 7 re_match woLaZPqW     perl     &lt;chr [1]&gt; logical           1 &lt;lgl [1]&gt;  &lt;chr&gt; </span></span>
-<span id="cb8-14"><a href="#cb8-14"></a><span class="co">## 8 re_match woLaZPqW     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">## 1 re_match HufnxdXR     pattern  &lt;chr [1]&gt; character         1 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">## 2 re_match HufnxdXR     text     &lt;chr [1]&gt; character         7 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">## 3 re_match HufnxdXR     perl     &lt;chr [1]&gt; logical           1 &lt;lgl [1]&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">## 4 re_match HufnxdXR     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co">## 5 re_match NluIn8Lr     pattern  &lt;chr [1]&gt; character         1 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="co">## 6 re_match NluIn8Lr     text     &lt;chr [1]&gt; character         7 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">## 7 re_match NluIn8Lr     perl     &lt;chr [1]&gt; logical           1 &lt;lgl [1]&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co">## 8 re_match NluIn8Lr     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;  &lt;chr&gt; </span></span>
 <span id="cb8-15"><a href="#cb8-15"></a><span class="co">## # … with 1 more variable: eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
 <p>The result contains one line for every parameter passed to every function call in the examples. <a href="https://mpadge.github.io/typetracer/reference/trace_package.html">The <code>trace_package()</code> function</a> also includes an additional parameter, <code>types</code>, which defaults to <code>c ("examples", "tests")</code>, so that traces are also by default generated for all tests included with local source packages.</p>
 <p>The final two columns of the result hold the unevaluated and evaluated representations of each parameter. The first two values of each demonstrate the difference:</p>
