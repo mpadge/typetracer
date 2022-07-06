@@ -4,10 +4,18 @@
 \alias{trace_package}
 \title{Trace all parameters for all functions in a specified package}
 \usage{
-trace_package(package = NULL, types = c("examples", "tests"), pkg_dir = NULL)
+trace_package(
+  package = NULL,
+  functions = NULL,
+  types = c("examples", "tests"),
+  pkg_dir = NULL
+)
 }
 \arguments{
 \item{package}{Name of package to be traced (as character value)}
+
+\item{functions}{Optional character vector of names of functions to trace.
+Defaults to tracing all functions.}
 
 \item{types}{The types of code to be run to generate traces: one or both
 values of "examples" or "tests" (as for \code{tools::testInstalledPackage}).}

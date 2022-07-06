@@ -2,6 +2,8 @@
 #' Trace all parameters for all functions in a specified package
 #'
 #' @param package Name of package to be traced (as character value)
+#' @param functions Optional character vector of names of functions to trace.
+#' Defaults to tracing all functions.
 #' @param types The types of code to be run to generate traces: one or both
 #' values of "examples" or "tests" (as for `tools::testInstalledPackage`).
 #' @param pkg_dir For "types" including "tests", a local directory to the source
@@ -11,6 +13,7 @@
 #' specified in code provided in package examples.
 #' @export
 trace_package <- function (package = NULL,
+                           functions = NULL,
                            types = c ("examples", "tests"),
                            pkg_dir = NULL) {
 
@@ -28,9 +31,11 @@ trace_package <- function (package = NULL,
 
     # -------- TRACING
     p <- paste0 ("package:", package)
-    fns <- ls (p, all.names = TRUE)
+    if (is.null (functions)) {
+        functions <- ls (p, all.names = TRUE)
+    }
     pkg_env <- as.environment (p)
-    for (f in fns) {
+    for (f in functions) {
         f <- get (f, envir = pkg_env)
         if (is.function (f)) {
             inject_tracer (f)
@@ -50,7 +55,7 @@ trace_package <- function (package = NULL,
 
     clear_traces ()
 
-    for (f in fns) {
+    for (f in functions) {
         f <- get (f, envir = pkg_env)
         if (is.function (f)) {
             uninject_tracer (f)
