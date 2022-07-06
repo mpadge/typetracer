@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/mpadge/typetracer",
   "issueTracker": "https://github.com/mpadge/typetracer/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.1.115",
+  "version": "0.0.1.116",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -127,7 +127,7 @@
     },
     "SystemRequirements": {}
   },
-  "fileSize": "69.621KB",
+  "fileSize": "70.977KB",
   "readme": "https://github.com/mpadge/typetracer/blob/main/README.md",
   "contIntegration": [
     "https://github.com/mpadge/typetracer/actions",
