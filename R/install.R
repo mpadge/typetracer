@@ -21,8 +21,10 @@ pre_install <- function (package, path = NULL, quiet = FALSE) {
     p <- paste0 ("package:", package)
     pkg_attached <- p %in% search ()
     if (pkg_attached) {
-        unloadNamespace (package)
-        pkg_attached <- p %in% search () # FALSE
+        tryCatch (
+            unloadNamespace (package),
+            error = function (e) NULL
+        )
     }
 
 
@@ -61,13 +63,15 @@ pre_install <- function (package, path = NULL, quiet = FALSE) {
 
     # ----- END covr code
 
-    libs <- c (install_path, libs)
+    lib_path <- get_pkg_lib_path (package, install_path)
+    if (!lib_path %in% libs) {
+        libs <- c (lib_path, libs)
+    }
 
-    lib_path <- get_pkg_lib_path (package, libs)
     loadNamespace (package, lib.loc = lib_path, keep.source = TRUE)
     attachNamespace (package)
 
-    return (get_pkg_lib_path (package, libs))
+    return (lib_path)
 }
 
 #' Reload package from default library location
