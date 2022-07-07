@@ -22,16 +22,7 @@ load_traces <- function (quiet = FALSE) {
         fn_name <- tr_i$fn_name
         par_formals <- tr_i$formals
         tr_i <- tr_i [which (!names (tr_i) %in% c ("fn_name", "formals"))]
-
-        fn_call_hash <- paste0 (sample (c (
-            letters,
-            LETTERS,
-            0:9
-        ),
-        size = 8
-        ),
-        collapse = ""
-        )
+        fn_call_hash <- gsub ("^.*typetrace\\_|\\.Rds$", "", i)
 
         # simple vector columns:
         par_name <- vapply (tr_i, function (i) i$par, character (1))
