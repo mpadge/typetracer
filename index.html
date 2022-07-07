@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">typetracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.124</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,12 +69,6 @@
 </h1></div>
 <p><code>typetracer</code> is an R package to trace function parameter types. The main usage of <code>typetracer</code> is to identify parameters used as input to R functions. Many computer languages have formal type systems, meaning the types of parameters must be formally declared and encoded. R is different, and offers no way to specify the expected types of input parameters. <code>typetracer</code> identifies the types of parameters passed to R functions. The package can trace individual functions or entire packages, as demonstrated below.</p>
 <div class="section level2">
-<h2 id="future-development">Future development<a class="anchor" aria-label="anchor" href="#future-development"></a>
-</h2>
-<p>There is currently no plan to release this package on CRAN. It has been primarily developed to serve as the tracing engine for <a href="https://docs.ropensci.org/autotest/" class="external-link">the <code>autotest</code> package</a>, with all code from here included directly in that package. Future development of this package will only be in response to changes or bug fixes implemented in <code>autotest</code>.</p>
-<p>If you see a direct use for this <code>typetracer</code> package, and would like to see it released on CRAN, feel free to open an issue here, or contact @mpadge directly, and we’ll see what can be done.</p>
-</div>
-<div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>The package can be installed with the following command:</p>
@@ -104,13 +98,13 @@
 <span id="cb4-11"><a href="#cb4-11"></a><span class="co">## # A tibble: 7 × 9</span></span>
 <span id="cb4-12"><a href="#cb4-12"></a><span class="co">##   fn_name fn_call_hash par_name class     storage_mode length formal      uneval</span></span>
 <span id="cb4-13"><a href="#cb4-13"></a><span class="co">##   &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;list&gt;&gt; &lt;chr&gt;         &lt;int&gt; &lt;named lis&gt; &lt;I&lt;li&gt;</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">## 1 f       k29OspWu     x        &lt;chr [1]&gt; integer           2 &lt;missing&gt;   &lt;chr&gt; </span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">## 2 f       k29OspWu     y        &lt;chr [1]&gt; double            2 &lt;missing&gt;   &lt;chr&gt; </span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## 3 f       k29OspWu     z        &lt;chr [1]&gt; NULL              0 &lt;missing&gt;   &lt;chr&gt; </span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co">## 4 f       k29OspWu     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;   &lt;chr&gt; </span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## 5 f       k29OspWu     a        &lt;chr [1]&gt; character         1 &lt;NULL&gt;      &lt;chr&gt; </span></span>
-<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## 6 f       k29OspWu     b        &lt;chr [1]&gt; list              2 &lt;NULL&gt;      &lt;chr&gt; </span></span>
-<span id="cb4-20"><a href="#cb4-20"></a><span class="co">## 7 f       k29OspWu     f        &lt;chr [1]&gt; language          3 &lt;NULL&gt;      &lt;chr&gt; </span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">## 1 f       WijEKtCf     x        &lt;chr [1]&gt; integer           2 &lt;missing&gt;   &lt;chr&gt; </span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">## 2 f       WijEKtCf     y        &lt;chr [1]&gt; double            2 &lt;missing&gt;   &lt;chr&gt; </span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## 3 f       WijEKtCf     z        &lt;chr [1]&gt; NULL              0 &lt;missing&gt;   &lt;chr&gt; </span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">## 4 f       WijEKtCf     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;   &lt;chr&gt; </span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## 5 f       WijEKtCf     a        &lt;chr [1]&gt; character         1 &lt;NULL&gt;      &lt;chr&gt; </span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## 6 f       WijEKtCf     b        &lt;chr [1]&gt; list              2 &lt;NULL&gt;      &lt;chr&gt; </span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">## 7 f       WijEKtCf     f        &lt;chr [1]&gt; language          3 &lt;NULL&gt;      &lt;chr&gt; </span></span>
 <span id="cb4-21"><a href="#cb4-21"></a><span class="co">## # … with 1 more variable: eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
 <p>That results shows that all parameters of the function, <code>f()</code>, were successfully traced, including the additional parameters, <code>a</code>, <code>b</code>, and <code>f</code>, passed as part of the <code>...</code> argument. Such additional parameters can be identified through having a <code>"formal"</code> entry of <code>NULL</code>, indicating that they are not part of the formal arguments to the function.</p>
 <p>The result also includes columns for all parameters both in unevaluated and evaluated forms. The former captures the parameters as passed to the function call, while the latter are the equivalent evaluated versions. The following examples illustrate the differences.</p>
@@ -160,14 +154,14 @@
 <span id="cb8-4"><a href="#cb8-4"></a><span class="co">## # A tibble: 8 × 9</span></span>
 <span id="cb8-5"><a href="#cb8-5"></a><span class="co">##   fn_name  fn_call_hash par_name class     storage_mode length formal     uneval</span></span>
 <span id="cb8-6"><a href="#cb8-6"></a><span class="co">##   &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;list&gt;&gt; &lt;chr&gt;         &lt;int&gt; &lt;named li&gt; &lt;I&lt;li&gt;</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="co">## 1 re_match BPbLW9sD     pattern  &lt;chr [1]&gt; character         1 &lt;missing&gt;  &lt;chr&gt; </span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="co">## 2 re_match BPbLW9sD     text     &lt;chr [1]&gt; character         7 &lt;missing&gt;  &lt;chr&gt; </span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="co">## 3 re_match BPbLW9sD     perl     &lt;chr [1]&gt; logical           1 &lt;lgl [1]&gt;  &lt;chr&gt; </span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">## 4 re_match BPbLW9sD     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;  &lt;chr&gt; </span></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="co">## 5 re_match 81XsubEe     pattern  &lt;chr [1]&gt; character         1 &lt;missing&gt;  &lt;chr&gt; </span></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="co">## 6 re_match 81XsubEe     text     &lt;chr [1]&gt; character         7 &lt;missing&gt;  &lt;chr&gt; </span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="co">## 7 re_match 81XsubEe     perl     &lt;chr [1]&gt; logical           1 &lt;lgl [1]&gt;  &lt;chr&gt; </span></span>
-<span id="cb8-14"><a href="#cb8-14"></a><span class="co">## 8 re_match 81XsubEe     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">## 1 re_match zMrDtp2R     pattern  &lt;chr [1]&gt; character         1 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">## 2 re_match zMrDtp2R     text     &lt;chr [1]&gt; character         7 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">## 3 re_match zMrDtp2R     perl     &lt;chr [1]&gt; logical           1 &lt;lgl [1]&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">## 4 re_match zMrDtp2R     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co">## 5 re_match v0GHjFC3     pattern  &lt;chr [1]&gt; character         1 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="co">## 6 re_match v0GHjFC3     text     &lt;chr [1]&gt; character         7 &lt;missing&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">## 7 re_match v0GHjFC3     perl     &lt;chr [1]&gt; logical           1 &lt;lgl [1]&gt;  &lt;chr&gt; </span></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co">## 8 re_match v0GHjFC3     ...      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;  &lt;chr&gt; </span></span>
 <span id="cb8-15"><a href="#cb8-15"></a><span class="co">## # … with 1 more variable: eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
 <p>The result contains one line for every parameter passed to every function call in the examples. <a href="https://mpadge.github.io/typetracer/reference/trace_package.html">The <code>trace_package()</code> function</a> also includes an additional parameter, <code>types</code>, which defaults to <code>c ("examples", "tests")</code>, so that traces are also by default generated for all tests included with local source packages.</p>
 <p>The final two columns of the result hold the unevaluated and evaluated representations of each parameter. The first two values of each demonstrate the difference:</p>
