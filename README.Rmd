@@ -22,19 +22,6 @@ specify the expected types of input parameters. `typetracer` identifies the
 types of parameters passed to R functions. The package can trace individual
 functions or entire packages, as demonstrated below.
 
-## Future development
-
-There is currently no plan to release this package on CRAN. It has been
-primarily developed to serve as the tracing engine for [the `autotest`
-package](https://docs.ropensci.org/autotest/), with all code from here included
-directly in that package. Future development of this package will only be in
-response to changes or bug fixes implemented in `autotest`.
-
-If you see a direct use for this `typetracer` package, and would like to see it
-released on CRAN, feel free to open an issue here, or contact @mpadge directly,
-and we'll see what can be done.
-
-
 ## Installation
 
 The package can be installed with the following command:
