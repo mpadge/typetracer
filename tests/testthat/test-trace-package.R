@@ -27,7 +27,7 @@ test_that ("trace installed package", {
         c (
             "fn_name", "fn_call_hash", "par_name",
             "class", "storage_mode", "length",
-            "formal", "uneval", "eval"
+            "formal", "uneval", "eval", "source"
         )
     )
 
@@ -43,7 +43,7 @@ test_that ("trace installed package", {
         c (
             "fn_name", "fn_call_hash", "par_name",
             "class", "storage_mode", "length",
-            "formal", "uneval", "eval"
+            "formal", "uneval", "eval", "source"
         )
     )
 
@@ -69,7 +69,11 @@ test_that ("trace source package", {
 
     package <- "rematch"
     path <- normalizePath (file.path (tempdir (), package))
-    attachNamespace (package)
+    tryCatch (
+        attachNamespace (package),
+        error = function (e) NULL
+    )
+
 
     expect_s3_class (
         x0 <- trace_package (
@@ -87,7 +91,7 @@ test_that ("trace source package", {
         c (
             "fn_name", "fn_call_hash", "par_name",
             "class", "storage_mode", "length",
-            "formal", "uneval", "eval"
+            "formal", "uneval", "eval", "source"
         )
     )
 })
