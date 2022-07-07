@@ -185,7 +185,6 @@ trace_package_exs <- function (package, functions = NULL) {
 trace_package_tests <- function (package, pkg_dir = NULL) {
 
     requireNamespace ("testthat")
-    requireNamespace ("withr")
 
     if (is.null (pkg_dir)) {
         return (list ()) # nocov
