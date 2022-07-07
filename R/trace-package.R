@@ -48,13 +48,20 @@ trace_package <- function (package = NULL,
     clear_traces ()
 
     if ("examples" %in% types) {
-        check <- trace_package_exs (package, functions) # dummy logical value
+        trace_names <- trace_package_exs (package, functions)
     }
     if ("tests" %in% types) {
         check <- trace_package_tests (package, pkg_dir)
     }
 
     traces <- load_traces (quiet = TRUE)
+
+    # join rd_name from trace_names:
+    traces$source <-
+        trace_names$rd_name [match (traces$trace_name, trace_names$trace)]
+    index <- which (!is.na (traces$source))
+    traces$source [index] <- paste0 ("rd_", traces$source [index])
+    traces$trace_name <- NULL
 
     clear_traces ()
 
@@ -99,6 +106,12 @@ assert_trace_package_inputs <- function (package = NULL,
     return (package)
 }
 
+#' Trace all examples from a package
+#'
+#' @param package Name of package to be traced.
+#' @param functions Optional list of names of functions to be traced.
+#' @return 'data.frame' of '.Rd' file names and trace names.
+#' @noRd
 trace_package_exs <- function (package, functions = NULL) {
 
     exs <- get_pkg_examples (package)
@@ -127,9 +140,17 @@ trace_package_exs <- function (package, functions = NULL) {
     dev <- options ()$"device"
     options (device = NULL)
 
+    # get current traces
+    td <- options ("typetracedir")$typetracedir
+    trace_list_old <- list.files (
+        td,
+        pattern = "^typetrace\\_",
+        full.names = TRUE
+    )
+
     # Evaluate each example separately, to avoid aborting evaluation process
     # when only one example errors
-    out <- lapply (exs, function (ex) {
+    traces <- lapply (exs, function (ex) {
 
         suppressWarnings ( # nolint - variable assigned but not used
             tryCatch ( # nolint - variable assigned but not used
@@ -137,11 +158,27 @@ trace_package_exs <- function (package, functions = NULL) {
                 error = function (e) NULL
             )
         )
+        trace_list_new <- list.files (
+            td,
+            pattern = "^typetrace\\_",
+            full.names = TRUE
+        )
+        trace_list_added <-
+            trace_list_new [which (!trace_list_new %in% trace_list_old)]
+        trace_list_old <- trace_list_new
+
+        return (trace_list_added)
     })
 
     options (device = dev)
 
-    return (TRUE)
+    traces <- lapply (traces, function (i) data.frame (trace_name = i))
+    traces <- do.call (rbind, traces) # inherits .Rd name as row name
+    traces$rd_name <- gsub ("\\.[0-9]+$", "", rownames (traces))
+    rownames (traces) <- NULL
+    traces <- traces [, c ("rd_name", "trace_name")]
+
+    return (traces)
 }
 
 # adapted from tools::testInstalledPackages

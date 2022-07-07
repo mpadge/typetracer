@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/mpadge/typetracer",
   "issueTracker": "https://github.com/mpadge/typetracer/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.1.0",
+  "version": "0.1.0.001",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -149,10 +149,13 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=withr"
     },
-    "SystemRequirements": null
+    "SystemRequirements": {}
   },
   "fileSize": "75.922KB",
   "readme": "https://github.com/mpadge/typetracer/blob/main/README.md",
-  "contIntegration": ["https://github.com/mpadge/typetracer/actions", "https://codecov.io/gh/mpadge/typetracer"],
+  "contIntegration": [
+    "https://github.com/mpadge/typetracer/actions",
+    "https://codecov.io/gh/mpadge/typetracer"
+  ],
   "keywords": "r"
 }

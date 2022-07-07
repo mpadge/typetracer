@@ -49,6 +49,7 @@ load_traces <- function (quiet = FALSE) {
         par_eval <- I (lapply (tr_i, function (i) i$par_eval))
 
         tibble::tibble (
+            trace_name = i,
             fn_name = fn_name,
             fn_call_hash = fn_call_hash,
             par_name = par_name,
