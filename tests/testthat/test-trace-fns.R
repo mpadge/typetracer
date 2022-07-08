@@ -57,13 +57,13 @@ test_that ("trace call", {
 
     expect_s3_class (x, "tbl_df")
     expect_equal (nrow (x), 2L) # x and y
-    expect_equal (ncol (x), 10L)
+    expect_equal (ncol (x), 11L)
     expect_identical (
         names (x),
         c (
-            "trace_name", "fn_name", "fn_call_hash",
-            "par_name", "class", "storage_mode",
-            "length", "formal", "uneval", "eval"
+            "trace_name", "trace_number", "fn_name",
+            "fn_call_hash", "par_name", "class",
+            "storage_mode", "length", "formal", "uneval", "eval"
         )
     )
 })
