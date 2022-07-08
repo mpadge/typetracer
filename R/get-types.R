@@ -21,6 +21,10 @@ get_types <- function () {
         paste0 ("typetrace_", typetracer_env$nm, ".Rds")
     )
 
+    typetracer_env$trace_dir <- options ("typetracedir")$typetracedir
+    typetracer_env$num_traces <-
+        length (list.files (typetracer_env$trace_dir, pattern = "^typetrace\\_"))
+
     # Extract values. `match.call` returns the *expressions* submitted to the
     # call, while the evaluated versions of formalArgs are stored in the
     # environment. `get` is used for the latter to avoid re-`eval`-ing, but
@@ -107,6 +111,7 @@ get_types <- function () {
 
     typetracer_env$data$fn_name <- as.character (typetracer_env$fn_name)
     typetracer_env$data$formals <- typetracer_env$par_formals
+    typetracer_env$data$num_traces <- typetracer_env$num_traces
 
     saveRDS (typetracer_env$data, typetracer_env$fname)
 
