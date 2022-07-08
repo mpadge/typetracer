@@ -58,13 +58,28 @@ trace_package <- function (package = NULL,
     }
 
     traces <- load_traces (quiet = TRUE)
+    traces$source <- NA_character_
 
-    # join rd_name from trace_names:
-    traces$source <-
-        trace_names$rd_name [match (traces$trace_name, trace_names$trace)]
-    index <- which (!is.na (traces$source))
-    traces$source [index] <- paste0 ("rd_", traces$source [index])
-    traces$trace_name <- NULL
+    if ("examples" %in% types) {
+        # join rd_name from trace_names:
+        traces$source <-
+            trace_names$rd_name [match (traces$trace_name, trace_names$trace)]
+        index <- which (!is.na (traces$source))
+        traces$source [index] <- paste0 ("rd_", traces$source [index])
+        traces$trace_name <- NULL
+    }
+    if ("tests" %in% types) {
+        # join test names from test_traces:
+        test_tr_start <- test_traces$trace_number
+        test_tr_end <- c (test_traces$trace_number [-1] - 1, max (traces$trace_number))
+        test_names <- rep (test_traces$test_name, times = test_tr_end - test_tr_start + 1)
+        test_files <- rep (test_traces$test_file, times = test_tr_end - test_tr_start + 1)
+        test_tr_index <- seq (min (test_tr_start), max (test_tr_end))
+        traces_index <- which (traces$trace_number %in% test_tr_index)
+        index <- match (traces$trace_number [traces_index], test_tr_index)
+        traces$source [traces_index] <- paste0 (test_files, "/", test_names) [index]
+    }
+
 
     clear_traces ()
 

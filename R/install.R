@@ -75,9 +75,9 @@ pre_install <- function (package, path = NULL, quiet = FALSE) {
     return (lib_path)
 }
 
-insert_counters_in_tests <- function (install_path) {
+insert_counters_in_tests <- function (pkg_dir) {
 
-    test_path <- file.path (install_path, "tests", "testthat")
+    test_path <- file.path (pkg_dir, "tests", "testthat")
     if (!dir.exists (test_path)) {
         return (NULL)
     }
@@ -116,7 +116,7 @@ insert_counters_in_tests <- function (install_path) {
                 "ntraces <- length (traces)",
                 paste0 (
                     "ftmp <- file.path (\"",
-                    install_path,
+                    pkg_dir,
                     "\", \"tracetest_",
                     test_name,
                     ".txt\")"
