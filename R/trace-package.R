@@ -302,7 +302,7 @@ get_pkg_examples <- function (package) {
 
 join_test_trace_data <- function (traces, test_traces) {
 
-    if ("trace_number" %in% names (test_traces)) {
+    if (!"trace_number" %in% names (test_traces)) {
         return (traces)
     }
 
@@ -313,7 +313,7 @@ join_test_trace_data <- function (traces, test_traces) {
     }
 
     tr_start1 <- min (test_tr_start, na.rm = TRUE)
-    tr_end1 <- min (test_tr_end, na.rm = TRUE)
+    tr_end1 <- max (test_tr_end, na.rm = TRUE)
     if (length (tr_start1) == 0L || length (tr_end1) == 0L) {
         return (traces)
     }
