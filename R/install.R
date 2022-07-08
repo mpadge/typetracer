@@ -63,6 +63,7 @@ pre_install <- function (package, path = NULL, quiet = FALSE) {
 
     # ----- END covr code
 
+
     lib_path <- get_pkg_lib_path (package, install_path)
     if (!lib_path %in% libs) {
         libs <- c (lib_path, libs)
@@ -72,6 +73,62 @@ pre_install <- function (package, path = NULL, quiet = FALSE) {
     attachNamespace (package)
 
     return (lib_path)
+}
+
+insert_counters_in_tests <- function (install_path) {
+
+    test_path <- file.path (install_path, "tests", "testthat")
+    if (!dir.exists (test_path)) {
+        return (NULL)
+    }
+
+    test_files <- list.files (test_path,
+                              pattern = "^test",
+                              recursive = TRUE,
+                              full.names = TRUE)
+
+    for (f in test_files) {
+
+        p <- parse (f)
+        p_injected <- lapply (seq_along (p), function (i) {
+            pd_i <- getParseData (parse (text = deparse (p [[i]])))
+            testthat_start <- which (pd_i$token == "SYMBOL_FUNCTION_CALL" &
+                                     pd_i$text == "test_that")
+            if (length (testthat_start) == 0L) {
+                return (deparse (p [[i]]))
+            }
+            str_const_i <- which (pd_i$token == "STR_CONST")
+            str_const_i <-
+                str_const_i [which (str_const_i > testthat_start) [1]]
+            test_name <- gsub ("\\\"|\\\'", "", pd_i$text [str_const_i])
+
+            pd_i <- deparse (p [[i]])
+            index1 <- grep (test_name, pd_i)
+            index2 <- grep ("\\{", pd_i)
+            index <- index2 [which (index2 >= index1 [1])] [1]
+            test_name <- gsub ("\\s+", "_", test_name)
+            pd_i <- c (
+                pd_i [seq (index)],
+                "",
+                "td <- options (\"typetracedir\")$typetracedir",
+                "traces <- list.files (td, pattern = \"^typetrace_\", ",
+                "                      full.names = TRUE)",
+                "ntraces <- length (traces)",
+                paste0 (
+                    "ftmp <- file.path (\"",
+                    install_path,
+                    "\", \"tracetest_",
+                    test_name,
+                    ".txt\")"
+                ),
+                "writeLines (as.character (ntraces), ftmp)",
+                "",
+                pd_i [-seq (index)])
+
+            return (pd_i)
+        })
+        writeLines (unlist (p_injected), f)
+    }
 }
 
 #' Reload package from default library location
