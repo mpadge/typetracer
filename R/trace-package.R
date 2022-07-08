@@ -305,7 +305,7 @@ get_pkg_examples <- function (package) {
 
 join_test_trace_data <- function (traces, test_traces) {
 
-    if (!"trace_number" %in% names (test_traces)) {
+    if (!"trace_number" %in% names (test_traces) || nrow (test_traces) == 0L) {
         return (traces)
     }
 
