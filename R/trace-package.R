@@ -28,7 +28,7 @@ trace_package <- function (package = NULL,
     lib_path <- pre_install (package, pkg_dir, quiet = FALSE)
     # Flag whether package was able to be pre-installed to local tempdir:
     pre_installed <- !lib_path %in% lib_paths
-    if (pre_installed | is.null (pkg_dir)) {
+    if (pre_installed || is.null (pkg_dir)) {
         pkg_dir <- file.path (lib_path, package)
     }
 
@@ -210,22 +210,25 @@ trace_package_tests <- function (package, pkg_dir = NULL,
     # `read_test_trace_numbers()` in @/load-traces.R
     test_trace_numbers <- read_test_trace_numbers (pkg_dir)
 
-    test_str <- lapply (out, function (i) c (i$file, i$test))
-    test_str <- data.frame (do.call (rbind, test_str))
-    names (test_str) <- c ("file", "test_name")
-    test_str$file <- file.path (
-        pkg_dir,
-        testthat::test_path (),
-        test_str$file
-    )
-    test_str$test <- gsub ("\\s+", "_", test_str$test_name)
-    index <- match (test_trace_numbers$test, test_str$test)
-    test_trace_numbers$test_name <- test_str$test_name [index]
-    test_trace_numbers$test_file <- basename (test_str$file [index])
-    test_trace_numbers$test <- NULL
-    test_trace_numbers <-
-        test_trace_numbers [, c ("test_file", "test_name", "trace_number")]
-    rownames (test_trace_numbers) <- NULL
+    if (nrow (test_trace_numbers) > 0L) {
+
+        test_str <- lapply (out, function (i) c (i$file, i$test))
+        test_str <- data.frame (do.call (rbind, test_str))
+        names (test_str) <- c ("file", "test_name")
+        test_str$file <- file.path (
+            pkg_dir,
+            testthat::test_path (),
+            test_str$file
+        )
+        test_str$test <- gsub ("\\s+", "_", test_str$test_name)
+        index <- match (test_trace_numbers$test, test_str$test)
+        test_trace_numbers$test_name <- test_str$test_name [index]
+        test_trace_numbers$test_file <- basename (test_str$file [index])
+        test_trace_numbers$test <- NULL
+        test_trace_numbers <-
+            test_trace_numbers [, c ("test_file", "test_name", "trace_number")]
+        rownames (test_trace_numbers) <- NULL
+    }
 
     return (test_trace_numbers)
 }
