@@ -22,7 +22,8 @@ load_traces <- function (quiet = FALSE) {
         fn_name <- tr_i$fn_name
         par_formals <- tr_i$formals
         num_traces <- tr_i$num_traces
-        tr_i <- tr_i [which (!names (tr_i) %in% c ("fn_name", "formals", "num_traces"))]
+        tr_i <- tr_i [which (!names (tr_i) %in%
+            c ("fn_name", "formals", "num_traces"))]
         fn_call_hash <- gsub ("^.*typetrace\\_|\\.Rds$", "", i)
 
         # simple vector columns:
@@ -107,7 +108,8 @@ read_test_trace_numbers <- function (install_path) {
         "",
         basename (rownames (num_traces))
     )
-    num_traces <- num_traces [order (num_traces$trace_number), c ("test", "trace_number")]
+    num_traces <-
+        num_traces [order (num_traces$trace_number), c ("test", "trace_number")]
     rownames (num_traces) <- NULL
 
     return (num_traces)
