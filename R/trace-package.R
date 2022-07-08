@@ -20,7 +20,10 @@ trace_package <- function (package = NULL,
     package <- assert_trace_package_inputs (package, types, pkg_dir)
     pkg_was_attached <- any (grepl (paste0 ("package:", package), search ()))
     if (pkg_was_attached) {
-        on.exit (attachNamespace (package))
+        on.exit (tryCatch (
+            attachNamespace (package),
+            error = function (e) NULL
+        ))
     }
 
     # -------- PRE_INSTALLATION
