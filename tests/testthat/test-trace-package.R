@@ -94,4 +94,9 @@ test_that ("trace source package", {
            "formal", "uneval", "eval", "source"
         )
     )
+
+    source_rd <- grep ("^rd\\_", x0$source, value = TRUE)
+    source_test <- grep ("^test", x0$source, value = TRUE)
+    expect_true (length (source_rd) > 1L)
+    expect_true (length (source_test) > 1L)
 })
