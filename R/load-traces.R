@@ -102,12 +102,12 @@ read_test_trace_numbers <- function (install_path) {
         function (i) as.integer (readLines (i) [1]),
         integer (1L)
     ))
-    num_traces$test_name <- gsub (
+    num_traces$test <- gsub (
         "^tracetest\\_|\\.txt$|\\.txt$",
         "",
         basename (rownames (num_traces))
     )
-    num_traces <- num_traces [order (num_traces$trace_number), c ("test_name", "trace_number")]
+    num_traces <- num_traces [order (num_traces$trace_number), c ("test", "trace_number")]
     rownames (num_traces) <- NULL
 
     return (num_traces)
