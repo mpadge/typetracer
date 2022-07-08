@@ -68,7 +68,7 @@ trace_package <- function (package = NULL,
         traces$source [index] <- paste0 ("rd_", traces$source [index])
         traces$trace_name <- NULL
     }
-    if ("tests" %in% types) {
+    if ("tests" %in% types & length (test_traces) > 0L) {
         # join test names from test_traces:
         test_tr_start <- test_traces$trace_number
         test_tr_end <- c (test_traces$trace_number [-1] - 1, max (traces$trace_number))
