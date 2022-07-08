@@ -24,8 +24,11 @@ trace_package <- function (package = NULL,
     }
 
     # -------- PRE_INSTALLATION
+    lib_paths <- .libPaths ()
     lib_path <- pre_install (package, pkg_dir, quiet = FALSE)
-    if (is.null (pkg_dir)) {
+    # Flag whether package was able to be pre-installed to local tempdir:
+    pre_installed <- !lib_path %in% lib_paths
+    if (pre_installed | is.null (pkg_dir)) {
         pkg_dir <- file.path (lib_path, package)
     }
 
@@ -51,7 +54,7 @@ trace_package <- function (package = NULL,
         trace_names <- trace_package_exs (package, functions)
     }
     if ("tests" %in% types) {
-        check <- trace_package_tests (package, pkg_dir)
+        test_traces <- trace_package_tests (package, pkg_dir, pre_installed)
     }
 
     traces <- load_traces (quiet = TRUE)
@@ -182,12 +185,16 @@ trace_package_exs <- function (package, functions = NULL) {
 }
 
 # adapted from tools::testInstalledPackages
-trace_package_tests <- function (package, pkg_dir = NULL) {
+trace_package_tests <- function (package, pkg_dir = NULL,
+                                 pre_installed = FALSE) {
 
     requireNamespace ("testthat")
 
     if (is.null (pkg_dir)) {
         return (list ()) # nocov
+    }
+    if (pre_installed) {
+        insert_counters_in_tests (pkg_dir)
     }
     test_dir <- file.path (pkg_dir, "tests")
 
@@ -195,12 +202,32 @@ trace_package_tests <- function (package, pkg_dir = NULL) {
         return (list ()) # test_check returns list
     }
 
-    withr::with_dir (
+    out <- withr::with_dir (
         test_dir,
-        testthat::test_check (package)
+        testthat::test_package (package, reporter = testthat::ListReporter)
     )
 
-    return (TRUE)
+    # `read_test_trace_numbers()` in @/load-traces.R
+    test_trace_numbers <- read_test_trace_numbers (pkg_dir)
+
+    test_str <- lapply (out, function (i) c (i$file, i$test))
+    test_str <- data.frame (do.call (rbind, test_str))
+    names (test_str) <- c ("file", "test_name")
+    test_str$file <- file.path (
+        pkg_dir,
+        testthat::test_path (),
+        test_str$file
+    )
+    test_str$test <- gsub ("\\s+", "_", test_str$test_name)
+    index <- match (test_trace_numbers$test, test_str$test)
+    test_trace_numbers$test_name <- test_str$test_name [index]
+    test_trace_numbers$test_file <- basename (test_str$file [index])
+    test_trace_numbers$test <- NULL
+    test_trace_numbers <-
+        test_trace_numbers [, c ("test_file", "test_name", "trace_number")]
+    rownames (test_trace_numbers) <- NULL
+
+    return (test_trace_numbers)
 }
 
 get_pkg_examples <- function (package) {
