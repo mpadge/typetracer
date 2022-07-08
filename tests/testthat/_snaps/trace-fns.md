@@ -10,6 +10,9 @@
               collapse = "")
           typetracer_env$fname <- file.path(typetracer_env$td, paste0("typetrace_", 
               typetracer_env$nm, ".Rds"))
+          typetracer_env$trace_dir <- options("typetracedir")$typetracedir
+          typetracer_env$num_traces <- length(list.files(typetracer_env$trace_dir, 
+              pattern = "^typetrace\\_"))
           typetracer_env$fn_call <- match.call(expand.dots = TRUE)
           typetracer_env$fn_name <- typetracer_env$fn_call[[1]]
           typetracer_env$pars <- as.list(typetracer_env$fn_call[-1L])
@@ -65,6 +68,7 @@
           })
           typetracer_env$data$fn_name <- as.character(typetracer_env$fn_name)
           typetracer_env$data$formals <- typetracer_env$par_formals
+          typetracer_env$data$num_traces <- typetracer_env$num_traces
           saveRDS(typetracer_env$data, typetracer_env$fname)
           rm(typetracer_env)
       }
