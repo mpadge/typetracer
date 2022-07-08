@@ -68,7 +68,7 @@ trace_package <- function (package = NULL,
         traces$source [index] <- paste0 ("rd_", traces$source [index])
         traces$trace_name <- NULL
     }
-    if ("tests" %in% types & length (test_traces) > 0L) {
+    if ("tests" %in% types && length (test_traces) > 0L) {
         traces <- join_test_trace_data (traces, test_traces)
     }
 
@@ -302,6 +302,10 @@ get_pkg_examples <- function (package) {
 
 join_test_trace_data <- function (traces, test_traces) {
 
+    if ("trace_number" %in% names (test_traces)) {
+        return (traces)
+    }
+
     test_tr_start <- test_traces$trace_number
     test_tr_end <- c (test_traces$trace_number [-1] - 1, max (traces$trace_number, na.rm = TRUE))
     if (any (is.na (test_tr_start)) || any (is.na (test_tr_end))) {
@@ -310,6 +314,12 @@ join_test_trace_data <- function (traces, test_traces) {
 
     tr_start1 <- min (test_tr_start, na.rm = TRUE)
     tr_end1 <- min (test_tr_end, na.rm = TRUE)
+    if (length (tr_start1) == 0L || length (tr_end1) == 0L) {
+        return (traces)
+    }
+    if (is.na (tr_start1) || is.na (tr_end1)) {
+        return (traces)
+    }
 
     test_names <- rep (test_traces$test_name, times = test_tr_end - test_tr_start + 1)
     test_files <- rep (test_traces$test_file, times = test_tr_end - test_tr_start + 1)
