@@ -59,17 +59,18 @@ from each function call.
     x <- load_traces ()
     x
 
-    ## # A tibble: 7 × 9
-    ##   fn_name fn_call_hash par_name class     storage_mode length formal      uneval
-    ##   <chr>   <chr>        <chr>    <I<list>> <chr>         <int> <named lis> <I<li>
-    ## 1 f       WijEKtCf     x        <chr [1]> integer           2 <missing>   <chr> 
-    ## 2 f       WijEKtCf     y        <chr [1]> double            2 <missing>   <chr> 
-    ## 3 f       WijEKtCf     z        <chr [1]> NULL              0 <missing>   <chr> 
-    ## 4 f       WijEKtCf     ...      <chr [1]> NULL              0 <missing>   <chr> 
-    ## 5 f       WijEKtCf     a        <chr [1]> character         1 <NULL>      <chr> 
-    ## 6 f       WijEKtCf     b        <chr [1]> list              2 <NULL>      <chr> 
-    ## 7 f       WijEKtCf     f        <chr [1]> language          3 <NULL>      <chr> 
-    ## # … with 1 more variable: eval <I<list>>
+    ## # A tibble: 7 × 11
+    ##   trace_name       trace_number fn_name fn_call_hash par_name class storage_mode
+    ##   <chr>                   <int> <chr>   <chr>        <chr>    <I<l> <chr>       
+    ## 1 /tmp/RtmpXPB1aF…            0 f       yDfBMuoW     x        <chr> integer     
+    ## 2 /tmp/RtmpXPB1aF…            0 f       yDfBMuoW     y        <chr> double      
+    ## 3 /tmp/RtmpXPB1aF…            0 f       yDfBMuoW     z        <chr> NULL        
+    ## 4 /tmp/RtmpXPB1aF…            0 f       yDfBMuoW     ...      <chr> NULL        
+    ## 5 /tmp/RtmpXPB1aF…            0 f       yDfBMuoW     a        <chr> character   
+    ## 6 /tmp/RtmpXPB1aF…            0 f       yDfBMuoW     b        <chr> list        
+    ## 7 /tmp/RtmpXPB1aF…            0 f       yDfBMuoW     f        <chr> language    
+    ## # … with 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
+    ## #   eval <I<list>>
 
 That results shows that all parameters of the function, `f()`, were
 successfully traced, including the additional parameters, `a`, `b`, and
@@ -157,18 +158,18 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     res <- trace_package ("rematch")
     res
 
-    ## # A tibble: 8 × 9
-    ##   fn_name  fn_call_hash par_name class     storage_mode length formal     uneval
-    ##   <chr>    <chr>        <chr>    <I<list>> <chr>         <int> <named li> <I<li>
-    ## 1 re_match zMrDtp2R     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 2 re_match zMrDtp2R     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 3 re_match zMrDtp2R     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 4 re_match zMrDtp2R     ...      <chr [1]> NULL              0 <missing>  <chr> 
-    ## 5 re_match v0GHjFC3     pattern  <chr [1]> character         1 <missing>  <chr> 
-    ## 6 re_match v0GHjFC3     text     <chr [1]> character         7 <missing>  <chr> 
-    ## 7 re_match v0GHjFC3     perl     <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 8 re_match v0GHjFC3     ...      <chr [1]> NULL              0 <missing>  <chr> 
-    ## # … with 1 more variable: eval <I<list>>
+    ## # A tibble: 8 × 11
+    ##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   
+    ##          <int> <chr>   <chr>        <chr>    <I<l> <chr>         <int> <named l>
+    ## 1            0 re_mat… DQBMPXEb     pattern  <chr> character         1 <missing>
+    ## 2            0 re_mat… DQBMPXEb     text     <chr> character         7 <missing>
+    ## 3            0 re_mat… DQBMPXEb     perl     <chr> logical           1 <lgl [1]>
+    ## 4            0 re_mat… DQBMPXEb     ...      <chr> NULL              0 <missing>
+    ## 5            1 re_mat… WgbmAuso     pattern  <chr> character         1 <missing>
+    ## 6            1 re_mat… WgbmAuso     text     <chr> character         7 <missing>
+    ## 7            1 re_mat… WgbmAuso     perl     <chr> logical           1 <lgl [1]>
+    ## 8            1 re_mat… WgbmAuso     ...      <chr> NULL              0 <missing>
+    ## # … with 3 more variables: uneval <I<list>>, eval <I<list>>, source <chr>
 
 The result contains one line for every parameter passed to every
 function call in the examples. [The `trace_package()`
