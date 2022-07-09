@@ -4,9 +4,12 @@
 \alias{load_traces}
 \title{Load traces of parameter types}
 \usage{
-load_traces(quiet = FALSE)
+load_traces(files = FALSE, quiet = FALSE)
 }
 \arguments{
+\item{files}{If \code{TRUE}, return paths to all temporary files holding trace
+data.}
+
 \item{quiet}{If \code{FALSE}, issue message when no traces found.}
 }
 \description{

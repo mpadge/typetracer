@@ -1,9 +1,11 @@
 
 #' Load traces of parameter types
 #'
+#' @param files If `TRUE`, return paths to all temporary files holding trace
+#' data.
 #' @param quiet If `FALSE`, issue message when no traces found.
 #' @export
-load_traces <- function (quiet = FALSE) {
+load_traces <- function (files = FALSE, quiet = FALSE) {
 
     td <- options ("typetracedir")$typetracedir
     traces <- list.files (td, pattern = "^typetrace\\_", full.names = TRUE)
