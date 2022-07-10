@@ -59,6 +59,11 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
     })
 
     out <- do.call (rbind, out)
+
+    if (!files) {
+        out$trace_name <- NULL
+    }
+
     out <- out [order (out$trace_number), ]
     rownames (out) <- NULL
 
