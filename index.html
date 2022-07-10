@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">typetracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.031</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.032</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,13 +98,13 @@
 <span id="cb4-11"><a href="#cb4-11"></a><span class="co">## # A tibble: 7 × 10</span></span>
 <span id="cb4-12"><a href="#cb4-12"></a><span class="co">##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   </span></span>
 <span id="cb4-13"><a href="#cb4-13"></a><span class="co">##          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;l&gt; &lt;chr&gt;         &lt;int&gt; &lt;named l&gt;</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">## 1            0 f       pFVsBjIA     x        &lt;chr&gt; integer           2 &lt;missing&gt;</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">## 2            0 f       pFVsBjIA     y        &lt;chr&gt; double            2 &lt;missing&gt;</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## 3            0 f       pFVsBjIA     z        &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co">## 4            0 f       pFVsBjIA     ...      &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## 5            0 f       pFVsBjIA     a        &lt;chr&gt; character         1 &lt;NULL&gt;   </span></span>
-<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## 6            0 f       pFVsBjIA     b        &lt;chr&gt; list              2 &lt;NULL&gt;   </span></span>
-<span id="cb4-20"><a href="#cb4-20"></a><span class="co">## 7            0 f       pFVsBjIA     f        &lt;chr&gt; language          3 &lt;NULL&gt;   </span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">## 1            0 f       ZtuzCfJn     x        &lt;chr&gt; integer           2 &lt;missing&gt;</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">## 2            0 f       ZtuzCfJn     y        &lt;chr&gt; double            2 &lt;missing&gt;</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## 3            0 f       ZtuzCfJn     z        &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">## 4            0 f       ZtuzCfJn     ...      &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## 5            0 f       ZtuzCfJn     a        &lt;chr&gt; character         1 &lt;NULL&gt;   </span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## 6            0 f       ZtuzCfJn     b        &lt;chr&gt; list              2 &lt;NULL&gt;   </span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">## 7            0 f       ZtuzCfJn     f        &lt;chr&gt; language          3 &lt;NULL&gt;   </span></span>
 <span id="cb4-21"><a href="#cb4-21"></a><span class="co">## # … with 2 more variables: uneval &lt;I&lt;list&gt;&gt;, eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
 <p>That results shows that all parameters of the function, <code>f()</code>, were successfully traced, including the additional parameters, <code>a</code>, <code>b</code>, and <code>f</code>, passed as part of the <code>...</code> argument. Such additional parameters can be identified through having a <code>"formal"</code> entry of <code>NULL</code>, indicating that they are not part of the formal arguments to the function.</p>
 <p>The result also includes columns for all parameters both in unevaluated and evaluated forms. The former captures the parameters as passed to the function call, while the latter are the equivalent evaluated versions. The following examples illustrate the differences.</p>
@@ -154,14 +154,14 @@
 <span id="cb8-4"><a href="#cb8-4"></a><span class="co">## # A tibble: 8 × 11</span></span>
 <span id="cb8-5"><a href="#cb8-5"></a><span class="co">##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   </span></span>
 <span id="cb8-6"><a href="#cb8-6"></a><span class="co">##          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;l&gt; &lt;chr&gt;         &lt;int&gt; &lt;named l&gt;</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="co">## 1            0 re_mat… QkITnWHq     pattern  &lt;chr&gt; character         1 &lt;missing&gt;</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="co">## 2            0 re_mat… QkITnWHq     text     &lt;chr&gt; character         7 &lt;missing&gt;</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="co">## 3            0 re_mat… QkITnWHq     perl     &lt;chr&gt; logical           1 &lt;lgl [1]&gt;</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">## 4            0 re_mat… QkITnWHq     ...      &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="co">## 5            1 re_mat… mLVNHJRk     pattern  &lt;chr&gt; character         1 &lt;missing&gt;</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="co">## 6            1 re_mat… mLVNHJRk     text     &lt;chr&gt; character         7 &lt;missing&gt;</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="co">## 7            1 re_mat… mLVNHJRk     perl     &lt;chr&gt; logical           1 &lt;lgl [1]&gt;</span></span>
-<span id="cb8-14"><a href="#cb8-14"></a><span class="co">## 8            1 re_mat… mLVNHJRk     ...      &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">## 1            0 re_mat… eBKFlEXv     pattern  &lt;chr&gt; character         1 &lt;missing&gt;</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">## 2            0 re_mat… eBKFlEXv     text     &lt;chr&gt; character         7 &lt;missing&gt;</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">## 3            0 re_mat… eBKFlEXv     perl     &lt;chr&gt; logical           1 &lt;lgl [1]&gt;</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">## 4            0 re_mat… eBKFlEXv     ...      &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co">## 5            1 re_mat… bwDndoWq     pattern  &lt;chr&gt; character         1 &lt;missing&gt;</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="co">## 6            1 re_mat… bwDndoWq     text     &lt;chr&gt; character         7 &lt;missing&gt;</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">## 7            1 re_mat… bwDndoWq     perl     &lt;chr&gt; logical           1 &lt;lgl [1]&gt;</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co">## 8            1 re_mat… bwDndoWq     ...      &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
 <span id="cb8-15"><a href="#cb8-15"></a><span class="co">## # … with 3 more variables: uneval &lt;I&lt;list&gt;&gt;, eval &lt;I&lt;list&gt;&gt;, source &lt;chr&gt;</span></span></code></pre></div>
 <p>The <code>data.frame</code> returned by the <code><a href="reference/trace_package.html">trace_package()</a></code> function includes one more column than the result directly returned by <code><a href="reference/load_traces.html">load_traces()</a></code>. This column is called “source”, and identifies the source-code object which generated each trace:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">unique</span> (res<span class="op">$</span>source)</span>
@@ -186,7 +186,7 @@
 <span id="cb10-14"><a href="#cb10-14"></a><span class="co">## $text</span></span>
 <span id="cb10-15"><a href="#cb10-15"></a><span class="co">## [1] "2016-04-20"       "1977-08-08"       "not a date"       "2016"            </span></span>
 <span id="cb10-16"><a href="#cb10-16"></a><span class="co">## [5] "76-03-02"         "2012-06-30"       "2015-01-21 19:58"</span></span></code></pre></div>
-<p>The example first assigns a variable <code>isodaten</code> to the first of the evaluated values, and then calls the function with <code>pattern = isodaten</code>. The second constructs the vector called <code>dates</code> with the second of the evaluated values, then calls the function with <code>test = dates</code>.</p>
+<p>The example first assigns a variable <code>isodate</code> to the first of the evaluated values, and then calls the function with <code>pattern = isodate</code>. The second constructs the vector called <code>dates</code> with the second of the evaluated values, then calls the function with <code>test = dates</code>.</p>
 <div class="section level3">
 <h3 id="example-2a---specifying-functions-to-trace">Example #2(a) - Specifying Functions to Trace<a class="anchor" aria-label="anchor" href="#example-2a---specifying-functions-to-trace"></a>
 </h3>
