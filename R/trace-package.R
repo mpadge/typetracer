@@ -60,7 +60,7 @@ trace_package <- function (package = NULL,
         test_traces <- trace_package_tests (package, pkg_dir, pre_installed)
     }
 
-    traces <- load_traces (quiet = TRUE)
+    traces <- load_traces (files = TRUE, quiet = TRUE)
     traces$source <- NA_character_
 
     if ("examples" %in% types) {
