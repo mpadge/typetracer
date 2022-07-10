@@ -62,13 +62,13 @@ from each function call.
     ## # A tibble: 7 × 10
     ##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   
     ##          <int> <chr>   <chr>        <chr>    <I<l> <chr>         <int> <named l>
-    ## 1            0 f       pFVsBjIA     x        <chr> integer           2 <missing>
-    ## 2            0 f       pFVsBjIA     y        <chr> double            2 <missing>
-    ## 3            0 f       pFVsBjIA     z        <chr> NULL              0 <missing>
-    ## 4            0 f       pFVsBjIA     ...      <chr> NULL              0 <missing>
-    ## 5            0 f       pFVsBjIA     a        <chr> character         1 <NULL>   
-    ## 6            0 f       pFVsBjIA     b        <chr> list              2 <NULL>   
-    ## 7            0 f       pFVsBjIA     f        <chr> language          3 <NULL>   
+    ## 1            0 f       ZtuzCfJn     x        <chr> integer           2 <missing>
+    ## 2            0 f       ZtuzCfJn     y        <chr> double            2 <missing>
+    ## 3            0 f       ZtuzCfJn     z        <chr> NULL              0 <missing>
+    ## 4            0 f       ZtuzCfJn     ...      <chr> NULL              0 <missing>
+    ## 5            0 f       ZtuzCfJn     a        <chr> character         1 <NULL>   
+    ## 6            0 f       ZtuzCfJn     b        <chr> list              2 <NULL>   
+    ## 7            0 f       ZtuzCfJn     f        <chr> language          3 <NULL>   
     ## # … with 2 more variables: uneval <I<list>>, eval <I<list>>
 
 That results shows that all parameters of the function, `f()`, were
@@ -160,14 +160,14 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     ## # A tibble: 8 × 11
     ##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   
     ##          <int> <chr>   <chr>        <chr>    <I<l> <chr>         <int> <named l>
-    ## 1            0 re_mat… QkITnWHq     pattern  <chr> character         1 <missing>
-    ## 2            0 re_mat… QkITnWHq     text     <chr> character         7 <missing>
-    ## 3            0 re_mat… QkITnWHq     perl     <chr> logical           1 <lgl [1]>
-    ## 4            0 re_mat… QkITnWHq     ...      <chr> NULL              0 <missing>
-    ## 5            1 re_mat… mLVNHJRk     pattern  <chr> character         1 <missing>
-    ## 6            1 re_mat… mLVNHJRk     text     <chr> character         7 <missing>
-    ## 7            1 re_mat… mLVNHJRk     perl     <chr> logical           1 <lgl [1]>
-    ## 8            1 re_mat… mLVNHJRk     ...      <chr> NULL              0 <missing>
+    ## 1            0 re_mat… eBKFlEXv     pattern  <chr> character         1 <missing>
+    ## 2            0 re_mat… eBKFlEXv     text     <chr> character         7 <missing>
+    ## 3            0 re_mat… eBKFlEXv     perl     <chr> logical           1 <lgl [1]>
+    ## 4            0 re_mat… eBKFlEXv     ...      <chr> NULL              0 <missing>
+    ## 5            1 re_mat… bwDndoWq     pattern  <chr> character         1 <missing>
+    ## 6            1 re_mat… bwDndoWq     text     <chr> character         7 <missing>
+    ## 7            1 re_mat… bwDndoWq     perl     <chr> logical           1 <lgl [1]>
+    ## 8            1 re_mat… bwDndoWq     ...      <chr> NULL              0 <missing>
     ## # … with 3 more variables: uneval <I<list>>, eval <I<list>>, source <chr>
 
 The `data.frame` returned by the `trace_package()` function includes one
@@ -215,8 +215,8 @@ The first two values of each demonstrate the difference:
     ## [1] "2016-04-20"       "1977-08-08"       "not a date"       "2016"            
     ## [5] "76-03-02"         "2012-06-30"       "2015-01-21 19:58"
 
-The example first assigns a variable `isodaten` to the first of the
-evaluated values, and then calls the function with `pattern = isodaten`.
+The example first assigns a variable `isodate` to the first of the
+evaluated values, and then calls the function with `pattern = isodate`.
 The second constructs the vector called `dates` with the second of the
 evaluated values, then calls the function with `test = dates`.
 

@@ -180,8 +180,8 @@ res$uneval [1:2]
 res$eval [1:2]
 ```
 
-The example first assigns a variable `isodaten` to the first of the evaluated
-values, and then calls the function with `pattern = isodaten`. The second
+The example first assigns a variable `isodate` to the first of the evaluated
+values, and then calls the function with `pattern = isodate`. The second
 constructs the vector called `dates` with the second of the evaluated values,
 then calls the function with `test = dates`.
 
