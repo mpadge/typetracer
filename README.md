@@ -62,13 +62,13 @@ from each function call.
     ## # A tibble: 7 × 10
     ##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   
     ##          <int> <chr>   <chr>        <chr>    <I<l> <chr>         <int> <named l>
-    ## 1            0 f       CbOuWJYh     x        <chr> integer           2 <missing>
-    ## 2            0 f       CbOuWJYh     y        <chr> double            2 <missing>
-    ## 3            0 f       CbOuWJYh     z        <chr> NULL              0 <missing>
-    ## 4            0 f       CbOuWJYh     ...      <chr> NULL              0 <missing>
-    ## 5            0 f       CbOuWJYh     a        <chr> character         1 <NULL>   
-    ## 6            0 f       CbOuWJYh     b        <chr> list              2 <NULL>   
-    ## 7            0 f       CbOuWJYh     f        <chr> language          3 <NULL>   
+    ## 1            0 f       pFVsBjIA     x        <chr> integer           2 <missing>
+    ## 2            0 f       pFVsBjIA     y        <chr> double            2 <missing>
+    ## 3            0 f       pFVsBjIA     z        <chr> NULL              0 <missing>
+    ## 4            0 f       pFVsBjIA     ...      <chr> NULL              0 <missing>
+    ## 5            0 f       pFVsBjIA     a        <chr> character         1 <NULL>   
+    ## 6            0 f       pFVsBjIA     b        <chr> list              2 <NULL>   
+    ## 7            0 f       pFVsBjIA     f        <chr> language          3 <NULL>   
     ## # … with 2 more variables: uneval <I<list>>, eval <I<list>>
 
 That results shows that all parameters of the function, `f()`, were
@@ -160,26 +160,43 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     ## # A tibble: 8 × 11
     ##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   
     ##          <int> <chr>   <chr>        <chr>    <I<l> <chr>         <int> <named l>
-    ## 1            0 re_mat… kJmVtOUW     pattern  <chr> character         1 <missing>
-    ## 2            0 re_mat… kJmVtOUW     text     <chr> character         7 <missing>
-    ## 3            0 re_mat… kJmVtOUW     perl     <chr> logical           1 <lgl [1]>
-    ## 4            0 re_mat… kJmVtOUW     ...      <chr> NULL              0 <missing>
-    ## 5            1 re_mat… uqQZNzhS     pattern  <chr> character         1 <missing>
-    ## 6            1 re_mat… uqQZNzhS     text     <chr> character         7 <missing>
-    ## 7            1 re_mat… uqQZNzhS     perl     <chr> logical           1 <lgl [1]>
-    ## 8            1 re_mat… uqQZNzhS     ...      <chr> NULL              0 <missing>
+    ## 1            0 re_mat… QkITnWHq     pattern  <chr> character         1 <missing>
+    ## 2            0 re_mat… QkITnWHq     text     <chr> character         7 <missing>
+    ## 3            0 re_mat… QkITnWHq     perl     <chr> logical           1 <lgl [1]>
+    ## 4            0 re_mat… QkITnWHq     ...      <chr> NULL              0 <missing>
+    ## 5            1 re_mat… mLVNHJRk     pattern  <chr> character         1 <missing>
+    ## 6            1 re_mat… mLVNHJRk     text     <chr> character         7 <missing>
+    ## 7            1 re_mat… mLVNHJRk     perl     <chr> logical           1 <lgl [1]>
+    ## 8            1 re_mat… mLVNHJRk     ...      <chr> NULL              0 <missing>
     ## # … with 3 more variables: uneval <I<list>>, eval <I<list>>, source <chr>
 
-The result contains one line for every parameter passed to every
-function call in the examples. [The `trace_package()`
+The `data.frame` returned by the `trace_package()` function includes one
+more column than the result directly returned by `load_traces()`. This
+column is called “source”, and identifies the source-code object which
+generated each trace:
+
+    unique (res$source)
+
+    ## [1] "rd_re_match"
+
+Tracing an installed package generally only extracts traces from example
+code, as documented in help, or `.Rd`, files. These are identified by
+the “rd\_” prefix on the source call, with the `rematch` package
+including one one `.Rd` file.
+
+[The `trace_package()`
 function](https://mpadge.github.io/typetracer/reference/trace_package.html)
 also includes an additional parameter, `types`, which defaults to
 `c ("examples", "tests")`, so that traces are also by default generated
-for all tests included with local source packages.
+for all tests included with local source packages (or for packages
+installed to include test files). The “source” column for test files
+identifies the names of each test, prefixed with “test\_”.
 
-The final two columns of the result hold the unevaluated and evaluated
-representations of each parameter. The first two values of each
-demonstrate the difference:
+Other than this “source” column, the results are the same as shown above
+for `load_traces()`, with one line for every parameter passed to every
+function call in the examples. The penultimate two columns of the result
+hold the unevaluated and evaluated representations of each parameter.
+The first two values of each demonstrate the difference:
 
     res$uneval [1:2]
 
