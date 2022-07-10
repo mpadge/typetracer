@@ -59,18 +59,17 @@ from each function call.
     x <- load_traces ()
     x
 
-    ## # A tibble: 7 × 11
-    ##   trace_name       trace_number fn_name fn_call_hash par_name class storage_mode
-    ##   <chr>                   <int> <chr>   <chr>        <chr>    <I<l> <chr>       
-    ## 1 /tmp/RtmpXPB1aF…            0 f       yDfBMuoW     x        <chr> integer     
-    ## 2 /tmp/RtmpXPB1aF…            0 f       yDfBMuoW     y        <chr> double      
-    ## 3 /tmp/RtmpXPB1aF…            0 f       yDfBMuoW     z        <chr> NULL        
-    ## 4 /tmp/RtmpXPB1aF…            0 f       yDfBMuoW     ...      <chr> NULL        
-    ## 5 /tmp/RtmpXPB1aF…            0 f       yDfBMuoW     a        <chr> character   
-    ## 6 /tmp/RtmpXPB1aF…            0 f       yDfBMuoW     b        <chr> list        
-    ## 7 /tmp/RtmpXPB1aF…            0 f       yDfBMuoW     f        <chr> language    
-    ## # … with 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
-    ## #   eval <I<list>>
+    ## # A tibble: 7 × 10
+    ##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   
+    ##          <int> <chr>   <chr>        <chr>    <I<l> <chr>         <int> <named l>
+    ## 1            0 f       CbOuWJYh     x        <chr> integer           2 <missing>
+    ## 2            0 f       CbOuWJYh     y        <chr> double            2 <missing>
+    ## 3            0 f       CbOuWJYh     z        <chr> NULL              0 <missing>
+    ## 4            0 f       CbOuWJYh     ...      <chr> NULL              0 <missing>
+    ## 5            0 f       CbOuWJYh     a        <chr> character         1 <NULL>   
+    ## 6            0 f       CbOuWJYh     b        <chr> list              2 <NULL>   
+    ## 7            0 f       CbOuWJYh     f        <chr> language          3 <NULL>   
+    ## # … with 2 more variables: uneval <I<list>>, eval <I<list>>
 
 That results shows that all parameters of the function, `f()`, were
 successfully traced, including the additional parameters, `a`, `b`, and
@@ -161,14 +160,14 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     ## # A tibble: 8 × 11
     ##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   
     ##          <int> <chr>   <chr>        <chr>    <I<l> <chr>         <int> <named l>
-    ## 1            0 re_mat… DQBMPXEb     pattern  <chr> character         1 <missing>
-    ## 2            0 re_mat… DQBMPXEb     text     <chr> character         7 <missing>
-    ## 3            0 re_mat… DQBMPXEb     perl     <chr> logical           1 <lgl [1]>
-    ## 4            0 re_mat… DQBMPXEb     ...      <chr> NULL              0 <missing>
-    ## 5            1 re_mat… WgbmAuso     pattern  <chr> character         1 <missing>
-    ## 6            1 re_mat… WgbmAuso     text     <chr> character         7 <missing>
-    ## 7            1 re_mat… WgbmAuso     perl     <chr> logical           1 <lgl [1]>
-    ## 8            1 re_mat… WgbmAuso     ...      <chr> NULL              0 <missing>
+    ## 1            0 re_mat… kJmVtOUW     pattern  <chr> character         1 <missing>
+    ## 2            0 re_mat… kJmVtOUW     text     <chr> character         7 <missing>
+    ## 3            0 re_mat… kJmVtOUW     perl     <chr> logical           1 <lgl [1]>
+    ## 4            0 re_mat… kJmVtOUW     ...      <chr> NULL              0 <missing>
+    ## 5            1 re_mat… uqQZNzhS     pattern  <chr> character         1 <missing>
+    ## 6            1 re_mat… uqQZNzhS     text     <chr> character         7 <missing>
+    ## 7            1 re_mat… uqQZNzhS     perl     <chr> logical           1 <lgl [1]>
+    ## 8            1 re_mat… uqQZNzhS     ...      <chr> NULL              0 <missing>
     ## # … with 3 more variables: uneval <I<list>>, eval <I<list>>, source <chr>
 
 The result contains one line for every parameter passed to every
