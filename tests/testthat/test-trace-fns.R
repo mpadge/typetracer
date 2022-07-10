@@ -53,7 +53,7 @@ test_that ("trace call", {
     )
     expect_true (length (flist) > 0L)
 
-    x <- load_traces ()
+    x <- load_traces (files = TRUE)
 
     expect_s3_class (x, "tbl_df")
     expect_equal (nrow (x), 2L) # x and y
