@@ -20,9 +20,9 @@ types](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types)
 but the language itself is ["absurdly
 dynamic"](https://dl.acm.org/doi/pdf/10.1145/3340670.3342426)[^1], and lacks
 any way to specify which types are expected by any expression. The `typetracer`
-package enables code to be traced to see what types of parameters are actually
-passed to R functions. `typetracer` can trace individual functions or entire
-packages, as demonstrated below.
+package enables code to be traced to extract detailed information on the
+properties of parameters passed to R functions. `typetracer` can trace
+individual functions or entire packages, as demonstrated below.
 
 [^1]: Alexi Turcotte & Jan Vitek (2019), *Towards a Type System for R*,
 ICOOOLPS '19: Proceedings of the 14th Workshop on Implementation, Compilation, Optimization of Object-Oriented Languages, Programs and Systems.
@@ -114,15 +114,15 @@ x$eval [x$par_name %in% c ("b", "f")]
 ```
 
 Unevaluated parameters are generally converted to equivalent character
-expressions. The `class` and `typeof` columns of traces can be used to
-convert these back to the type of parameter passed to the function call. The
-following code demonstrates how to recover the formula argument, `f = a ~ b`:
+expressions.
 
-```{r formula-recovery}
-i <- which (x$typeof == "language") # 7
-convert_fn <- paste0 ("as.", x$class [i]) # "as.formula"
-do.call (convert_fn, list (x$uneval [[i]]))
-```
+The `typeof`, `mode`, and `storage_mode` columns are similar, yet may hold
+distinct information for certain types of parameters. The conditions under
+which these values differ are complex, and depend among other things on the
+version of R itself. `typeof` alone should generally provide sufficient
+information, although [this list of
+differences](https://stackoverflow.com/a/37469255) may provide further insight
+into whether the other columns may provide useful additional information.
 
 Traces themselves are saved in the temporary directory of the current R
 session, and [the `load_traces()`

@@ -12,9 +12,10 @@ types](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types)
 but the language itself is [“absurdly
 dynamic”](https://dl.acm.org/doi/pdf/10.1145/3340670.3342426)[1], and
 lacks any way to specify which types are expected by any expression. The
-`typetracer` package enables code to be traced to see what types of
-parameters are actually passed to R functions. `typetracer` can trace
-individual functions or entire packages, as demonstrated below.
+`typetracer` package enables code to be traced to extract detailed
+information on the properties of parameters passed to R functions.
+`typetracer` can trace individual functions or entire packages, as
+demonstrated below.
 
 ## Installation
 
@@ -63,13 +64,13 @@ from each function call.
     ## # A tibble: 7 × 12
     ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
     ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
-    ## 1            0 f       cITueiVE     x        <chr [1]> integ… nume… integer     
-    ## 2            0 f       cITueiVE     y        <chr [1]> double nume… double      
-    ## 3            0 f       cITueiVE     z        <chr [1]> NULL   NULL  NULL        
-    ## 4            0 f       cITueiVE     ...      <chr [1]> NULL   NULL  NULL        
-    ## 5            0 f       cITueiVE     a        <chr [1]> chara… char… character   
-    ## 6            0 f       cITueiVE     b        <chr [1]> list   list  list        
-    ## 7            0 f       cITueiVE     f        <chr [1]> langu… call  language    
+    ## 1            0 f       vctWwGBq     x        <chr [1]> integ… nume… integer     
+    ## 2            0 f       vctWwGBq     y        <chr [1]> double nume… double      
+    ## 3            0 f       vctWwGBq     z        <chr [1]> NULL   NULL  NULL        
+    ## 4            0 f       vctWwGBq     ...      <chr [1]> NULL   NULL  NULL        
+    ## 5            0 f       vctWwGBq     a        <chr [1]> chara… char… character   
+    ## 6            0 f       vctWwGBq     b        <chr [1]> list   list  list        
+    ## 7            0 f       vctWwGBq     f        <chr [1]> langu… call  language    
     ## # … with 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
     ## #   eval <I<list>>
 
@@ -122,19 +123,19 @@ unevaluated and evaluated forms of parameters:
     ## 
     ## $f
     ## a ~ b
-    ## <environment: 0x5565436ee998>
+    ## <environment: 0x5573513b9c38>
 
 Unevaluated parameters are generally converted to equivalent character
-expressions. The `class` and `typeof` columns of traces can be used to
-convert these back to the type of parameter passed to the function call.
-The following code demonstrates how to recover the formula argument,
-`f = a ~ b`:
+expressions.
 
-    i <- which (x$typeof == "language") # 7
-    convert_fn <- paste0 ("as.", x$class [i]) # "as.formula"
-    do.call (convert_fn, list (x$uneval [[i]]))
-
-    ## a ~ b
+The `typeof`, `mode`, and `storage_mode` columns are similar, yet may
+hold distinct information for certain types of parameters. The
+conditions under which these values differ are complex, and depend among
+other things on the version of R itself. `typeof` alone should generally
+provide sufficient information, although [this list of
+differences](https://stackoverflow.com/a/37469255) may provide further
+insight into whether the other columns may provide useful additional
+information.
 
 Traces themselves are saved in the temporary directory of the current R
 session, and [the `load_traces()`
@@ -181,14 +182,14 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     ## # A tibble: 8 × 13
     ##   trace_number fn_name  fn_call_hash par_name class    typeof mode  storage_mode
     ##          <int> <chr>    <chr>        <chr>    <I<list> <chr>  <chr> <chr>       
-    ## 1            0 re_match NVlXMHFq     pattern  <chr>    chara… char… character   
-    ## 2            0 re_match NVlXMHFq     text     <chr>    chara… char… character   
-    ## 3            0 re_match NVlXMHFq     perl     <chr>    logic… logi… logical     
-    ## 4            0 re_match NVlXMHFq     ...      <chr>    NULL   NULL  NULL        
-    ## 5            1 re_match ekOxRwoP     pattern  <chr>    chara… char… character   
-    ## 6            1 re_match ekOxRwoP     text     <chr>    chara… char… character   
-    ## 7            1 re_match ekOxRwoP     perl     <chr>    logic… logi… logical     
-    ## 8            1 re_match ekOxRwoP     ...      <chr>    NULL   NULL  NULL        
+    ## 1            0 re_match DiqLVcuE     pattern  <chr>    chara… char… character   
+    ## 2            0 re_match DiqLVcuE     text     <chr>    chara… char… character   
+    ## 3            0 re_match DiqLVcuE     perl     <chr>    logic… logi… logical     
+    ## 4            0 re_match DiqLVcuE     ...      <chr>    NULL   NULL  NULL        
+    ## 5            1 re_match WkdGznuw     pattern  <chr>    chara… char… character   
+    ## 6            1 re_match WkdGznuw     text     <chr>    chara… char… character   
+    ## 7            1 re_match WkdGznuw     perl     <chr>    logic… logi… logical     
+    ## 8            1 re_match WkdGznuw     ...      <chr>    NULL   NULL  NULL        
     ## # … with 5 more variables: length <int>, formal <named list>, uneval <I<list>>,
     ## #   eval <I<list>>, source <chr>
 
