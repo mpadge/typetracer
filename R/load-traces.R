@@ -29,15 +29,16 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
         fn_call_hash <- gsub ("^.*typetrace\\_|\\.Rds$", "", i)
 
         # simple vector columns:
-        par_name <- vapply (tr_i, function (i) i$par, character (1))
-        types <- vapply (tr_i, function (i) i$type, character (1))
-        storage_mode <- vapply (
+        par_name <- vapply (tr_i, function (i) i$par, character (1L))
+        types <- vapply (tr_i, function (i) i$type, character (1L))
+        modes <- vapply (tr_i, function (i) i$mode, character (1L))
+        storage_mode <- vapply ( # wrapped coz otherwise > 80 char wide
             tr_i, function (i) {
                 i$storage_mode
             },
             character (1)
         )
-        len <- vapply (tr_i, function (i) i$length, integer (1))
+        len <- vapply (tr_i, function (i) i$length, integer (1L))
         fmls <- par_formals [match (par_name, names (par_formals))]
         # list-columns:
         classes <- I (lapply (tr_i, function (i) i$class))
@@ -52,6 +53,7 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
             par_name = par_name,
             class = classes,
             typeof = types,
+            mode = modes,
             storage_mode = storage_mode,
             length = len,
             formal = fmls,
