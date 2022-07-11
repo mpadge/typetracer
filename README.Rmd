@@ -246,3 +246,16 @@ x <- tibble::tibble (
 )
 x
 ```
+
+## Prior Art
+
+This package extends on concepts previously developed in other R packages,
+notably including:
+
+- The [`typed` package](https://github.com/moodymudskipper/typed) by
+  [@moodymudskipper](https://github.com/moodymudskipper)
+- The [`contractr` package](https://github.com/PRL-PRG/contractr) by
+  [@aviralg](https://github.com/aviralg) &
+  [@fikovnik](https://github.com/fikovnik)
+
+Plus work explained in detail in this footnote:<br>
