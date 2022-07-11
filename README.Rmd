@@ -5,7 +5,7 @@ output: md_document
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/mpadge/typetracer/workflows/R-CMD-check/badge.svg)](https://github.com/mpadge/typetracer/actions)
-[![codecov](https://codecov.io/gh/mpadge/typetracer/branch/main/graph/badge.svg)](https://codecov.io/gh/mpadge/typetracer)
+[![codecov](https://codecov.io/gh/mpadge/typetracer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mpadge/typetracer)
 <!-- badges: end -->
 
 ```{r setup, include=FALSE}
@@ -180,7 +180,7 @@ unique (res$source)
 
 Tracing an installed package generally only extracts traces from example code,
 as documented in help, or `.Rd`, files. These are identified by the "rd_"
-prefix on the source call, with the `rematch` package including one one `.Rd`
+prefix on the source call, with the `rematch` package including only one `.Rd`
 file.
 
 [The `trace_package()`

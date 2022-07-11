@@ -1,7 +1,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/mpadge/typetracer/workflows/R-CMD-check/badge.svg)](https://github.com/mpadge/typetracer/actions)
-[![codecov](https://codecov.io/gh/mpadge/typetracer/branch/main/graph/badge.svg)](https://codecov.io/gh/mpadge/typetracer)
+[![codecov](https://codecov.io/gh/mpadge/typetracer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mpadge/typetracer)
 <!-- badges: end -->
 
 # typetracer
@@ -64,13 +64,13 @@ from each function call.
     ## # A tibble: 7 × 12
     ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
     ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
-    ## 1            0 f       vctWwGBq     x        <chr [1]> integ… nume… integer     
-    ## 2            0 f       vctWwGBq     y        <chr [1]> double nume… double      
-    ## 3            0 f       vctWwGBq     z        <chr [1]> NULL   NULL  NULL        
-    ## 4            0 f       vctWwGBq     ...      <chr [1]> NULL   NULL  NULL        
-    ## 5            0 f       vctWwGBq     a        <chr [1]> chara… char… character   
-    ## 6            0 f       vctWwGBq     b        <chr [1]> list   list  list        
-    ## 7            0 f       vctWwGBq     f        <chr [1]> langu… call  language    
+    ## 1            0 f       acDVZHbn     x        <chr [1]> integ… nume… integer     
+    ## 2            0 f       acDVZHbn     y        <chr [1]> double nume… double      
+    ## 3            0 f       acDVZHbn     z        <chr [1]> NULL   NULL  NULL        
+    ## 4            0 f       acDVZHbn     ...      <chr [1]> NULL   NULL  NULL        
+    ## 5            0 f       acDVZHbn     a        <chr [1]> chara… char… character   
+    ## 6            0 f       acDVZHbn     b        <chr [1]> list   list  list        
+    ## 7            0 f       acDVZHbn     f        <chr [1]> langu… call  language    
     ## # … with 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
     ## #   eval <I<list>>
 
@@ -123,7 +123,7 @@ unevaluated and evaluated forms of parameters:
     ## 
     ## $f
     ## a ~ b
-    ## <environment: 0x5573513b9c38>
+    ## <environment: 0x561e5dd16c38>
 
 Unevaluated parameters are generally converted to equivalent character
 expressions.
@@ -182,14 +182,14 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     ## # A tibble: 8 × 13
     ##   trace_number fn_name  fn_call_hash par_name class    typeof mode  storage_mode
     ##          <int> <chr>    <chr>        <chr>    <I<list> <chr>  <chr> <chr>       
-    ## 1            0 re_match DiqLVcuE     pattern  <chr>    chara… char… character   
-    ## 2            0 re_match DiqLVcuE     text     <chr>    chara… char… character   
-    ## 3            0 re_match DiqLVcuE     perl     <chr>    logic… logi… logical     
-    ## 4            0 re_match DiqLVcuE     ...      <chr>    NULL   NULL  NULL        
-    ## 5            1 re_match WkdGznuw     pattern  <chr>    chara… char… character   
-    ## 6            1 re_match WkdGznuw     text     <chr>    chara… char… character   
-    ## 7            1 re_match WkdGznuw     perl     <chr>    logic… logi… logical     
-    ## 8            1 re_match WkdGznuw     ...      <chr>    NULL   NULL  NULL        
+    ## 1            0 re_match DMxsBqEc     pattern  <chr>    chara… char… character   
+    ## 2            0 re_match DMxsBqEc     text     <chr>    chara… char… character   
+    ## 3            0 re_match DMxsBqEc     perl     <chr>    logic… logi… logical     
+    ## 4            0 re_match DMxsBqEc     ...      <chr>    NULL   NULL  NULL        
+    ## 5            1 re_match clziFvXN     pattern  <chr>    chara… char… character   
+    ## 6            1 re_match clziFvXN     text     <chr>    chara… char… character   
+    ## 7            1 re_match clziFvXN     perl     <chr>    logic… logi… logical     
+    ## 8            1 re_match clziFvXN     ...      <chr>    NULL   NULL  NULL        
     ## # … with 5 more variables: length <int>, formal <named list>, uneval <I<list>>,
     ## #   eval <I<list>>, source <chr>
 
@@ -205,7 +205,7 @@ generated each trace:
 Tracing an installed package generally only extracts traces from example
 code, as documented in help, or `.Rd`, files. These are identified by
 the “rd\_” prefix on the source call, with the `rematch` package
-including one one `.Rd` file.
+including only one `.Rd` file.
 
 [The `trace_package()`
 function](https://mpadge.github.io/typetracer/reference/trace_package.html)
