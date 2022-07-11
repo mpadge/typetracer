@@ -9,11 +9,12 @@
 `typetracer` is an R package to trace function parameter types. The R
 language includes [a set of defined
 types](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types),
-but the language itself is “absurdly dynamic”[1], and lacks any way to
-specify which types are expected by any expression. The `typetracer`
-package enables code to be traced to see what types of parameters are
-actually passed to R functions. `typetracer` can trace individual
-functions or entire packages, as demonstrated below.
+but the language itself is [“absurdly
+dynamic”](https://dl.acm.org/doi/pdf/10.1145/3340670.3342426)[1], and
+lacks any way to specify which types are expected by any expression. The
+`typetracer` package enables code to be traced to see what types of
+parameters are actually passed to R functions. `typetracer` can trace
+individual functions or entire packages, as demonstrated below.
 
 ## Installation
 
@@ -62,13 +63,13 @@ from each function call.
     ## # A tibble: 7 × 10
     ##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   
     ##          <int> <chr>   <chr>        <chr>    <I<l> <chr>         <int> <named l>
-    ## 1            0 f       eIVLbaiN     x        <chr> integer           2 <missing>
-    ## 2            0 f       eIVLbaiN     y        <chr> double            2 <missing>
-    ## 3            0 f       eIVLbaiN     z        <chr> NULL              0 <missing>
-    ## 4            0 f       eIVLbaiN     ...      <chr> NULL              0 <missing>
-    ## 5            0 f       eIVLbaiN     a        <chr> character         1 <NULL>   
-    ## 6            0 f       eIVLbaiN     b        <chr> list              2 <NULL>   
-    ## 7            0 f       eIVLbaiN     f        <chr> language          3 <NULL>   
+    ## 1            0 f       KcvrbyeT     x        <chr> integer           2 <missing>
+    ## 2            0 f       KcvrbyeT     y        <chr> double            2 <missing>
+    ## 3            0 f       KcvrbyeT     z        <chr> NULL              0 <missing>
+    ## 4            0 f       KcvrbyeT     ...      <chr> NULL              0 <missing>
+    ## 5            0 f       KcvrbyeT     a        <chr> character         1 <NULL>   
+    ## 6            0 f       KcvrbyeT     b        <chr> list              2 <NULL>   
+    ## 7            0 f       KcvrbyeT     f        <chr> language          3 <NULL>   
     ## # … with 2 more variables: uneval <I<list>>, eval <I<list>>
 
 That results shows that all parameters of the function, `f()`, were
@@ -160,14 +161,14 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     ## # A tibble: 8 × 11
     ##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   
     ##          <int> <chr>   <chr>        <chr>    <I<l> <chr>         <int> <named l>
-    ## 1            0 re_mat… VvMDmokx     pattern  <chr> character         1 <missing>
-    ## 2            0 re_mat… VvMDmokx     text     <chr> character         7 <missing>
-    ## 3            0 re_mat… VvMDmokx     perl     <chr> logical           1 <lgl [1]>
-    ## 4            0 re_mat… VvMDmokx     ...      <chr> NULL              0 <missing>
-    ## 5            1 re_mat… OvzihToy     pattern  <chr> character         1 <missing>
-    ## 6            1 re_mat… OvzihToy     text     <chr> character         7 <missing>
-    ## 7            1 re_mat… OvzihToy     perl     <chr> logical           1 <lgl [1]>
-    ## 8            1 re_mat… OvzihToy     ...      <chr> NULL              0 <missing>
+    ## 1            0 re_mat… JzxtHfgM     pattern  <chr> character         1 <missing>
+    ## 2            0 re_mat… JzxtHfgM     text     <chr> character         7 <missing>
+    ## 3            0 re_mat… JzxtHfgM     perl     <chr> logical           1 <lgl [1]>
+    ## 4            0 re_mat… JzxtHfgM     ...      <chr> NULL              0 <missing>
+    ## 5            1 re_mat… fwBrgGsx     pattern  <chr> character         1 <missing>
+    ## 6            1 re_mat… fwBrgGsx     text     <chr> character         7 <missing>
+    ## 7            1 re_mat… fwBrgGsx     perl     <chr> logical           1 <lgl [1]>
+    ## 8            1 re_mat… fwBrgGsx     ...      <chr> NULL              0 <missing>
     ## # … with 3 more variables: uneval <I<list>>, eval <I<list>>, source <chr>
 
 The `data.frame` returned by the `trace_package()` function includes one
