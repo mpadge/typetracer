@@ -25,11 +25,13 @@ test_that ("trace installed package", {
     expect_identical (
         names (x0),
         c (
-           "trace_number", "fn_name", "fn_call_hash",
-           "par_name", "class", "storage_mode", "length",
-           "formal", "uneval", "eval", "source"
+            "trace_number", "fn_name",
+            "fn_call_hash", "par_name", "class",
+            "typeof", "mode", "storage_mode", "length",
+            "formal", "uneval", "eval", "source"
         )
     )
+    expect_true (all (grepl ("^rd_", x0$source)))
 
     expect_s3_class (
         x1 <- trace_package (package,
@@ -41,11 +43,14 @@ test_that ("trace installed package", {
     expect_identical (
         names (x1),
         c (
-           "trace_number", "fn_name", "fn_call_hash",
-           "par_name", "class", "storage_mode", "length",
-           "formal", "uneval", "eval", "source"
+            "trace_number", "fn_name",
+            "fn_call_hash", "par_name", "class",
+            "typeof", "mode", "storage_mode", "length",
+            "formal", "uneval", "eval", "source"
         )
     )
+    # still only Rd sources because no test files
+    expect_true (all (grepl ("^rd_", x0$source)))
 
     # installed packages have no tests, so traces are examples only:
     expect_identical (nrow (x0), nrow (x1))
@@ -89,11 +94,13 @@ test_that ("trace source package", {
     expect_identical (
         names (x0),
         c (
-           "trace_number", "fn_name", "fn_call_hash",
-           "par_name", "class", "storage_mode", "length",
-           "formal", "uneval", "eval", "source"
+            "trace_number", "fn_name",
+            "fn_call_hash", "par_name", "class",
+            "typeof", "mode", "storage_mode", "length",
+            "formal", "uneval", "eval", "source"
         )
     )
+    expect_false (all (grepl ("^rd_", x0$source)))
 
     source_rd <- grep ("^rd\\_", x0$source, value = TRUE)
     source_test <- grep ("^test", x0$source, value = TRUE)

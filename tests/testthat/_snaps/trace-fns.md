@@ -63,7 +63,8 @@
                       s <- "NULL"
                   }
               }
-              list(par = p, class = class(res), storage_mode = storage.mode(res), 
+              list(par = p, class = class(res), typeof = typeof(res), 
+                  storage_mode = storage.mode(res), mode = mode(res), 
                   length = length(res), par_uneval = s, par_eval = res)
           })
           typetracer_env$data$fn_name <- as.character(typetracer_env$fn_name)
