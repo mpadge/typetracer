@@ -60,57 +60,77 @@ from each function call.
     x <- load_traces ()
     x
 
-    ## # A tibble: 7 × 10
-    ##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   
-    ##          <int> <chr>   <chr>        <chr>    <I<l> <chr>         <int> <named l>
-    ## 1            0 f       KcvrbyeT     x        <chr> integer           2 <missing>
-    ## 2            0 f       KcvrbyeT     y        <chr> double            2 <missing>
-    ## 3            0 f       KcvrbyeT     z        <chr> NULL              0 <missing>
-    ## 4            0 f       KcvrbyeT     ...      <chr> NULL              0 <missing>
-    ## 5            0 f       KcvrbyeT     a        <chr> character         1 <NULL>   
-    ## 6            0 f       KcvrbyeT     b        <chr> list              2 <NULL>   
-    ## 7            0 f       KcvrbyeT     f        <chr> language          3 <NULL>   
-    ## # … with 2 more variables: uneval <I<list>>, eval <I<list>>
+    ## # A tibble: 7 × 12
+    ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
+    ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
+    ## 1            0 f       cITueiVE     x        <chr [1]> integ… nume… integer     
+    ## 2            0 f       cITueiVE     y        <chr [1]> double nume… double      
+    ## 3            0 f       cITueiVE     z        <chr [1]> NULL   NULL  NULL        
+    ## 4            0 f       cITueiVE     ...      <chr [1]> NULL   NULL  NULL        
+    ## 5            0 f       cITueiVE     a        <chr [1]> chara… char… character   
+    ## 6            0 f       cITueiVE     b        <chr [1]> list   list  list        
+    ## 7            0 f       cITueiVE     f        <chr [1]> langu… call  language    
+    ## # … with 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
+    ## #   eval <I<list>>
 
-That results shows that all parameters of the function, `f()`, were
+Each row of the result returned by `load_traces()` represents one
+parameter passed to one function call. Each function call itself
+represents a single “trace” as enumerated by the `trace_number` column,
+and also uniquely identified by an arbitrary function call hash
+(`fn_call_hash`). The remaining columns of the trace data define the
+properties of each parameter, `p`, as:
+
+1.  `par_name`: Name of parameter.
+2.  `class`: List of classes of parameter.
+3.  `typeof`: Result of `typeof(p)`.
+4.  `mode`: Result of `mode(p)`.
+5.  `storage_mode`: Result of `storage.mode(p)`.
+6.  `length`: Result of `length(p)`.
+7.  `formal`: Result of `formals(f)[["p"]]`, as named list item with
+    default value where specified.
+8.  `uneval`: Parameters as passed to the function call prior to
+    evaluation within function environment.
+9.  `eval`: Evaluated version of parameter.
+
+The results above show that all parameters of the function, `f()`, were
 successfully traced, including the additional parameters, `a`, `b`, and
 `f`, passed as part of the `...` argument. Such additional parameters
 can be identified through having a `"formal"` entry of `NULL`,
 indicating that they are not part of the formal arguments to the
 function.
 
-The result also includes columns for all parameters both in unevaluated
-and evaluated forms. The former captures the parameters as passed to the
-function call, while the latter are the equivalent evaluated versions.
-The following examples illustrate the differences.
+That result can also be used to demonstrate the difference between the
+unevaluated and evaluated forms of parameters:
 
-    x$uneval [x$par_name %in% c ("a", "b")]
+    x$uneval [x$par_name %in% c ("b", "f")]
 
-    ## $a
-    ## [1] "blah"
-    ## 
     ## $b
     ## [1] "list(a = 1, b = \"b\")"
-
-    x$eval [x$par_name %in% c ("a", "b")]
-
-    ## $a
-    ## [1] "blah"
     ## 
+    ## $f
+    ## [1] "a ~ b"
+
+    x$eval [x$par_name %in% c ("b", "f")]
+
     ## $b
     ## $b$a
     ## [1] 1
     ## 
     ## $b$b
     ## [1] "b"
+    ## 
+    ## 
+    ## $f
+    ## a ~ b
+    ## <environment: 0x5565436ee998>
 
 Unevaluated parameters are generally converted to equivalent character
-expressions. The `class` and `storage.mode` columns of traces can be
-used to convert these back to the type of parameter passed to the
-function call. The following code demonstrates how to recover the
-formula argument, `f = a ~ b`:
+expressions. The `class` and `typeof` columns of traces can be used to
+convert these back to the type of parameter passed to the function call.
+The following code demonstrates how to recover the formula argument,
+`f = a ~ b`:
 
-    i <- which (x$storage_mode == "language") # 7
+    i <- which (x$typeof == "language") # 7
     convert_fn <- paste0 ("as.", x$class [i]) # "as.formula"
     do.call (convert_fn, list (x$uneval [[i]]))
 
@@ -158,18 +178,19 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     res <- trace_package ("rematch")
     res
 
-    ## # A tibble: 8 × 11
-    ##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   
-    ##          <int> <chr>   <chr>        <chr>    <I<l> <chr>         <int> <named l>
-    ## 1            0 re_mat… JzxtHfgM     pattern  <chr> character         1 <missing>
-    ## 2            0 re_mat… JzxtHfgM     text     <chr> character         7 <missing>
-    ## 3            0 re_mat… JzxtHfgM     perl     <chr> logical           1 <lgl [1]>
-    ## 4            0 re_mat… JzxtHfgM     ...      <chr> NULL              0 <missing>
-    ## 5            1 re_mat… fwBrgGsx     pattern  <chr> character         1 <missing>
-    ## 6            1 re_mat… fwBrgGsx     text     <chr> character         7 <missing>
-    ## 7            1 re_mat… fwBrgGsx     perl     <chr> logical           1 <lgl [1]>
-    ## 8            1 re_mat… fwBrgGsx     ...      <chr> NULL              0 <missing>
-    ## # … with 3 more variables: uneval <I<list>>, eval <I<list>>, source <chr>
+    ## # A tibble: 8 × 13
+    ##   trace_number fn_name  fn_call_hash par_name class    typeof mode  storage_mode
+    ##          <int> <chr>    <chr>        <chr>    <I<list> <chr>  <chr> <chr>       
+    ## 1            0 re_match NVlXMHFq     pattern  <chr>    chara… char… character   
+    ## 2            0 re_match NVlXMHFq     text     <chr>    chara… char… character   
+    ## 3            0 re_match NVlXMHFq     perl     <chr>    logic… logi… logical     
+    ## 4            0 re_match NVlXMHFq     ...      <chr>    NULL   NULL  NULL        
+    ## 5            1 re_match ekOxRwoP     pattern  <chr>    chara… char… character   
+    ## 6            1 re_match ekOxRwoP     text     <chr>    chara… char… character   
+    ## 7            1 re_match ekOxRwoP     perl     <chr>    logic… logi… logical     
+    ## 8            1 re_match ekOxRwoP     ...      <chr>    NULL   NULL  NULL        
+    ## # … with 5 more variables: length <int>, formal <named list>, uneval <I<list>>,
+    ## #   eval <I<list>>, source <chr>
 
 The `data.frame` returned by the `trace_package()` function includes one
 more column than the result directly returned by `load_traces()`. This
@@ -191,35 +212,10 @@ also includes an additional parameter, `types`, which defaults to
 `c ("examples", "tests")`, so that traces are also by default generated
 for all tests included with local source packages (or for packages
 installed to include test files). The “source” column for test files
-identifies the names of each test, prefixed with “test\_”.
-
-Other than this “source” column, the results are the same as shown above
-for `load_traces()`, with one line for every parameter passed to every
-function call in the examples. The penultimate two columns of the result
-hold the unevaluated and evaluated representations of each parameter.
-The first two values of each demonstrate the difference:
-
-    res$uneval [1:2]
-
-    ## $pattern
-    ## [1] "isodate"
-    ## 
-    ## $text
-    ## [1] "dates"
-
-    res$eval [1:2]
-
-    ## $pattern
-    ## [1] "([0-9]{4})-([0-1][0-9])-([0-3][0-9])"
-    ## 
-    ## $text
-    ## [1] "2016-04-20"       "1977-08-08"       "not a date"       "2016"            
-    ## [5] "76-03-02"         "2012-06-30"       "2015-01-21 19:58"
-
-The example first assigns a variable `isodate` to the first of the
-evaluated values, and then calls the function with `pattern = isodate`.
-The second constructs the vector called `dates` with the second of the
-evaluated values, then calls the function with `test = dates`.
+identifies the names of each test, prefixed with “test\_”. Other than
+this column, the results are the same as shown above for
+`load_traces()`, with one line for every parameter passed to every
+function call in the examples.
 
 ### Example \#2(a) - Specifying Functions to Trace
 
@@ -228,22 +224,15 @@ function](https://mpadge.github.io/typetracer/reference/trace_package.html)
 also accepts an argument, `functions`, specifying which functions from a
 package should be traced. For example,
 
-    x <- trace_package ("stats", functions = c ("sd", "var"))
+    x <- trace_package ("stats", functions = "sd")
 
-    ## # A tibble: 10 × 9
-    ##    fn_name fn_call_hash par_name class     storage.mode length formal     uneval
-    ##    <chr>   <chr>        <chr>    <I<list>> <chr>         <int> <named li> <I<li>
-    ##  1 sd      nNbBzFCg     x        <chr [1]> integer           2 <missing>  <chr> 
-    ##  2 sd      nNbBzFCg     na.rm    <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ##  3 var     kwTgNeUZ     x        <chr [1]> integer           2 <missing>  <chr> 
-    ##  4 var     kwTgNeUZ     y        <chr [1]> NULL              0 <NULL>     <chr> 
-    ##  5 var     kwTgNeUZ     na.rm    <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ##  6 var     kwTgNeUZ     use      <chr [1]> NULL              0 <missing>  <chr> 
-    ##  7 var     risTCGmw     x        <chr [1]> integer          10 <missing>  <chr> 
-    ##  8 var     risTCGmw     y        <chr [1]> NULL              0 <NULL>     <chr> 
-    ##  9 var     risTCGmw     na.rm    <chr [1]> logical           1 <lgl [1]>  <chr> 
-    ## 10 var     risTCGmw     use      <chr [1]> NULL              0 <missing>  <chr> 
-    ## # … with 1 more variable: eval <I<list>>
+    ## # A tibble: 2 × 13
+    ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
+    ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
+    ## 1            0 sd      EzasZOKV     x        <chr [1]> integ… nume… integer     
+    ## 2            0 sd      EzasZOKV     na.rm    <chr [1]> logic… logi… logical     
+    ## # … with 5 more variables: length <int>, formal <I<list>>, uneval <I<list>>,
+    ## #   eval <I<list>>, source <chr>
 
 ## Prior Art
 

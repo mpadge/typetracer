@@ -81,29 +81,45 @@ x <- load_traces ()
 x
 ```
 
-That results shows that all parameters of the function, `f()`, were
+Each row of the result returned by `load_traces()` represents one parameter
+passed to one function call. Each function call itself represents a single
+"trace" as enumerated by the `trace_number` column, and also uniquely
+identified by an arbitrary function call hash (`fn_call_hash`). The remaining
+columns of the trace data define the properties of each parameter, `p`, as:
+
+1. `par_name`: Name of parameter.
+2. `class`: List of classes of parameter.
+3. `typeof`: Result of `typeof(p)`.
+4. `mode`: Result of `mode(p)`.
+5. `storage_mode`: Result of `storage.mode(p)`.
+6. `length`: Result of `length(p)`.
+7. `formal`: Result of `formals(f)[["p"]]`, as named list item with default
+   value where specified.
+8. `uneval`: Parameters as passed to the function call prior to evaluation
+   within function environment.
+9. `eval`: Evaluated version of parameter.
+
+The results above show that all parameters of the function, `f()`, were
 successfully traced, including the additional parameters, `a`, `b`, and `f`,
 passed as part of the `...` argument. Such additional parameters can be
 identified through having a `"formal"` entry of `NULL`, indicating that they
 are not part of the formal arguments to the function.
 
-The result also includes columns for all parameters both in unevaluated and
-evaluated forms. The former captures the parameters as passed to the function
-call, while the latter are the equivalent evaluated versions. The following
-examples illustrate the differences.
+That result can also be used to demonstrate the difference between the
+unevaluated and evaluated forms of parameters:
 
 ```{r uneval-eval}
-x$uneval [x$par_name %in% c ("a", "b")]
-x$eval [x$par_name %in% c ("a", "b")]
+x$uneval [x$par_name %in% c ("b", "f")]
+x$eval [x$par_name %in% c ("b", "f")]
 ```
 
 Unevaluated parameters are generally converted to equivalent character
-expressions. The `class` and `storage.mode` columns of traces can be used to
+expressions. The `class` and `typeof` columns of traces can be used to
 convert these back to the type of parameter passed to the function call. The
 following code demonstrates how to recover the formula argument, `f = a ~ b`:
 
 ```{r formula-recovery}
-i <- which (x$storage_mode == "language") # 7
+i <- which (x$typeof == "language") # 7
 convert_fn <- paste0 ("as.", x$class [i]) # "as.formula"
 do.call (convert_fn, list (x$uneval [[i]]))
 ```
@@ -173,23 +189,9 @@ also includes an additional parameter, `types`, which defaults to `c
 ("examples", "tests")`, so that traces are also by default generated for all
 tests included with local source packages (or for packages installed to include
 test files). The "source" column for test files identifies the names of each
-test, prefixed with "test_". 
-
-Other than this "source" column, the results are the same as shown above for
-`load_traces()`, with one line for every parameter passed to every function
-call in the examples. The penultimate two columns of the result hold the
-unevaluated and evaluated representations of each parameter. The first two
-values of each demonstrate the difference:
-
-```{r rematch-output}
-res$uneval [1:2]
-res$eval [1:2]
-```
-
-The example first assigns a variable `isodate` to the first of the evaluated
-values, and then calls the function with `pattern = isodate`. The second
-constructs the vector called `dates` with the second of the evaluated values,
-then calls the function with `test = dates`.
+test, prefixed with "test_". Other than this column, the results are the same
+as shown above for `load_traces()`, with one line for every parameter passed to
+every function call in the examples.
 
 ### Example #2(a) - Specifying Functions to Trace
 
@@ -199,51 +201,31 @@ also accepts an argument, `functions`, specifying which functions from a
 package should be traced. For example,
 
 ```{r trace-stats, eval = FALSE}
-x <- trace_package ("stats", functions = c ("sd", "var"))
+x <- trace_package ("stats", functions = "sd")
 ```
 ```{r stats-output, echo = FALSE}
-par_name <- c ("x", "na.rm", "x", "y", "na.rm",
-               "use", "x", "y", "na.rm", "use")
-storage.mode <- c ("integer", "logical", "integer", "NULL", "logical",
-                   "NULL", "integer", "NULL", "logical", "NULL")
 # Create an empty list for formal params. "empty" means an empty name or symbol
 # object, which can be conveniently constructed with 'substitute()':
 formal <- pairlist (
     x = substitute (),
-    na.rm = FALSE,
-    y = NULL,
-    use = substitute ()
+    na.rm = FALSE
 )
-formal <- formal [match (par_name, names (formal))]
-
-uneval <- as.list (letters [1:10])
-names (uneval) <- par_name
-eval <- pairlist (
-    x = 1:2,
-    na.rm = FALSE,
-    x = 1:2,
-    y = NULL,
-    na.rm = FALSE,
-    use = NULL,
-    x = 1:10,
-    y = NULL,
-    na.rm = FALSE,
-    y = NULL
-)
-
+types <- c ("integer", "logical")
 
 x <- tibble::tibble (
-    fn_name = c (rep ("sd", 2L), rep ("var", 8L)),
-    fn_call_hash = c (
-        rep ("nNbBzFCg", 2L), rep ("kwTgNeUZ", 4L), rep ("risTCGmw", 4L)),
-    par_name = c ("x", "na.rm", "x", "y", "na.rm",
-                  "use", "x", "y", "na.rm", "use"),
-    class = I (as.list (storage.mode)),
-    storage.mode = storage.mode,
-    length = as.integer (c (2, 1, 2, 0, 1, 0, 10, 0, 1, 0)),
-    formal = formal,
-    uneval = I (uneval),
-    eval = I (as.list (eval))
+    trace_number = 0L,
+    fn_name = "sd",
+    fn_call_hash = "EzasZOKV",
+    par_name = c ("x", "na.rm"),
+    class = I (as.list (types)),
+    typeof = types,
+    mode = c ("numeric", "logical"),
+    storage_mode = types,
+    length = 2:1,
+    formal = I (as.list (formal)),
+    uneval = I (list (x = 1:2, na.rm = "NULL")),
+    eval = I (list (x = 1:2, na.rm = FALSE)),
+    source = "rd_sd"
 )
 x
 ```
