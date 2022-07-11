@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">typetracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.040</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.041</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,13 +98,13 @@
 <span id="cb4-11"><a href="#cb4-11"></a><span class="co">## # A tibble: 7 × 12</span></span>
 <span id="cb4-12"><a href="#cb4-12"></a><span class="co">##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode</span></span>
 <span id="cb4-13"><a href="#cb4-13"></a><span class="co">##          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;list&gt;&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;       </span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">## 1            0 f       vctWwGBq     x        &lt;chr [1]&gt; integ… nume… integer     </span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">## 2            0 f       vctWwGBq     y        &lt;chr [1]&gt; double nume… double      </span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## 3            0 f       vctWwGBq     z        &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co">## 4            0 f       vctWwGBq     ...      &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## 5            0 f       vctWwGBq     a        &lt;chr [1]&gt; chara… char… character   </span></span>
-<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## 6            0 f       vctWwGBq     b        &lt;chr [1]&gt; list   list  list        </span></span>
-<span id="cb4-20"><a href="#cb4-20"></a><span class="co">## 7            0 f       vctWwGBq     f        &lt;chr [1]&gt; langu… call  language    </span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">## 1            0 f       acDVZHbn     x        &lt;chr [1]&gt; integ… nume… integer     </span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">## 2            0 f       acDVZHbn     y        &lt;chr [1]&gt; double nume… double      </span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## 3            0 f       acDVZHbn     z        &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">## 4            0 f       acDVZHbn     ...      &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## 5            0 f       acDVZHbn     a        &lt;chr [1]&gt; chara… char… character   </span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## 6            0 f       acDVZHbn     b        &lt;chr [1]&gt; list   list  list        </span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">## 7            0 f       acDVZHbn     f        &lt;chr [1]&gt; langu… call  language    </span></span>
 <span id="cb4-21"><a href="#cb4-21"></a><span class="co">## # … with 4 more variables: length &lt;int&gt;, formal &lt;named list&gt;, uneval &lt;I&lt;list&gt;&gt;,</span></span>
 <span id="cb4-22"><a href="#cb4-22"></a><span class="co">## #   eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
 <p>Each row of the result returned by <code><a href="reference/load_traces.html">load_traces()</a></code> represents one parameter passed to one function call. Each function call itself represents a single “trace” as enumerated by the <code>trace_number</code> column, and also uniquely identified by an arbitrary function call hash (<code>fn_call_hash</code>). The remaining columns of the trace data define the properties of each parameter, <code>p</code>, as:</p>
@@ -150,7 +150,7 @@
 <span id="cb5-18"><a href="#cb5-18"></a><span class="co">## </span></span>
 <span id="cb5-19"><a href="#cb5-19"></a><span class="co">## $f</span></span>
 <span id="cb5-20"><a href="#cb5-20"></a><span class="co">## a ~ b</span></span>
-<span id="cb5-21"><a href="#cb5-21"></a><span class="co">## &lt;environment: 0x5573513b9c38&gt;</span></span></code></pre></div>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co">## &lt;environment: 0x561e5dd16c38&gt;</span></span></code></pre></div>
 <p>Unevaluated parameters are generally converted to equivalent character expressions.</p>
 <p>The <code>typeof</code>, <code>mode</code>, and <code>storage_mode</code> columns are similar, yet may hold distinct information for certain types of parameters. The conditions under which these values differ are complex, and depend among other things on the version of R itself. <code>typeof</code> alone should generally provide sufficient information, although <a href="https://stackoverflow.com/a/37469255" class="external-link">this list of differences</a> may provide further insight into whether the other columns may provide useful additional information.</p>
 <p>Traces themselves are saved in the temporary directory of the current R session, and <a href="https://mpadge.github.io/typetracer/reference/load_traces.html">the <code>load_traces()</code> function</a> simply loads all traces created in that session. <a href="https://mpadge.github.io/typetracer/reference/clear_traces.html">The function <code>clear_traces()</code></a> removes all traces, so that <a href="https://mpadge.github.io/typetracer/reference/load_traces.html"><code>load_traces()</code></a> will only load new traces produced after that time.</p>
@@ -174,21 +174,21 @@
 <span id="cb7-4"><a href="#cb7-4"></a><span class="co">## # A tibble: 8 × 13</span></span>
 <span id="cb7-5"><a href="#cb7-5"></a><span class="co">##   trace_number fn_name  fn_call_hash par_name class    typeof mode  storage_mode</span></span>
 <span id="cb7-6"><a href="#cb7-6"></a><span class="co">##          &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;list&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;       </span></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co">## 1            0 re_match DiqLVcuE     pattern  &lt;chr&gt;    chara… char… character   </span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="co">## 2            0 re_match DiqLVcuE     text     &lt;chr&gt;    chara… char… character   </span></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="co">## 3            0 re_match DiqLVcuE     perl     &lt;chr&gt;    logic… logi… logical     </span></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="co">## 4            0 re_match DiqLVcuE     ...      &lt;chr&gt;    NULL   NULL  NULL        </span></span>
-<span id="cb7-11"><a href="#cb7-11"></a><span class="co">## 5            1 re_match WkdGznuw     pattern  &lt;chr&gt;    chara… char… character   </span></span>
-<span id="cb7-12"><a href="#cb7-12"></a><span class="co">## 6            1 re_match WkdGznuw     text     &lt;chr&gt;    chara… char… character   </span></span>
-<span id="cb7-13"><a href="#cb7-13"></a><span class="co">## 7            1 re_match WkdGznuw     perl     &lt;chr&gt;    logic… logi… logical     </span></span>
-<span id="cb7-14"><a href="#cb7-14"></a><span class="co">## 8            1 re_match WkdGznuw     ...      &lt;chr&gt;    NULL   NULL  NULL        </span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co">## 1            0 re_match DMxsBqEc     pattern  &lt;chr&gt;    chara… char… character   </span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="co">## 2            0 re_match DMxsBqEc     text     &lt;chr&gt;    chara… char… character   </span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co">## 3            0 re_match DMxsBqEc     perl     &lt;chr&gt;    logic… logi… logical     </span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="co">## 4            0 re_match DMxsBqEc     ...      &lt;chr&gt;    NULL   NULL  NULL        </span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co">## 5            1 re_match clziFvXN     pattern  &lt;chr&gt;    chara… char… character   </span></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="co">## 6            1 re_match clziFvXN     text     &lt;chr&gt;    chara… char… character   </span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co">## 7            1 re_match clziFvXN     perl     &lt;chr&gt;    logic… logi… logical     </span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="co">## 8            1 re_match clziFvXN     ...      &lt;chr&gt;    NULL   NULL  NULL        </span></span>
 <span id="cb7-15"><a href="#cb7-15"></a><span class="co">## # … with 5 more variables: length &lt;int&gt;, formal &lt;named list&gt;, uneval &lt;I&lt;list&gt;&gt;,</span></span>
 <span id="cb7-16"><a href="#cb7-16"></a><span class="co">## #   eval &lt;I&lt;list&gt;&gt;, source &lt;chr&gt;</span></span></code></pre></div>
 <p>The <code>data.frame</code> returned by the <code><a href="reference/trace_package.html">trace_package()</a></code> function includes one more column than the result directly returned by <code><a href="reference/load_traces.html">load_traces()</a></code>. This column is called “source”, and identifies the source-code object which generated each trace:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">unique</span> (res<span class="op">$</span>source)</span>
 <span id="cb8-2"><a href="#cb8-2"></a></span>
 <span id="cb8-3"><a href="#cb8-3"></a><span class="co">## [1] "rd_re_match"</span></span></code></pre></div>
-<p>Tracing an installed package generally only extracts traces from example code, as documented in help, or <code>.Rd</code>, files. These are identified by the “rd_” prefix on the source call, with the <code>rematch</code> package including one one <code>.Rd</code> file.</p>
+<p>Tracing an installed package generally only extracts traces from example code, as documented in help, or <code>.Rd</code>, files. These are identified by the “rd_” prefix on the source call, with the <code>rematch</code> package including only one <code>.Rd</code> file.</p>
 <p><a href="https://mpadge.github.io/typetracer/reference/trace_package.html">The <code>trace_package()</code> function</a> also includes an additional parameter, <code>types</code>, which defaults to <code>c ("examples", "tests")</code>, so that traces are also by default generated for all tests included with local source packages (or for packages installed to include test files). The “source” column for test files identifies the names of each test, prefixed with “test_”. Other than this column, the results are the same as shown above for <code><a href="reference/load_traces.html">load_traces()</a></code>, with one line for every parameter passed to every function call in the examples.</p>
 <div class="section level3">
 <h3 id="example-2a---specifying-functions-to-trace">Example #2(a) - Specifying Functions to Trace<a class="anchor" aria-label="anchor" href="#example-2a---specifying-functions-to-trace"></a>
@@ -258,7 +258,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/mpadge/typetracer/actions" class="external-link"><img src="https://github.com/mpadge/typetracer/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://codecov.io/gh/mpadge/typetracer" class="external-link"><img src="https://codecov.io/gh/mpadge/typetracer/branch/main/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://app.codecov.io/gh/mpadge/typetracer" class="external-link"><img src="https://codecov.io/gh/mpadge/typetracer/branch/main/graph/badge.svg" alt="codecov"></a></li>
 </ul>
 </div>
 
