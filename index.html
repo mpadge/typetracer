@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">typetracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.032</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.034</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +67,7 @@
 <div class="section level1">
 <div class="page-header"><h1 id="typetracer">typetracer<a class="anchor" aria-label="anchor" href="#typetracer"></a>
 </h1></div>
-<p><code>typetracer</code> is an R package to trace function parameter types. The main usage of <code>typetracer</code> is to identify parameters used as input to R functions. Many computer languages have formal type systems, meaning the types of parameters must be formally declared and encoded. R is different, and offers no way to specify the expected types of input parameters. <code>typetracer</code> identifies the types of parameters passed to R functions. The package can trace individual functions or entire packages, as demonstrated below.</p>
+<p><code>typetracer</code> is an R package to trace function parameter types. The R language includes <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types" class="external-link">a set of defined types</a>, but the language itself is “absurdly dynamic”[1], and lacks any way to specify which types are expected by any expression. The <code>typetracer</code> package enables code to be traced to see what types of parameters are actually passed to R functions. <code>typetracer</code> can trace individual functions or entire packages, as demonstrated below.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -98,13 +98,13 @@
 <span id="cb4-11"><a href="#cb4-11"></a><span class="co">## # A tibble: 7 × 10</span></span>
 <span id="cb4-12"><a href="#cb4-12"></a><span class="co">##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   </span></span>
 <span id="cb4-13"><a href="#cb4-13"></a><span class="co">##          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;l&gt; &lt;chr&gt;         &lt;int&gt; &lt;named l&gt;</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">## 1            0 f       ZtuzCfJn     x        &lt;chr&gt; integer           2 &lt;missing&gt;</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">## 2            0 f       ZtuzCfJn     y        &lt;chr&gt; double            2 &lt;missing&gt;</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## 3            0 f       ZtuzCfJn     z        &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co">## 4            0 f       ZtuzCfJn     ...      &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## 5            0 f       ZtuzCfJn     a        &lt;chr&gt; character         1 &lt;NULL&gt;   </span></span>
-<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## 6            0 f       ZtuzCfJn     b        &lt;chr&gt; list              2 &lt;NULL&gt;   </span></span>
-<span id="cb4-20"><a href="#cb4-20"></a><span class="co">## 7            0 f       ZtuzCfJn     f        &lt;chr&gt; language          3 &lt;NULL&gt;   </span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">## 1            0 f       eIVLbaiN     x        &lt;chr&gt; integer           2 &lt;missing&gt;</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">## 2            0 f       eIVLbaiN     y        &lt;chr&gt; double            2 &lt;missing&gt;</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## 3            0 f       eIVLbaiN     z        &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">## 4            0 f       eIVLbaiN     ...      &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## 5            0 f       eIVLbaiN     a        &lt;chr&gt; character         1 &lt;NULL&gt;   </span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## 6            0 f       eIVLbaiN     b        &lt;chr&gt; list              2 &lt;NULL&gt;   </span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">## 7            0 f       eIVLbaiN     f        &lt;chr&gt; language          3 &lt;NULL&gt;   </span></span>
 <span id="cb4-21"><a href="#cb4-21"></a><span class="co">## # … with 2 more variables: uneval &lt;I&lt;list&gt;&gt;, eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
 <p>That results shows that all parameters of the function, <code>f()</code>, were successfully traced, including the additional parameters, <code>a</code>, <code>b</code>, and <code>f</code>, passed as part of the <code>...</code> argument. Such additional parameters can be identified through having a <code>"formal"</code> entry of <code>NULL</code>, indicating that they are not part of the formal arguments to the function.</p>
 <p>The result also includes columns for all parameters both in unevaluated and evaluated forms. The former captures the parameters as passed to the function call, while the latter are the equivalent evaluated versions. The following examples illustrate the differences.</p>
@@ -154,14 +154,14 @@
 <span id="cb8-4"><a href="#cb8-4"></a><span class="co">## # A tibble: 8 × 11</span></span>
 <span id="cb8-5"><a href="#cb8-5"></a><span class="co">##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   </span></span>
 <span id="cb8-6"><a href="#cb8-6"></a><span class="co">##          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;l&gt; &lt;chr&gt;         &lt;int&gt; &lt;named l&gt;</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="co">## 1            0 re_mat… eBKFlEXv     pattern  &lt;chr&gt; character         1 &lt;missing&gt;</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="co">## 2            0 re_mat… eBKFlEXv     text     &lt;chr&gt; character         7 &lt;missing&gt;</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="co">## 3            0 re_mat… eBKFlEXv     perl     &lt;chr&gt; logical           1 &lt;lgl [1]&gt;</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">## 4            0 re_mat… eBKFlEXv     ...      &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="co">## 5            1 re_mat… bwDndoWq     pattern  &lt;chr&gt; character         1 &lt;missing&gt;</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="co">## 6            1 re_mat… bwDndoWq     text     &lt;chr&gt; character         7 &lt;missing&gt;</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="co">## 7            1 re_mat… bwDndoWq     perl     &lt;chr&gt; logical           1 &lt;lgl [1]&gt;</span></span>
-<span id="cb8-14"><a href="#cb8-14"></a><span class="co">## 8            1 re_mat… bwDndoWq     ...      &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">## 1            0 re_mat… VvMDmokx     pattern  &lt;chr&gt; character         1 &lt;missing&gt;</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">## 2            0 re_mat… VvMDmokx     text     &lt;chr&gt; character         7 &lt;missing&gt;</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">## 3            0 re_mat… VvMDmokx     perl     &lt;chr&gt; logical           1 &lt;lgl [1]&gt;</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">## 4            0 re_mat… VvMDmokx     ...      &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co">## 5            1 re_mat… OvzihToy     pattern  &lt;chr&gt; character         1 &lt;missing&gt;</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="co">## 6            1 re_mat… OvzihToy     text     &lt;chr&gt; character         7 &lt;missing&gt;</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">## 7            1 re_mat… OvzihToy     perl     &lt;chr&gt; logical           1 &lt;lgl [1]&gt;</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co">## 8            1 re_mat… OvzihToy     ...      &lt;chr&gt; NULL              0 &lt;missing&gt;</span></span>
 <span id="cb8-15"><a href="#cb8-15"></a><span class="co">## # … with 3 more variables: uneval &lt;I&lt;list&gt;&gt;, eval &lt;I&lt;list&gt;&gt;, source &lt;chr&gt;</span></span></code></pre></div>
 <p>The <code>data.frame</code> returned by the <code><a href="reference/trace_package.html">trace_package()</a></code> function includes one more column than the result directly returned by <code><a href="reference/load_traces.html">load_traces()</a></code>. This column is called “source”, and identifies the source-code object which generated each trace:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">unique</span> (res<span class="op">$</span>source)</span>
@@ -208,6 +208,19 @@
 <span id="cb11-15"><a href="#cb11-15"></a><span class="co">## 10 var     risTCGmw     use      &lt;chr [1]&gt; NULL              0 &lt;missing&gt;  &lt;chr&gt; </span></span>
 <span id="cb11-16"><a href="#cb11-16"></a><span class="co">## # … with 1 more variable: eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
 </div>
+</div>
+<div class="section level2">
+<h2 id="prior-art">Prior Art<a class="anchor" aria-label="anchor" href="#prior-art"></a>
+</h2>
+<p>This package extends on concepts previously developed in other R packages, notably including:</p>
+<ul>
+<li>The <a href="https://github.com/moodymudskipper/typed" class="external-link"><code>typed</code> package</a> by <a href="https://github.com/moodymudskipper" class="external-link">@moodymudskipper</a>
+</li>
+<li>The <a href="https://github.com/PRL-PRG/contractr" class="external-link"><code>contractr</code> package</a> by <a href="https://github.com/aviralg" class="external-link">@aviralg</a> &amp; <a href="https://github.com/fikovnik" class="external-link">@fikovnik</a>
+</li>
+</ul>
+<p>Plus work explained in detail in this footnote:<br></p>
+<p>[1] Alexi Turcotte &amp; Jan Vitek (2019), <em>Towards a Type System for R</em>, ICOOOLPS ’19: Proceedings of the 14th Workshop on Implementation, Compilation, Optimization of Object-Oriented Languages, Programs and Systems. Article No. 4, Pages 1–5, <a href="https://doi.org/10.1145/3340670.3342426" class="external-link uri">https://doi.org/10.1145/3340670.3342426</a></p>
 </div>
 </div>
 
