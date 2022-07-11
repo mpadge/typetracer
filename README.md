@@ -6,14 +6,14 @@
 
 # typetracer
 
-`typetracer` is an R package to trace function parameter types. The main
-usage of `typetracer` is to identify parameters used as input to R
-functions. Many computer languages have formal type systems, meaning the
-types of parameters must be formally declared and encoded. R is
-different, and offers no way to specify the expected types of input
-parameters. `typetracer` identifies the types of parameters passed to R
-functions. The package can trace individual functions or entire
-packages, as demonstrated below.
+`typetracer` is an R package to trace function parameter types. The R
+language includes [a set of defined
+types](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types),
+but the language itself is “absurdly dynamic”[1], and lacks any way to
+specify which types are expected by any expression. The `typetracer`
+package enables code to be traced to see what types of parameters are
+actually passed to R functions. `typetracer` can trace individual
+functions or entire packages, as demonstrated below.
 
 ## Installation
 
@@ -62,13 +62,13 @@ from each function call.
     ## # A tibble: 7 × 10
     ##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   
     ##          <int> <chr>   <chr>        <chr>    <I<l> <chr>         <int> <named l>
-    ## 1            0 f       ZtuzCfJn     x        <chr> integer           2 <missing>
-    ## 2            0 f       ZtuzCfJn     y        <chr> double            2 <missing>
-    ## 3            0 f       ZtuzCfJn     z        <chr> NULL              0 <missing>
-    ## 4            0 f       ZtuzCfJn     ...      <chr> NULL              0 <missing>
-    ## 5            0 f       ZtuzCfJn     a        <chr> character         1 <NULL>   
-    ## 6            0 f       ZtuzCfJn     b        <chr> list              2 <NULL>   
-    ## 7            0 f       ZtuzCfJn     f        <chr> language          3 <NULL>   
+    ## 1            0 f       ztkWNpEJ     x        <chr> integer           2 <missing>
+    ## 2            0 f       ztkWNpEJ     y        <chr> double            2 <missing>
+    ## 3            0 f       ztkWNpEJ     z        <chr> NULL              0 <missing>
+    ## 4            0 f       ztkWNpEJ     ...      <chr> NULL              0 <missing>
+    ## 5            0 f       ztkWNpEJ     a        <chr> character         1 <NULL>   
+    ## 6            0 f       ztkWNpEJ     b        <chr> list              2 <NULL>   
+    ## 7            0 f       ztkWNpEJ     f        <chr> language          3 <NULL>   
     ## # … with 2 more variables: uneval <I<list>>, eval <I<list>>
 
 That results shows that all parameters of the function, `f()`, were
@@ -160,14 +160,14 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     ## # A tibble: 8 × 11
     ##   trace_number fn_name fn_call_hash par_name class storage_mode length formal   
     ##          <int> <chr>   <chr>        <chr>    <I<l> <chr>         <int> <named l>
-    ## 1            0 re_mat… eBKFlEXv     pattern  <chr> character         1 <missing>
-    ## 2            0 re_mat… eBKFlEXv     text     <chr> character         7 <missing>
-    ## 3            0 re_mat… eBKFlEXv     perl     <chr> logical           1 <lgl [1]>
-    ## 4            0 re_mat… eBKFlEXv     ...      <chr> NULL              0 <missing>
-    ## 5            1 re_mat… bwDndoWq     pattern  <chr> character         1 <missing>
-    ## 6            1 re_mat… bwDndoWq     text     <chr> character         7 <missing>
-    ## 7            1 re_mat… bwDndoWq     perl     <chr> logical           1 <lgl [1]>
-    ## 8            1 re_mat… bwDndoWq     ...      <chr> NULL              0 <missing>
+    ## 1            0 re_mat… NvbxVMin     pattern  <chr> character         1 <missing>
+    ## 2            0 re_mat… NvbxVMin     text     <chr> character         7 <missing>
+    ## 3            0 re_mat… NvbxVMin     perl     <chr> logical           1 <lgl [1]>
+    ## 4            0 re_mat… NvbxVMin     ...      <chr> NULL              0 <missing>
+    ## 5            1 re_mat… nNJHRpwv     pattern  <chr> character         1 <missing>
+    ## 6            1 re_mat… nNJHRpwv     text     <chr> character         7 <missing>
+    ## 7            1 re_mat… nNJHRpwv     perl     <chr> logical           1 <lgl [1]>
+    ## 8            1 re_mat… nNJHRpwv     ...      <chr> NULL              0 <missing>
     ## # … with 3 more variables: uneval <I<list>>, eval <I<list>>, source <chr>
 
 The `data.frame` returned by the `trace_package()` function includes one
@@ -243,3 +243,9 @@ package should be traced. For example,
     ##  9 var     risTCGmw     na.rm    <chr [1]> logical           1 <lgl [1]>  <chr> 
     ## 10 var     risTCGmw     use      <chr [1]> NULL              0 <missing>  <chr> 
     ## # … with 1 more variable: eval <I<list>>
+
+[1] Alexi Turcotte & Jan Vitek (2019), *Towards a Type System for R*,
+ICOOOLPS ’19: Proceedings of the 14th Workshop on Implementation,
+Compilation, Optimization of Object-Oriented Languages, Programs and
+Systems. Article No. 4, Pages 1–5,
+<https://doi.org/10.1145/3340670.3342426>

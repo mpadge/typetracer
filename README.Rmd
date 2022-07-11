@@ -14,13 +14,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # typetracer
 
-`typetracer` is an R package to trace function parameter types. The main usage
-of `typetracer` is to identify parameters used as input to R functions. Many
-computer languages have formal type systems, meaning the types of parameters
-must be formally declared and encoded. R is different, and offers no way to
-specify the expected types of input parameters. `typetracer` identifies the
-types of parameters passed to R functions. The package can trace individual
-functions or entire packages, as demonstrated below.
+`typetracer` is an R package to trace function parameter types. The R language
+includes [a set of defined
+types](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types),
+but the language itself is "absurdly dynamic"[^1], and lacks any way to specify
+which types are expected by any expression. The `typetracer` package enables
+code to be traced to see what types of parameters are actually passed to R
+functions. `typetracer` can trace individual functions or entire packages, as
+demonstrated below.
+
+[^1]: Alexi Turcotte & Jan Vitek (2019), *Towards a Type System for R*,
+ICOOOLPS '19: Proceedings of the 14th Workshop on Implementation, Compilation, Optimization of Object-Oriented Languages, Programs and Systems.
+Article No. 4, Pages 1–5, https://doi.org/10.1145/3340670.3342426
 
 ## Installation
 
