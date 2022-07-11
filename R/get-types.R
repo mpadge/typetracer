@@ -102,6 +102,7 @@ get_types <- function () {
             par = p,
             class = class (res),
             storage_mode = storage.mode (res),
+            typeof = typeof (res),
             length = length (res),
             par_uneval = s,
             par_eval = res

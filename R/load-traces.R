@@ -30,6 +30,7 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
 
         # simple vector columns:
         par_name <- vapply (tr_i, function (i) i$par, character (1))
+        types <- vapply (tr_i, function (i) i$type, character (1))
         storage_mode <- vapply (
             tr_i, function (i) {
                 i$storage_mode
@@ -50,6 +51,7 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
             fn_call_hash = fn_call_hash,
             par_name = par_name,
             class = classes,
+            typeof = types,
             storage_mode = storage_mode,
             length = len,
             formal = fmls,
