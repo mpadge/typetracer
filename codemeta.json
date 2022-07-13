@@ -2,13 +2,13 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "typetracer",
-  "description": "Trace function parameter types.",
+  "description": "Trace function parameter types. The R language includes a set of defined types, but the language itself is \"absurdly dynamic\" (2019, <doi:10.1145/3340670.3342426>), and lacks any way to specify which types are expected by any expression. The `typetracer` package enables code to be traced to extract detailed information on the properties of parameters passed to R functions. `typetracer` can trace individual functions or entire packages.",
   "name": "typetracer: Trace Function Parameter Types",
   "relatedLink": "https://mpadge.github.io/typetracer/",
   "codeRepository": "https://github.com/mpadge/typetracer",
   "issueTracker": "https://github.com/mpadge/typetracer/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.1.0.42",
+  "version": "0.1.0.043",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -151,10 +151,13 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=withr"
     },
-    "SystemRequirements": null
+    "SystemRequirements": {}
   },
-  "fileSize": "711.65KB",
+  "fileSize": "712.24KB",
   "readme": "https://github.com/mpadge/typetracer/blob/main/README.md",
-  "contIntegration": ["https://github.com/mpadge/typetracer/actions", "https://app.codecov.io/gh/mpadge/typetracer"],
+  "contIntegration": [
+    "https://github.com/mpadge/typetracer/actions",
+    "https://app.codecov.io/gh/mpadge/typetracer"
+  ],
   "keywords": "r"
 }

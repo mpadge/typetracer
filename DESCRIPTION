@@ -1,6 +1,6 @@
 Package: typetracer
 Title: Trace Function Parameter Types
-Version: 0.1.0.042
+Version: 0.1.0.043
 Authors@R: c(
     person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2172-5265")),
@@ -9,7 +9,13 @@ Authors@R: c(
     person("covr authors", role = "cph",
             comment = "Original authors of sections of code from 'covr' package included here in modified form.")
   )
-Description: Trace function parameter types.
+Description: Trace function parameter types. The R language includes a set of
+    defined types, but the language itself is "absurdly dynamic" (2019, 
+    <doi:10.1145/3340670.3342426>), and lacks any way to specify which types are
+    expected by any expression. The `typetracer` package enables code to be
+    traced to extract detailed information on the properties of parameters
+    passed to R functions. `typetracer` can trace individual functions or entire
+    packages.
 License: MIT + file LICENSE
 URL: https://github.com/mpadge/typetracer,
     https://mpadge.github.io/typetracer/
