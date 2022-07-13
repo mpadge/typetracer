@@ -136,7 +136,7 @@ trace_package_exs <- function (package, functions = NULL) {
 
         # Reduce examples down to only those which call specified functions
         has_functions <- vapply (exs, function (i) {
-            p <- utils::getParseData (parse (text = i))
+            p <- utils::getParseData (parse (text = i, keep.source = TRUE))
             fn_names <- p$text [p$token == "SYMBOL_FUNCTION_CALL"]
             any (functions %in% fn_names)
         }, logical (1L))
@@ -166,7 +166,7 @@ trace_package_exs <- function (package, functions = NULL) {
 
         suppressWarnings ( # nolint - variable assigned but not used
             tryCatch ( # nolint - variable assigned but not used
-                eval (parse (text = ex)),
+                eval (parse (text = ex, keep.source = TRUE)),
                 error = function (e) NULL
             )
         )
