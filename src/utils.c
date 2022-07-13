@@ -5,21 +5,10 @@
 #include <R_ext/Error.h>
 #include <R_ext/Rdynload.h>
 #include <Rdefines.h>
-#include <stdio.h>
+#include <stdlib.h> // for NULL
 
 SEXP reassign_function_body(SEXP fun, SEXP body) {
   if (TYPEOF(fun) != CLOSXP) Rf_error("fun must be a function");
-
-  switch (TYPEOF(body)) {
-  case PROMSXP:
-  case DOTSXP:
-  case ANYSXP:
-  case BCODESXP:
-  case WEAKREFSXP:
-  case NEWSXP:
-  case FREESXP:
-    Rf_error("body type %d is not supported", TYPEOF(body));
-  }
 
   SET_BODY(fun, body);
 

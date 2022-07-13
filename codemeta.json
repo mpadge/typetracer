@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/mpadge/typetracer",
   "issueTracker": "https://github.com/mpadge/typetracer/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.1.0.041",
+  "version": "0.1.0.42",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.0 (2022-04-22)",
+  "runtimePlatform": "R version 4.2.1 (2022-06-23)",
   "author": [
     {
       "@type": "Person",
@@ -22,7 +22,9 @@
       "familyName": "Padgham",
       "email": "mark.padgham@email.com",
       "@id": "https://orcid.org/0000-0003-2172-5265"
-    },
+    }
+  ],
+  "contributor": [
     {
       "@type": "Person",
       "givenName": "Filip",
@@ -149,13 +151,10 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=withr"
     },
-    "SystemRequirements": {}
+    "SystemRequirements": null
   },
-  "fileSize": "75.922KB",
+  "fileSize": "711.65KB",
   "readme": "https://github.com/mpadge/typetracer/blob/main/README.md",
-  "contIntegration": [
-    "https://github.com/mpadge/typetracer/actions",
-    "https://codecov.io/gh/mpadge/typetracer"
-  ],
+  "contIntegration": ["https://github.com/mpadge/typetracer/actions", "https://app.codecov.io/gh/mpadge/typetracer"],
   "keywords": "r"
 }

@@ -23,16 +23,9 @@ inject_tracer <- function (f) {
     get_types <- utils::getFromNamespace ("get_types", "typetracer")
     code <- body (get_types)
 
-    # check whether OpenCurlyBrace (`{`) has been redefined
-    env <- environment (f)
-    if (is.null (env)) {
-        env <- as.environment ("package:base")
-    }
-    ocb_remapped <- !identical (get ("{", envir = env), .Primitive ("{"))
-
     fun_body <- body (f)
 
-    new_body <- prepend_code (fun_body, code, ocb_remapped)
+    new_body <- prepend_code (fun_body, code)
 
     invisible (reassign_function_body (f, new_body))
 }
