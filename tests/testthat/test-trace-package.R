@@ -88,7 +88,6 @@ test_that ("trace source package", {
         ),
         "tbl_df"
     )
-    unloadNamespace (package)
 
     expect_true (nrow (x0) > 5) # arbitrarily low number
     expect_identical (
@@ -106,4 +105,18 @@ test_that ("trace source package", {
     source_test <- grep ("^test", x0$source, value = TRUE)
     expect_true (length (source_rd) > 1L)
     expect_true (length (source_test) > 1L)
+
+    # rematch has 2 fns: re_match + re_match_all
+    expect_s3_class (
+        x1 <- trace_package (
+            package,
+            pkg_dir = path,
+            types = c ("examples", "tests"),
+            functions = "re_match"
+        ),
+        "tbl_df"
+    )
+    expect_true (nrow (x1) < nrow (x0))
+
+    unloadNamespace (package)
 })
