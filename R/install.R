@@ -93,6 +93,8 @@ insert_counters_in_tests <- function (pkg_dir) {
         full.names = TRUE
     )
 
+    trace_dir <- options ("typetracedir")$typetracedir
+
     for (f in test_files) {
 
         p <- parse (f, keep.source = TRUE)
@@ -119,9 +121,11 @@ insert_counters_in_tests <- function (pkg_dir) {
             pd_i <- c (
                 pd_i [seq (index)],
                 "",
-                "td <- options (\"typetracedir\")$typetracedir",
-                "traces <- list.files (td, pattern = \"^typetrace_\", ",
-                "                      full.names = TRUE)",
+                paste0 (
+                    "traces <- list.files (\"",
+                    trace_dir,
+                    "\", pattern = \"^typetrace_\", full.names = TRUE)"
+                ),
                 "ntraces <- length (traces)",
                 paste0 (
                     "ftmp <- file.path (\"",
