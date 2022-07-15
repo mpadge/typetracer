@@ -57,7 +57,7 @@ trace_package <- function (package = NULL,
         trace_names <- trace_package_exs (package, functions)
     }
     if ("tests" %in% types) {
-        if (testthat_is_parallel (pkg_dir)) {
+        if (testthat_is_parallel (pkg_dir) && !pre_installed) {
             message ("Tests run with testthat v3 in parallel can ",
                      "not be traced, and will not be run.")
             test_traces <- NULL
@@ -210,6 +210,9 @@ trace_package_tests <- function (package, pkg_dir = NULL,
     }
     if (pre_installed) {
         insert_counters_in_tests (pkg_dir)
+        if (testthat_is_parallel (pkg_dir)) {
+            rm_testthat_parallel (pkg_dir)
+        }
     }
     test_dir <- file.path (pkg_dir, "tests")
 
@@ -264,6 +267,28 @@ testthat_is_parallel <- function (pkg_dir) {
     ret <- ifelse (is.na (ret), FALSE, ret)
 
     return (ret)
+}
+
+#' Remove testthat "parallel = true" config entry from DESCRIPTION
+#'
+#' Tests can not be traced in parallel (issue#10), so this line needs to be
+#' removed in order to enable tracing.
+#' @noRd
+rm_testthat_parallel <- function (pkg_dir) {
+
+    message ("Tests can not be traced with testthat tests run in parallel; ",
+             "parallel testing has been temporarily deactivated.")
+
+    flist <- list.files (pkg_dir, recursive = TRUE, full.names = TRUE)
+    desc_file <- grep ("DESCRIPTION$", flist, value = TRUE)
+    if (length (desc_file) != 1L) {
+        return (NULL)
+    }
+    desc <- brio::read_lines (desc_file)
+    field <- "Config/testthat/parallel"
+    desc <- desc [-grep (field, desc, fixed = TRUE)]
+
+    brio::write_lines (desc, desc_file)
 }
 
 get_pkg_examples <- function (package) {
