@@ -57,7 +57,13 @@ trace_package <- function (package = NULL,
         trace_names <- trace_package_exs (package, functions)
     }
     if ("tests" %in% types) {
-        test_traces <- trace_package_tests (package, pkg_dir, pre_installed)
+        if (testthat_is_parallel (pkg_dir)) {
+            message ("Tests run with testthat v3 in parallel can ",
+                     "not be traced, and will not be run.")
+            test_traces <- NULL
+        } else {
+            test_traces <- trace_package_tests (package, pkg_dir, pre_installed)
+        }
     }
 
     traces <- load_traces (files = TRUE, quiet = TRUE)
@@ -240,6 +246,24 @@ trace_package_tests <- function (package, pkg_dir = NULL,
     }
 
     return (test_trace_numbers)
+}
+
+testthat_is_parallel <- function (pkg_dir) {
+
+    flist <- list.files (pkg_dir, recursive = TRUE, full.names = TRUE)
+    desc <- grep ("DESCRIPTION$", flist, value = TRUE)
+    if (length (desc) != 1L) {
+        return (FALSE)
+    }
+    desc <- read.dcf (desc)
+    field <- "Config/testthat/parallel"
+    if (!field %in% colnames (desc)) {
+        return (FALSE)
+    }
+    ret <- as.logical (desc [1L, field])
+    ret <- ifelse (is.na (ret), FALSE, ret)
+
+    return (ret)
 }
 
 get_pkg_examples <- function (package) {
