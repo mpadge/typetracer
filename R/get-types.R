@@ -44,10 +44,12 @@ get_types <- function () {
         typetracer_env$dot_names <- names (typetracer_env$fn_call)
         typetracer_env$dot_names <-
             typetracer_env$dot_names [which (nzchar (typetracer_env$dot_names) &
-                                             !typetracer_env$dot_names %in%
-                                             typetracer_env$par_names)]
-        typetracer_env$par_names <- c (typetracer_env$par_names,
-                                       typetracer_env$dot_names)
+                !typetracer_env$dot_names %in%
+                    typetracer_env$par_names)]
+        typetracer_env$par_names <- c (
+            typetracer_env$par_names,
+            typetracer_env$dot_names
+        )
     }
 
     # Return structure of parameters as character strings
