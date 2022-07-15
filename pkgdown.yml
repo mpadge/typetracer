@@ -3,7 +3,7 @@ pkgdown: 2.0.5
 pkgdown_sha: ~
 articles:
   nse: nse.html
-last_built: 2022-07-13T11:00Z
+last_built: 2022-07-15T09:34Z
 urls:
   reference: https://mpadge.github.io/typetracer/reference
   article: https://mpadge.github.io/typetracer/articles
