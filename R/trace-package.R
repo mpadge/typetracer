@@ -58,8 +58,10 @@ trace_package <- function (package = NULL,
     }
     if ("tests" %in% types) {
         if (testthat_is_parallel (pkg_dir) && !pre_installed) {
-            message ("Tests run with testthat v3 in parallel can ",
-                     "not be traced, and will not be run.")
+            message (
+                "Tests run with testthat v3 in parallel can ",
+                "not be traced, and will not be run."
+            )
             test_traces <- NULL
         } else {
             test_traces <- trace_package_tests (package, pkg_dir, pre_installed)
@@ -276,8 +278,10 @@ testthat_is_parallel <- function (pkg_dir) {
 #' @noRd
 rm_testthat_parallel <- function (pkg_dir) {
 
-    message ("Tests can not be traced with testthat tests run in parallel; ",
-             "parallel testing has been temporarily deactivated.")
+    message (
+        "Tests can not be traced with testthat tests run in parallel; ",
+        "parallel testing has been temporarily deactivated."
+    )
 
     flist <- list.files (pkg_dir, recursive = TRUE, full.names = TRUE)
     desc_file <- grep ("DESCRIPTION$", flist, value = TRUE)

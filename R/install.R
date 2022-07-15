@@ -103,7 +103,7 @@ insert_counters_in_tests <- function (pkg_dir) {
             pd_i <- utils::getParseData (pp_i, includeText = TRUE)
             testthat_start <- which (
                 pd_i$token == "SYMBOL_FUNCTION_CALL" &
-                pd_i$text == "test_that"
+                    pd_i$text == "test_that"
             )
             if (length (testthat_start) == 0L) {
                 return (deparse (p [[i]]))
