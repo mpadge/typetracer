@@ -31,13 +31,13 @@ pre_install <- function (package, path = NULL, quiet = FALSE) {
     # ----- BEGIN covr code
 
     flag_types <- c (
-                     "CFLAGS",
-                     "CXXFLAGS",
-                     "CXX1XFLAGS",
-                     "CXX11FLAGS",
-                     "CXX14FLAGS",
-                     "CXX17FLAGS",
-                     "CXX20FLAGS"
+        "CFLAGS",
+        "CXXFLAGS",
+        "CXX1XFLAGS",
+        "CXX11FLAGS",
+        "CXX14FLAGS",
+        "CXX17FLAGS",
+        "CXX20FLAGS"
     )
     flags <- "-O0" # No compiler optimsation; strict code correctness only
     flags <- rep (flags, length (flag_types))
@@ -46,19 +46,23 @@ pre_install <- function (package, path = NULL, quiet = FALSE) {
     install_path <- tempfile (pattern = "R_LIBS")
     dir.create (install_path)
 
-    withr::with_makevars(flags, assignment = "+=",
-                         utils::install.packages(
-        repos = NULL,
-        lib = install_path,
-        path,
-        type = "source",
-        INSTALL_opts = c("--example",
-                         "--install-tests",
-                         "--with-keep.source",
-                         "--with-keep.parse.data",
-                         "--no-staged-install",
-                         "--no-multiarch"),
-        quiet = quiet)
+    withr::with_makevars (flags,
+        assignment = "+=",
+        utils::install.packages (
+            repos = NULL,
+            lib = install_path,
+            path,
+            type = "source",
+            INSTALL_opts = c (
+                "--example",
+                "--install-tests",
+                "--with-keep.source",
+                "--with-keep.parse.data",
+                "--no-staged-install",
+                "--no-multiarch"
+            ),
+            quiet = quiet
+        )
     )
 
     # ----- END covr code
@@ -82,10 +86,12 @@ insert_counters_in_tests <- function (pkg_dir) {
         return (NULL)
     }
 
-    test_files <- list.files (test_path,
-                              pattern = "^test",
-                              recursive = TRUE,
-                              full.names = TRUE)
+    test_files <- list.files (
+        test_path,
+        pattern = "^test",
+        recursive = TRUE,
+        full.names = TRUE
+    )
 
     for (f in test_files) {
 
@@ -93,8 +99,10 @@ insert_counters_in_tests <- function (pkg_dir) {
         p_injected <- lapply (seq_along (p), function (i) {
             pp_i <- parse (text = deparse (p [[i]]), keep.source = TRUE)
             pd_i <- utils::getParseData (pp_i, includeText = TRUE)
-            testthat_start <- which (pd_i$token == "SYMBOL_FUNCTION_CALL" &
-                                     pd_i$text == "test_that")
+            testthat_start <- which (
+                pd_i$token == "SYMBOL_FUNCTION_CALL" &
+                pd_i$text == "test_that"
+            )
             if (length (testthat_start) == 0L) {
                 return (deparse (p [[i]]))
             }
@@ -124,7 +132,8 @@ insert_counters_in_tests <- function (pkg_dir) {
                 ),
                 "writeLines (as.character (ntraces), ftmp)",
                 "",
-                pd_i [-seq (index)])
+                pd_i [-seq (index)]
+            )
 
             return (pd_i)
         })
@@ -154,17 +163,22 @@ reload_pkg <- function (pkg_name, lib_path) {
         return (FALSE)
     }
 
-    fpath <- ifelse (grepl (tempdir (), lib_path),
-                     lib_path,
-                     tempdir ())
+    fpath <- ifelse (
+        grepl (tempdir (), lib_path),
+        lib_path,
+        tempdir ()
+    )
     infile <- file.path (fpath, paste0 (pkg_name, "-reload.Rout"))
     outfile <- file.path (fpath, paste0 (pkg_name, "-reload-out.Rout"))
-    cat(
+    cat (
         "library ('", pkg_name, "')\n",
-        file = infile, sep = "")
-    cmd <- paste (shQuote (file.path (R.home ("bin"), "R")),
-                 "CMD BATCH --vanilla --no-timing",
-                 shQuote (infile), shQuote (outfile))
+        file = infile, sep = ""
+    )
+    cmd <- paste (
+        shQuote (file.path (R.home ("bin"), "R")),
+        "CMD BATCH --vanilla --no-timing",
+        shQuote (infile), shQuote (outfile)
+    )
     res <- system (cmd)
     if (res != 0L) {
         stop ("Command failed", call. = FALSE)
