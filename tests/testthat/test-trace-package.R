@@ -74,11 +74,6 @@ test_that ("trace source package", {
 
     package <- "rematch"
     path <- normalizePath (file.path (tempdir (), package))
-    #tryCatch (
-    #    attachNamespace (package),
-    #    error = function (e) NULL
-    #)
-
 
     expect_s3_class (
         x0 <- trace_package (
@@ -117,6 +112,4 @@ test_that ("trace source package", {
         "tbl_df"
     )
     expect_true (nrow (x1) < nrow (x0))
-
-    #unloadNamespace (package)
 })
