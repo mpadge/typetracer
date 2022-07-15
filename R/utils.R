@@ -25,10 +25,10 @@ get_pkg_lib_path <- function (package, lib_paths) {
 
     if (is.null (pkg_path)) {
         stop (
-              "Package '", package, "' is not installed. Please ",
-              "install locally, or use 'devtools::load_all()' ",
-              "before calling 'trace_package()'",
-              call. = FALSE
+            "Package '", package, "' is not installed. Please ",
+            "install locally, or use 'devtools::load_all()' ",
+            "before calling 'trace_package()'",
+            call. = FALSE
         )
     }
 
