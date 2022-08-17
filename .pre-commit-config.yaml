@@ -33,7 +33,7 @@ repos:
           .*\.sh|
           .*\.RData
           )$
-    -   id: lintr
+          # -   id: lintr
     -   id: readme-rmd-rendered
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.2.0
