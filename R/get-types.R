@@ -22,8 +22,10 @@ get_types <- function () {
     )
 
     typetracer_env$trace_dir <- options ("typetracedir")$typetracedir
-    typetracer_env$num_traces <-
-        length (list.files (typetracer_env$trace_dir, pattern = "^typetrace\\_"))
+    typetracer_env$num_traces <- length (list.files (
+        typetracer_env$trace_dir,
+        pattern = "^typetrace\\_"
+    ))
 
     # Extract values. `match.call` returns the *expressions* submitted to the
     # call, while the evaluated versions of formalArgs are stored in the
