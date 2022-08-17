@@ -83,7 +83,11 @@ trace_package <- function (package = NULL,
         traces <- join_test_trace_data (traces, test_traces)
     }
 
-    clear_traces ()
+    # Envvar to enable traces to remain so that package can be used by
+    # 'autotest', through loading traces after calling 'trace_package()'
+    if (!Sys.getenv ("TYPETRACER_LEAVE_TRACES") == "true") {
+        clear_traces ()
+    }
 
     for (f in trace_fns) {
         f <- get (f, envir = pkg_env)
