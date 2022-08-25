@@ -10,7 +10,7 @@
 #' @export
 load_traces <- function (files = FALSE, quiet = FALSE) {
 
-    td <- getOption ("typetracedir")
+    td <- get_typetrace_dir ()
     traces <- list.files (td, pattern = "^typetrace\\_", full.names = TRUE)
 
     if (length (traces) == 0L) {
@@ -91,8 +91,10 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
 #' @export
 clear_traces <- function () {
 
-    td <- getOption ("typetracedir")
+    td <- get_typetrace_dir ()
     traces <- list.files (td, pattern = "^typetrace\\_", full.names = TRUE)
+
+    clear_fn_bodies_dir ()
 
     invisible (file.remove (traces))
 }
