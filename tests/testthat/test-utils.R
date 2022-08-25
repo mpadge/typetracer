@@ -43,6 +43,9 @@ test_that ("package not installed error", {
 })
 
 skip_on_os ("windows") # sometimes fails to install 'rematch' package
+# CRAN: "Please do not install packages ... This can make the functions,
+# examples, and cran-check very slow.
+skip_on_cran ()
 
 test_that ("utils functions", {
     package <- "rematch"

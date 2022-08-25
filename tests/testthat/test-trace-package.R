@@ -1,4 +1,8 @@
 
+# CRAN: "Please do not install packages ... This can make the functions,
+# examples, and cran-check very slow.
+skip_on_cran ()
+
 is_gh_cov <- identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage")
 
 test_that ("errors", {
@@ -11,7 +15,6 @@ test_that ("errors", {
 })
 
 skip_on_os ("windows") # sometimes fails to install 'rematch' package
-
 
 test_that ("trace installed package", {
 
