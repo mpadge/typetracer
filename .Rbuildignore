@@ -4,6 +4,8 @@
 ^\.ccls.*$
 ^\.gitignore$
 ^\.git$
+^cran-comments.md$
+^inst/WORDLIST$
 ^typetracer.Rcheck$
 ^Makefile$
 ^typetracer_.*\.tar\.gz$
