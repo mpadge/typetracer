@@ -188,5 +188,12 @@ reload_pkg <- function (pkg_name, lib_path) {
         stop ("Command failed", call. = FALSE)
     }
 
+    if (!identical (fpath, tempdir ())) {
+        tryCatch (
+            unlink (fpath, recursive = TRUE),
+            error = function (e) NULL
+        )
+    }
+
     return (res == 0L)
 }
