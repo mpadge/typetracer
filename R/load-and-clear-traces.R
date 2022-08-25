@@ -10,7 +10,7 @@
 #' @export
 load_traces <- function (files = FALSE, quiet = FALSE) {
 
-    td <- options ("typetracedir")$typetracedir
+    td <- getOption ("typetracedir")
     traces <- list.files (td, pattern = "^typetrace\\_", full.names = TRUE)
 
     if (length (traces) == 0L) {
@@ -91,7 +91,7 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
 #' @export
 clear_traces <- function () {
 
-    td <- options ("typetracedir")$typetracedir
+    td <- getOption ("typetracedir")
     traces <- list.files (td, pattern = "^typetrace\\_", full.names = TRUE)
 
     invisible (file.remove (traces))
