@@ -12,6 +12,11 @@ data.}
 
 \item{quiet}{If \code{FALSE}, issue message when no traces found.}
 }
+\value{
+A 'data.frame' of traces, including names of functions and
+parameters, and values of each parameter traced in both unevaluated and
+evaluated forms.
+}
 \description{
 Load traces of parameter types
 }

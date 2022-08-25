@@ -6,6 +6,10 @@
 \usage{
 clear_traces()
 }
+\value{
+(Invisibly) A single logical value indicating whether or not traces
+were successfully cleared.
+}
 \description{
 Traces are by default appended to previous traces. This function can be used
 to clean those previous ones, to enable subsequent calls to generate new

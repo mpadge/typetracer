@@ -4,6 +4,9 @@
 #' @param files If `TRUE`, return paths to all temporary files holding trace
 #' data.
 #' @param quiet If `FALSE`, issue message when no traces found.
+#' @return A 'data.frame' of traces, including names of functions and
+#' parameters, and values of each parameter traced in both unevaluated and
+#' evaluated forms.
 #' @export
 load_traces <- function (files = FALSE, quiet = FALSE) {
 
@@ -82,6 +85,9 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
 #' Traces are by default appended to previous traces. This function can be used
 #' to clean those previous ones, to enable subsequent calls to generate new
 #' traces that are not appended to previous ones.
+#'
+#' @return (Invisibly) A single logical value indicating whether or not traces
+#' were successfully cleared.
 #' @export
 clear_traces <- function () {
 
