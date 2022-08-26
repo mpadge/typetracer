@@ -95,6 +95,7 @@ trace_package <- function (package = NULL,
             uninject_tracer (f)
         }
     }
+    clear_fn_bodies_dir ()
 
     tryCatch (
         unloadNamespace (package),
@@ -165,7 +166,7 @@ trace_package_exs <- function (package, functions = NULL) {
     options (device = NULL)
 
     # get current traces
-    td <- options ("typetracedir")$typetracedir
+    td <- get_typetrace_dir ()
     trace_list_old <- list.files (
         td,
         pattern = "^typetrace\\_",
