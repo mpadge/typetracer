@@ -27,8 +27,10 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
         fn_name <- tr_i$fn_name
         par_formals <- tr_i$formals
         num_traces <- tr_i$num_traces
+        trace_source <- tr_i$source
+
         tr_i <- tr_i [which (!names (tr_i) %in%
-            c ("fn_name", "formals", "num_traces"))]
+            c ("fn_name", "formals", "num_traces", "source"))]
         fn_call_hash <- gsub ("^.*typetrace\\_|\\.Rds$", "", i)
 
         # simple vector columns:
@@ -51,6 +53,7 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
         tibble::tibble (
             trace_name = i,
             trace_number = num_traces,
+            trace_source = trace_source,
             fn_name = fn_name,
             fn_call_hash = fn_call_hash,
             par_name = par_name,

@@ -55,7 +55,8 @@ trace_package <- function (package = NULL,
 
     if ("examples" %in% types) {
         trace_names <- trace_package_exs (package, functions)
-        traces <- list_traces ()
+        traces_ex <- list_traces ()
+        add_trace_source (traces_ex, "examples")
     }
     if ("tests" %in% types) {
         if (testthat_is_parallel (pkg_dir) && !pre_installed) {
@@ -66,6 +67,9 @@ trace_package <- function (package = NULL,
             test_traces <- NULL
         } else {
             test_traces <- trace_package_tests (package, pkg_dir, pre_installed)
+            traces_test <- list_traces ()
+            traces_test <- traces_test [which (!traces_test %in% traces_ex)]
+            add_trace_source (traces_test, "tests")
         }
     }
 
@@ -358,4 +362,15 @@ join_test_trace_data <- function (traces, test_traces) {
     traces$source [traces_index] <- paste0 (test_files, "/", test_names) [index]
 
     return (traces)
+}
+
+add_trace_source <- function (traces, trace_source) {
+
+    checkmate::assert_character (trace_source)
+
+    for (i in traces) {
+        tr <- readRDS (i)
+        tr$source <- trace_source
+        saveRDS (tr, i)
+    }
 }
