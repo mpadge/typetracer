@@ -2,19 +2,25 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "typetracer",
-  "description": "Trace function parameter types. The R language includes a set of defined types, but the language itself is \"absurdly dynamic\" (2019, <doi:10.1145/3340670.3342426>), and lacks any way to specify which types are expected by any expression. The 'typetracer' package enables code to be traced to extract detailed information on the properties of parameters passed to R functions. 'typetracer' can trace individual functions or entire packages.",
+  "description": "The 'R' language includes a set of defined types, but the language itself is \"absurdly dynamic\" (Turcotte & Vitek (2019) <doi:10.1145/3340670.3342426>), and lacks any way to specify which types are expected by any expression. The 'typetracer' package enables code to be traced to extract detailed information on the properties of parameters passed to 'R' functions. 'typetracer' can trace individual functions or entire packages.",
   "name": "typetracer: Trace Function Parameter Types",
   "relatedLink": "https://mpadge.github.io/typetracer/",
   "codeRepository": "https://github.com/mpadge/typetracer",
   "issueTracker": "https://github.com/mpadge/typetracer/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.1.0.075",
+  "version": "0.1.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
   "runtimePlatform": "R version 4.2.1 (2022-06-23)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
   "author": [
     {
       "@type": "Person",
@@ -151,13 +157,10 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=withr"
     },
-    "SystemRequirements": {}
+    "SystemRequirements": null
   },
-  "fileSize": "712.275KB",
+  "fileSize": "85.442KB",
   "readme": "https://github.com/mpadge/typetracer/blob/main/README.md",
-  "contIntegration": [
-    "https://github.com/mpadge/typetracer/actions",
-    "https://app.codecov.io/gh/mpadge/typetracer"
-  ],
+  "contIntegration": ["https://github.com/mpadge/typetracer/actions", "https://app.codecov.io/gh/mpadge/typetracer"],
   "keywords": "r"
 }
