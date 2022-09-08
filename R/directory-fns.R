@@ -15,3 +15,13 @@ clear_fn_bodies_dir <- function () {
         unlink (fn_bodies_dir, recursive = TRUE)
     }
 }
+
+list_traces <- function () {
+
+    td <- get_typetrace_dir ()
+    list.files (
+        td,
+        full.names = TRUE,
+        pattern = "^typetrace\\_.*\\.Rds$"
+    )
+}
