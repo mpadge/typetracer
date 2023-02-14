@@ -6,10 +6,12 @@ output: md_document
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/mpadge/typetracer/workflows/R-CMD-check/badge.svg)](https://github.com/mpadge/typetracer/actions)
 [![codecov](https://codecov.io/gh/mpadge/typetracer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mpadge/typetracer)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/typetracer)](https://cran.r-project.org/package=typetracer/) 
+[![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/typetracer?color=orange)](https://cran.r-project.org/package=typetracer)
 <!-- badges: end -->
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set (echo = TRUE)
 ```
 
 # typetracer

@@ -2,6 +2,9 @@
 
 [![R-CMD-check](https://github.com/mpadge/typetracer/workflows/R-CMD-check/badge.svg)](https://github.com/mpadge/typetracer/actions)
 [![codecov](https://codecov.io/gh/mpadge/typetracer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mpadge/typetracer)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/typetracer)](https://cran.r-project.org/package=typetracer/)
+[![CRAN
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/typetracer?color=orange)](https://cran.r-project.org/package=typetracer)
 <!-- badges: end -->
 
 # typetracer
@@ -62,17 +65,17 @@ from each function call.
     x
 
     ## # A tibble: 7 × 12
-    ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
-    ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
-    ## 1            0 f       acDVZHbn     x        <chr [1]> integ… nume… integer     
-    ## 2            0 f       acDVZHbn     y        <chr [1]> double nume… double      
-    ## 3            0 f       acDVZHbn     z        <chr [1]> NULL   NULL  NULL        
-    ## 4            0 f       acDVZHbn     ...      <chr [1]> NULL   NULL  NULL        
-    ## 5            0 f       acDVZHbn     a        <chr [1]> chara… char… character   
-    ## 6            0 f       acDVZHbn     b        <chr [1]> list   list  list        
-    ## 7            0 f       acDVZHbn     f        <chr [1]> langu… call  language    
-    ## # … with 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
-    ## #   eval <I<list>>
+    ##   trace_nu…¹ fn_name fn_ca…² par_n…³ class typeof mode  stora…⁴ length formal   
+    ##        <int> <chr>   <chr>   <chr>   <I<l> <chr>  <chr> <chr>    <int> <named l>
+    ## 1          0 f       BGOMYd… x       <chr> integ… nume… integer      2 <missing>
+    ## 2          0 f       BGOMYd… y       <chr> double nume… double       2 <missing>
+    ## 3          0 f       BGOMYd… z       <chr> NULL   NULL  NULL         0 <missing>
+    ## 4          0 f       BGOMYd… ...     <chr> NULL   NULL  NULL         0 <missing>
+    ## 5          0 f       BGOMYd… a       <chr> chara… char… charac…      1 <NULL>   
+    ## 6          0 f       BGOMYd… b       <chr> list   list  list         2 <NULL>   
+    ## 7          0 f       BGOMYd… f       <chr> langu… call  langua…      3 <NULL>   
+    ## # … with 2 more variables: uneval <I<list>>, eval <I<list>>, and abbreviated
+    ## #   variable names ¹​trace_number, ²​fn_call_hash, ³​par_name, ⁴​storage_mode
 
 Each row of the result returned by `load_traces()` represents one
 parameter passed to one function call. Each function call itself
@@ -123,7 +126,7 @@ unevaluated and evaluated forms of parameters:
     ## 
     ## $f
     ## a ~ b
-    ## <environment: 0x561e5dd16c38>
+    ## <environment: 0x55c4851c7198>
 
 Unevaluated parameters are generally converted to equivalent character
 expressions.
@@ -179,19 +182,20 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     res <- trace_package ("rematch")
     res
 
-    ## # A tibble: 8 × 13
-    ##   trace_number fn_name  fn_call_hash par_name class    typeof mode  storage_mode
-    ##          <int> <chr>    <chr>        <chr>    <I<list> <chr>  <chr> <chr>       
-    ## 1            0 re_match DMxsBqEc     pattern  <chr>    chara… char… character   
-    ## 2            0 re_match DMxsBqEc     text     <chr>    chara… char… character   
-    ## 3            0 re_match DMxsBqEc     perl     <chr>    logic… logi… logical     
-    ## 4            0 re_match DMxsBqEc     ...      <chr>    NULL   NULL  NULL        
-    ## 5            1 re_match clziFvXN     pattern  <chr>    chara… char… character   
-    ## 6            1 re_match clziFvXN     text     <chr>    chara… char… character   
-    ## 7            1 re_match clziFvXN     perl     <chr>    logic… logi… logical     
-    ## 8            1 re_match clziFvXN     ...      <chr>    NULL   NULL  NULL        
-    ## # … with 5 more variables: length <int>, formal <named list>, uneval <I<list>>,
-    ## #   eval <I<list>>, source <chr>
+    ## # A tibble: 8 × 14
+    ##   trace_number trace…¹ fn_name fn_ca…² par_n…³ class typeof mode  stora…⁴ length
+    ##          <int> <chr>   <chr>   <chr>   <chr>   <I<l> <chr>  <chr> <chr>    <int>
+    ## 1            0 exampl… re_mat… NKOqPl… pattern <chr> chara… char… charac…      1
+    ## 2            0 exampl… re_mat… NKOqPl… text    <chr> chara… char… charac…      7
+    ## 3            0 exampl… re_mat… NKOqPl… perl    <chr> logic… logi… logical      1
+    ## 4            0 exampl… re_mat… NKOqPl… ...     <chr> NULL   NULL  NULL         0
+    ## 5            1 exampl… re_mat… kbIZej… pattern <chr> chara… char… charac…      1
+    ## 6            1 exampl… re_mat… kbIZej… text    <chr> chara… char… charac…      7
+    ## 7            1 exampl… re_mat… kbIZej… perl    <chr> logic… logi… logical      1
+    ## 8            1 exampl… re_mat… kbIZej… ...     <chr> NULL   NULL  NULL         0
+    ## # … with 4 more variables: formal <named list>, uneval <I<list>>,
+    ## #   eval <I<list>>, source <chr>, and abbreviated variable names ¹​trace_source,
+    ## #   ²​fn_call_hash, ³​par_name, ⁴​storage_mode
 
 The `data.frame` returned by the `trace_package()` function includes one
 more column than the result directly returned by `load_traces()`. This
@@ -228,12 +232,13 @@ package should be traced. For example,
     x <- trace_package ("stats", functions = "sd")
 
     ## # A tibble: 2 × 13
-    ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
-    ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
-    ## 1            0 sd      EzasZOKV     x        <chr [1]> integ… nume… integer     
-    ## 2            0 sd      EzasZOKV     na.rm    <chr [1]> logic… logi… logical     
-    ## # … with 5 more variables: length <int>, formal <I<list>>, uneval <I<list>>,
-    ## #   eval <I<list>>, source <chr>
+    ##   trace_nu…¹ fn_name fn_ca…² par_n…³ class typeof mode  stora…⁴ length formal   
+    ##        <int> <chr>   <chr>   <chr>   <I<l> <chr>  <chr> <chr>    <int> <I<list>>
+    ## 1          0 sd      EzasZO… x       <chr> integ… nume… integer      2 <missing>
+    ## 2          0 sd      EzasZO… na.rm   <chr> logic… logi… logical      1 <lgl [1]>
+    ## # … with 3 more variables: uneval <I<list>>, eval <I<list>>, source <chr>, and
+    ## #   abbreviated variable names ¹​trace_number, ²​fn_call_hash, ³​par_name,
+    ## #   ⁴​storage_mode
 
 ## Prior Art
 
