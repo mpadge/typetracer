@@ -14,10 +14,10 @@
     entire packages.'>
 <title>Trace Function Parameter Types • typetracer</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Trace Function Parameter Types">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Trace Function Parameter Types">
 <meta property="og:description" content='The R language includes a set of defined types, but the language
     itself is "absurdly dynamic" (Turcotte &amp; Vitek (2019)
     &lt;doi:10.1145/3340670.3342426&gt;), and lacks any way to specify which types are
@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="index.html">typetracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,41 +84,41 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>The package can be installed with the following command:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>remotes<span class="op">::</span><span class="kw">install_github</span> (<span class="st">"mpadge/typetracer"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span> (<span class="st">"mpadge/typetracer"</span>)</span></code></pre></div>
 <p>Then loaded for use by calling <code>library</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">library</span> (typetracer)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span> (typetracer)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example-1---a-single-function">Example #1 - A Single Function<a class="anchor" aria-label="anchor" href="#example-1---a-single-function"></a>
 </h2>
 <p><code>typetracer</code> works by “injecting” tracing code into the body of a function using <a href="https://mpadge.github.io/typetracer/reference/inject_tracer.html">the <code>inject_tracer()</code> function</a>. Locally-defined functions can be traced by simply passing the functions directly to <code><a href="reference/inject_tracer.html">inject_tracer()</a></code>. The following example includes four parameters, including <code>...</code> to allow passing of additional and entirely arbitrary parameter types and values.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>f &lt;-<span class="st"> </span><span class="cf">function</span> (x, y, z, ...) {</span>
-<span id="cb3-2"><a href="#cb3-2"></a>    x <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>y <span class="op">*</span><span class="st"> </span>y</span>
-<span id="cb3-3"><a href="#cb3-3"></a>}</span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="kw">inject_tracer</span> (f)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span> (x, y, z, ...) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    x <span class="sc">*</span> x <span class="sc">+</span> y <span class="sc">*</span> y</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">inject_tracer</span> (f)</span></code></pre></div>
 <p>After injecting the <code>typetracer</code> code, calls to the function, <code>f</code>, will “trace” each parameter of the function, by capturing both unevaluated and evaluated representations at the point at which the function is first called. These values can be accessed with <a href="https://mpadge.github.io/typetracer/reference/load_traces.html">the <code>load_traces</code> function</a>, which returns a <code>data.frame</code> object (in <a href="https://tibble.tidyverse.org" class="external-link"><code>tibble</code> format</a>) with one row for each parameter from each function call.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>val &lt;-<span class="st"> </span><span class="kw">f</span> (</span>
-<span id="cb4-2"><a href="#cb4-2"></a>    <span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,</span>
-<span id="cb4-3"><a href="#cb4-3"></a>    <span class="dt">y =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.</span>,</span>
-<span id="cb4-4"><a href="#cb4-4"></a>    <span class="dt">a =</span> <span class="st">"blah"</span>,</span>
-<span id="cb4-5"><a href="#cb4-5"></a>    <span class="dt">b =</span> <span class="kw">list</span> (<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="st">"b"</span>),</span>
-<span id="cb4-6"><a href="#cb4-6"></a>    <span class="dt">f =</span> a <span class="op">~</span><span class="st"> </span>b</span>
-<span id="cb4-7"><a href="#cb4-7"></a>)</span>
-<span id="cb4-8"><a href="#cb4-8"></a>x &lt;-<span class="st"> </span><span class="kw">load_traces</span> ()</span>
-<span id="cb4-9"><a href="#cb4-9"></a>x</span>
-<span id="cb4-10"><a href="#cb4-10"></a></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">## # A tibble: 7 × 12</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co">##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">##          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;list&gt;&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;       </span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">## 1            0 f       acDVZHbn     x        &lt;chr [1]&gt; integ… nume… integer     </span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">## 2            0 f       acDVZHbn     y        &lt;chr [1]&gt; double nume… double      </span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## 3            0 f       acDVZHbn     z        &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co">## 4            0 f       acDVZHbn     ...      &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## 5            0 f       acDVZHbn     a        &lt;chr [1]&gt; chara… char… character   </span></span>
-<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## 6            0 f       acDVZHbn     b        &lt;chr [1]&gt; list   list  list        </span></span>
-<span id="cb4-20"><a href="#cb4-20"></a><span class="co">## 7            0 f       acDVZHbn     f        &lt;chr [1]&gt; langu… call  language    </span></span>
-<span id="cb4-21"><a href="#cb4-21"></a><span class="co">## # … with 4 more variables: length &lt;int&gt;, formal &lt;named list&gt;, uneval &lt;I&lt;list&gt;&gt;,</span></span>
-<span id="cb4-22"><a href="#cb4-22"></a><span class="co">## #   eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>val <span class="ot">&lt;-</span> <span class="fu">f</span> (</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span> <span class="sc">+</span> <span class="fl">0.</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">a =</span> <span class="st">"blah"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">b =</span> <span class="fu">list</span> (<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="st">"b"</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">f =</span> a <span class="sc">~</span> b</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">load_traces</span> ()</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 7 × 12</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">##   trace_nu…¹ fn_name fn_ca…² par_n…³ class typeof mode  stora…⁴ length formal   </span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="do">##        &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;I&lt;l&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;int&gt; &lt;named l&gt;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 1          0 f       BGOMYd… x       &lt;chr&gt; integ… nume… integer      2 &lt;missing&gt;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 2          0 f       BGOMYd… y       &lt;chr&gt; double nume… double       2 &lt;missing&gt;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 3          0 f       BGOMYd… z       &lt;chr&gt; NULL   NULL  NULL         0 &lt;missing&gt;</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 4          0 f       BGOMYd… ...     &lt;chr&gt; NULL   NULL  NULL         0 &lt;missing&gt;</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 5          0 f       BGOMYd… a       &lt;chr&gt; chara… char… charac…      1 &lt;NULL&gt;   </span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 6          0 f       BGOMYd… b       &lt;chr&gt; list   list  list         2 &lt;NULL&gt;   </span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 7          0 f       BGOMYd… f       &lt;chr&gt; langu… call  langua…      3 &lt;NULL&gt;   </span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 2 more variables: uneval &lt;I&lt;list&gt;&gt;, eval &lt;I&lt;list&gt;&gt;, and abbreviated</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="do">## #   variable names ¹​trace_number, ²​fn_call_hash, ³​par_name, ⁴​storage_mode</span></span></code></pre></div>
 <p>Each row of the result returned by <code><a href="reference/load_traces.html">load_traces()</a></code> represents one parameter passed to one function call. Each function call itself represents a single “trace” as enumerated by the <code>trace_number</code> column, and also uniquely identified by an arbitrary function call hash (<code>fn_call_hash</code>). The remaining columns of the trace data define the properties of each parameter, <code>p</code>, as:</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -142,27 +142,27 @@
 </ol>
 <p>The results above show that all parameters of the function, <code>f()</code>, were successfully traced, including the additional parameters, <code>a</code>, <code>b</code>, and <code>f</code>, passed as part of the <code>...</code> argument. Such additional parameters can be identified through having a <code>"formal"</code> entry of <code>NULL</code>, indicating that they are not part of the formal arguments to the function.</p>
 <p>That result can also be used to demonstrate the difference between the unevaluated and evaluated forms of parameters:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>x<span class="op">$</span>uneval [x<span class="op">$</span>par_name <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span> (<span class="st">"b"</span>, <span class="st">"f"</span>)]</span>
-<span id="cb5-2"><a href="#cb5-2"></a></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co">## $b</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">## [1] "list(a = 1, b = \"b\")"</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co">## </span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">## $f</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co">## [1] "a ~ b"</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a></span>
-<span id="cb5-9"><a href="#cb5-9"></a>x<span class="op">$</span>eval [x<span class="op">$</span>par_name <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span> (<span class="st">"b"</span>, <span class="st">"f"</span>)]</span>
-<span id="cb5-10"><a href="#cb5-10"></a></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co">## $b</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">## $b$a</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co">## [1] 1</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co">## </span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="co">## $b$b</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="co">## [1] "b"</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co">## </span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="co">## </span></span>
-<span id="cb5-19"><a href="#cb5-19"></a><span class="co">## $f</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a><span class="co">## a ~ b</span></span>
-<span id="cb5-21"><a href="#cb5-21"></a><span class="co">## &lt;environment: 0x561e5dd16c38&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x<span class="sc">$</span>uneval [x<span class="sc">$</span>par_name <span class="sc">%in%</span> <span class="fu">c</span> (<span class="st">"b"</span>, <span class="st">"f"</span>)]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">## $b</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "list(a = 1, b = \"b\")"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">## $f</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "a ~ b"</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>x<span class="sc">$</span>eval [x<span class="sc">$</span>par_name <span class="sc">%in%</span> <span class="fu">c</span> (<span class="st">"b"</span>, <span class="st">"f"</span>)]</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">## $b</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $b$a</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="do">## $b$b</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "b"</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="do">## $f</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="do">## a ~ b</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;environment: 0x55c4851c7198&gt;</span></span></code></pre></div>
 <p>Unevaluated parameters are generally converted to equivalent character expressions.</p>
 <p>The <code>typeof</code>, <code>mode</code>, and <code>storage_mode</code> columns are similar, yet may hold distinct information for certain types of parameters. The conditions under which these values differ are complex, and depend among other things on the version of R itself. <code>typeof</code> alone should generally provide sufficient information, although <a href="https://stackoverflow.com/a/37469255" class="external-link">this list of differences</a> may provide further insight into whether the other columns may provide useful additional information.</p>
 <p>Traces themselves are saved in the temporary directory of the current R session, and <a href="https://mpadge.github.io/typetracer/reference/load_traces.html">the <code>load_traces()</code> function</a> simply loads all traces created in that session. <a href="https://mpadge.github.io/typetracer/reference/clear_traces.html">The function <code>clear_traces()</code></a> removes all traces, so that <a href="https://mpadge.github.io/typetracer/reference/load_traces.html"><code>load_traces()</code></a> will only load new traces produced after that time.</p>
@@ -170,9 +170,9 @@
 <h3 id="uninjecting-traces">Uninjecting Traces<a class="anchor" aria-label="anchor" href="#uninjecting-traces"></a>
 </h3>
 <p>It is important after applying <a href="https://mpadge.github.io/typetracer/reference/inject_tracer.html">the <code>inject_tracer()</code> function</a> to restore the functions back to their original form through calling <a href="https://mpadge.github.io/typetracer/reference/uninject_tracer.html">the obverse <code>uninject_tracer()</code> function</a>. For the function, <code>r</code>, above, this simply requires,</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">uninject_tracer</span> (f)</span>
-<span id="cb6-2"><a href="#cb6-2"></a></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="co">## [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">uninject_tracer</span> (f)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
 <p>Because <code>typetracer</code> modifies the internal code of functions as defined within a current R session, we strongly recommend restarting your R session after using <code>typetracer</code>, to ensure expected function behaviour is restored.</p>
 </div>
 </div>
@@ -180,41 +180,43 @@
 <h2 id="example-2---tracing-a-package">Example #2 - Tracing a Package<a class="anchor" aria-label="anchor" href="#example-2---tracing-a-package"></a>
 </h2>
 <p>This section presents a more complex example tracing all function calls from <a href="https://github.com/MangoTheCat/rematch" class="external-link">the <code>rematch</code> package</a>, chosen because it has less code than almost any other package on CRAN. The following single line traces function calls in all examples for the nominated package. <a href="https://mpadge.github.io/typetracer/reference/trace_package.html">The <code>trace_package()</code> function</a> automatically injects tracing code into every function within the package, so there is no need to explicitly call <a href="https://mpadge.github.io/typetracer/reference/inject_tracer">the <code>inject_tracer()</code> function</a>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>res &lt;-<span class="st"> </span><span class="kw">trace_package</span> (<span class="st">"rematch"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2"></a>res</span>
-<span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="co">## # A tibble: 8 × 13</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="co">##   trace_number fn_name  fn_call_hash par_name class    typeof mode  storage_mode</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="co">##          &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;list&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;       </span></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co">## 1            0 re_match DMxsBqEc     pattern  &lt;chr&gt;    chara… char… character   </span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="co">## 2            0 re_match DMxsBqEc     text     &lt;chr&gt;    chara… char… character   </span></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="co">## 3            0 re_match DMxsBqEc     perl     &lt;chr&gt;    logic… logi… logical     </span></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="co">## 4            0 re_match DMxsBqEc     ...      &lt;chr&gt;    NULL   NULL  NULL        </span></span>
-<span id="cb7-11"><a href="#cb7-11"></a><span class="co">## 5            1 re_match clziFvXN     pattern  &lt;chr&gt;    chara… char… character   </span></span>
-<span id="cb7-12"><a href="#cb7-12"></a><span class="co">## 6            1 re_match clziFvXN     text     &lt;chr&gt;    chara… char… character   </span></span>
-<span id="cb7-13"><a href="#cb7-13"></a><span class="co">## 7            1 re_match clziFvXN     perl     &lt;chr&gt;    logic… logi… logical     </span></span>
-<span id="cb7-14"><a href="#cb7-14"></a><span class="co">## 8            1 re_match clziFvXN     ...      &lt;chr&gt;    NULL   NULL  NULL        </span></span>
-<span id="cb7-15"><a href="#cb7-15"></a><span class="co">## # … with 5 more variables: length &lt;int&gt;, formal &lt;named list&gt;, uneval &lt;I&lt;list&gt;&gt;,</span></span>
-<span id="cb7-16"><a href="#cb7-16"></a><span class="co">## #   eval &lt;I&lt;list&gt;&gt;, source &lt;chr&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">trace_package</span> (<span class="st">"rematch"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>res</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 8 × 14</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   trace_number trace…¹ fn_name fn_ca…² par_n…³ class typeof mode  stora…⁴ length</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">##          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;I&lt;l&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;int&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1            0 exampl… re_mat… NKOqPl… pattern &lt;chr&gt; chara… char… charac…      1</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2            0 exampl… re_mat… NKOqPl… text    &lt;chr&gt; chara… char… charac…      7</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3            0 exampl… re_mat… NKOqPl… perl    &lt;chr&gt; logic… logi… logical      1</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 4            0 exampl… re_mat… NKOqPl… ...     &lt;chr&gt; NULL   NULL  NULL         0</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 5            1 exampl… re_mat… kbIZej… pattern &lt;chr&gt; chara… char… charac…      1</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 6            1 exampl… re_mat… kbIZej… text    &lt;chr&gt; chara… char… charac…      7</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 7            1 exampl… re_mat… kbIZej… perl    &lt;chr&gt; logic… logi… logical      1</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 8            1 exampl… re_mat… kbIZej… ...     &lt;chr&gt; NULL   NULL  NULL         0</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 4 more variables: formal &lt;named list&gt;, uneval &lt;I&lt;list&gt;&gt;,</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="do">## #   eval &lt;I&lt;list&gt;&gt;, source &lt;chr&gt;, and abbreviated variable names ¹​trace_source,</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="do">## #   ²​fn_call_hash, ³​par_name, ⁴​storage_mode</span></span></code></pre></div>
 <p>The <code>data.frame</code> returned by the <code><a href="reference/trace_package.html">trace_package()</a></code> function includes one more column than the result directly returned by <code><a href="reference/load_traces.html">load_traces()</a></code>. This column is called “source”, and identifies the source-code object which generated each trace:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">unique</span> (res<span class="op">$</span>source)</span>
-<span id="cb8-2"><a href="#cb8-2"></a></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="co">## [1] "rd_re_match"</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span> (res<span class="sc">$</span>source)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "rd_re_match"</span></span></code></pre></div>
 <p>Tracing an installed package generally only extracts traces from example code, as documented in help, or <code>.Rd</code>, files. These are identified by the “rd_” prefix on the source call, with the <code>rematch</code> package including only one <code>.Rd</code> file.</p>
 <p><a href="https://mpadge.github.io/typetracer/reference/trace_package.html">The <code>trace_package()</code> function</a> also includes an additional parameter, <code>types</code>, which defaults to <code>c ("examples", "tests")</code>, so that traces are also by default generated for all tests included with local source packages (or for packages installed to include test files). The “source” column for test files identifies the names of each test, prefixed with “test_”. Other than this column, the results are the same as shown above for <code><a href="reference/load_traces.html">load_traces()</a></code>, with one line for every parameter passed to every function call in the examples.</p>
 <div class="section level3">
 <h3 id="example-2a---specifying-functions-to-trace">Example #2(a) - Specifying Functions to Trace<a class="anchor" aria-label="anchor" href="#example-2a---specifying-functions-to-trace"></a>
 </h3>
 <p><a href="https://mpadge.github.io/typetracer/reference/trace_package.html">The <code>trace_package()</code> function</a> also accepts an argument, <code>functions</code>, specifying which functions from a package should be traced. For example,</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>x &lt;-<span class="st"> </span><span class="kw">trace_package</span> (<span class="st">"stats"</span>, <span class="dt">functions =</span> <span class="st">"sd"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2"></a></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="co">## # A tibble: 2 × 13</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="co">##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="co">##          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;list&gt;&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;       </span></span>
-<span id="cb9-6"><a href="#cb9-6"></a><span class="co">## 1            0 sd      EzasZOKV     x        &lt;chr [1]&gt; integ… nume… integer     </span></span>
-<span id="cb9-7"><a href="#cb9-7"></a><span class="co">## 2            0 sd      EzasZOKV     na.rm    &lt;chr [1]&gt; logic… logi… logical     </span></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="co">## # … with 5 more variables: length &lt;int&gt;, formal &lt;I&lt;list&gt;&gt;, uneval &lt;I&lt;list&gt;&gt;,</span></span>
-<span id="cb9-9"><a href="#cb9-9"></a><span class="co">## #   eval &lt;I&lt;list&gt;&gt;, source &lt;chr&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">trace_package</span> (<span class="st">"stats"</span>, <span class="at">functions =</span> <span class="st">"sd"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 2 × 13</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   trace_nu…¹ fn_name fn_ca…² par_n…³ class typeof mode  stora…⁴ length formal   </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="do">##        &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;I&lt;l&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;int&gt; &lt;I&lt;list&gt;&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1          0 sd      EzasZO… x       &lt;chr&gt; integ… nume… integer      2 &lt;missing&gt;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2          0 sd      EzasZO… na.rm   &lt;chr&gt; logic… logi… logical      1 &lt;lgl [1]&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 3 more variables: uneval &lt;I&lt;list&gt;&gt;, eval &lt;I&lt;list&gt;&gt;, source &lt;chr&gt;, and</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="do">## #   abbreviated variable names ¹​trace_number, ²​fn_call_hash, ³​par_name,</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="do">## #   ⁴​storage_mode</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -271,6 +273,8 @@
 <ul class="list-unstyled">
 <li><a href="https://github.com/mpadge/typetracer/actions" class="external-link"><img src="https://github.com/mpadge/typetracer/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://app.codecov.io/gh/mpadge/typetracer" class="external-link"><img src="https://codecov.io/gh/mpadge/typetracer/branch/main/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://cran.r-project.org/package=typetracer/" class="external-link"><img src="https://www.r-pkg.org/badges/version/typetracer" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://cran.r-project.org/package=typetracer" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/typetracer?color=orange" alt="CRAN Downloads"></a></li>
 </ul>
 </div>
 
@@ -285,7 +289,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer>
