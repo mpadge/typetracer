@@ -74,13 +74,13 @@ from each function call.
     ## # A tibble: 7 × 14
     ##   trace_number trace_file call_env fn_name fn_call_hash par_name class    typeof
     ##          <int> <chr>      <chr>    <chr>   <chr>        <chr>    <I<list> <chr> 
-    ## 1            0 <NA>       <NA>     f       MqfVUXHJ     x        <chr>    integ…
-    ## 2            0 <NA>       <NA>     f       MqfVUXHJ     y        <chr>    double
-    ## 3            0 <NA>       <NA>     f       MqfVUXHJ     z        <chr>    NULL  
-    ## 4            0 <NA>       <NA>     f       MqfVUXHJ     ...      <chr>    NULL  
-    ## 5            0 <NA>       <NA>     f       MqfVUXHJ     a        <chr>    chara…
-    ## 6            0 <NA>       <NA>     f       MqfVUXHJ     b        <chr>    list  
-    ## 7            0 <NA>       <NA>     f       MqfVUXHJ     f        <chr>    langu…
+    ## 1            0 <NA>       <NA>     f       KNEtbPwO     x        <chr>    integ…
+    ## 2            0 <NA>       <NA>     f       KNEtbPwO     y        <chr>    double
+    ## 3            0 <NA>       <NA>     f       KNEtbPwO     z        <chr>    NULL  
+    ## 4            0 <NA>       <NA>     f       KNEtbPwO     ...      <chr>    NULL  
+    ## 5            0 <NA>       <NA>     f       KNEtbPwO     a        <chr>    chara…
+    ## 6            0 <NA>       <NA>     f       KNEtbPwO     b        <chr>    list  
+    ## 7            0 <NA>       <NA>     f       KNEtbPwO     f        <chr>    langu…
     ## # ℹ 6 more variables: mode <chr>, storage_mode <chr>, length <int>,
     ## #   formal <named list>, uneval <I<list>>, eval <I<list>>
 
@@ -133,7 +133,7 @@ unevaluated and evaluated forms of parameters:
     ## 
     ## $f
     ## a ~ b
-    ## <environment: 0x55fe322cf860>
+    ## <environment: 0x559e837a22c8>
 
 Unevaluated parameters are generally converted to equivalent character
 expressions.
@@ -192,14 +192,14 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     ## # A tibble: 8 × 16
     ##   trace_number trace_source trace_file call_env fn_name  fn_call_hash par_name
     ##          <int> <chr>        <chr>      <chr>    <chr>    <chr>        <chr>   
-    ## 1            0 examples     <NA>       <NA>     re_match nVGJmSkO     pattern 
-    ## 2            0 examples     <NA>       <NA>     re_match nVGJmSkO     text    
-    ## 3            0 examples     <NA>       <NA>     re_match nVGJmSkO     perl    
-    ## 4            0 examples     <NA>       <NA>     re_match nVGJmSkO     ...     
-    ## 5            1 examples     <NA>       <NA>     re_match tpfwGxWd     pattern 
-    ## 6            1 examples     <NA>       <NA>     re_match tpfwGxWd     text    
-    ## 7            1 examples     <NA>       <NA>     re_match tpfwGxWd     perl    
-    ## 8            1 examples     <NA>       <NA>     re_match tpfwGxWd     ...     
+    ## 1            0 examples     <NA>       <NA>     re_match meGyWSPZ     pattern 
+    ## 2            0 examples     <NA>       <NA>     re_match meGyWSPZ     text    
+    ## 3            0 examples     <NA>       <NA>     re_match meGyWSPZ     perl    
+    ## 4            0 examples     <NA>       <NA>     re_match meGyWSPZ     ...     
+    ## 5            1 examples     <NA>       <NA>     re_match nGNFLgiO     pattern 
+    ## 6            1 examples     <NA>       <NA>     re_match nGNFLgiO     text    
+    ## 7            1 examples     <NA>       <NA>     re_match nGNFLgiO     perl    
+    ## 8            1 examples     <NA>       <NA>     re_match nGNFLgiO     ...     
     ## # ℹ 9 more variables: class <I<list>>, typeof <chr>, mode <chr>,
     ## #   storage_mode <chr>, length <int>, formal <named list>, uneval <I<list>>,
     ## #   eval <I<list>>, source <chr>
@@ -247,12 +247,13 @@ package should be traced. For example,
 
     x <- trace_package ("stats", functions = "sd")
 
-    ## # A tibble: 2 × 13
-    ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
-    ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
-    ## 1            0 sd      EzasZOKV     x        <chr [1]> integ… nume… integer     
-    ## 2            0 sd      EzasZOKV     na.rm    <chr [1]> logic… logi… logical     
-    ## # ℹ 5 more variables: length <int>, formal <I<list>>, uneval <I<list>>,
+    ## # A tibble: 2 × 16
+    ##   trace_number trace_source fn_name fn_call_hash trace_file call_env par_name
+    ##          <int> <chr>        <chr>   <chr>        <chr>      <chr>    <chr>   
+    ## 1            0 examples     sd      EzasZOKV     <NA>       <NA>     x       
+    ## 2            0 examples     sd      EzasZOKV     <NA>       <NA>     na.rm   
+    ## # ℹ 9 more variables: class <I<list>>, typeof <chr>, mode <chr>,
+    ## #   storage_mode <chr>, length <int>, formal <I<list>>, uneval <I<list>>,
     ## #   eval <I<list>>, source <chr>
 
 ## Prior Art

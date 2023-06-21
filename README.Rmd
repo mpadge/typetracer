@@ -231,8 +231,11 @@ types <- c ("integer", "logical")
 
 x <- tibble::tibble (
     trace_number = 0L,
+    trace_source = "examples",
     fn_name = "sd",
     fn_call_hash = "EzasZOKV",
+    trace_file = NA_character_,
+    call_env = NA_character_,
     par_name = c ("x", "na.rm"),
     class = I (as.list (types)),
     typeof = types,
