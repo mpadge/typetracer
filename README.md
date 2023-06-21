@@ -22,9 +22,16 @@ demonstrated below.
 
 ## Installation
 
-The package can be installed with the following command:
+The stable version of the package can be installed with one of the
+following commands:
 
-    remotes::install_github ("mpadge/typetracer")
+    # Stable version from CRAN:
+    install.packages ("typetrace")
+    # Current development version from r-universe:
+    install.packages (
+        "typetracer",
+        repos = c ("https://mpadge.r-universe.dev", "https://cloud.r-project.org")
+    )
 
 Then loaded for use by calling `library`:
 
@@ -64,18 +71,18 @@ from each function call.
     x <- load_traces ()
     x
 
-    ## # A tibble: 7 × 12
-    ##   trace_nu…¹ fn_name fn_ca…² par_n…³ class typeof mode  stora…⁴ length formal   
-    ##        <int> <chr>   <chr>   <chr>   <I<l> <chr>  <chr> <chr>    <int> <named l>
-    ## 1          0 f       BGOMYd… x       <chr> integ… nume… integer      2 <missing>
-    ## 2          0 f       BGOMYd… y       <chr> double nume… double       2 <missing>
-    ## 3          0 f       BGOMYd… z       <chr> NULL   NULL  NULL         0 <missing>
-    ## 4          0 f       BGOMYd… ...     <chr> NULL   NULL  NULL         0 <missing>
-    ## 5          0 f       BGOMYd… a       <chr> chara… char… charac…      1 <NULL>   
-    ## 6          0 f       BGOMYd… b       <chr> list   list  list         2 <NULL>   
-    ## 7          0 f       BGOMYd… f       <chr> langu… call  langua…      3 <NULL>   
-    ## # … with 2 more variables: uneval <I<list>>, eval <I<list>>, and abbreviated
-    ## #   variable names ¹​trace_number, ²​fn_call_hash, ³​par_name, ⁴​storage_mode
+    ## # A tibble: 7 × 14
+    ##   trace_number trace_file call_env fn_name fn_call_hash par_name class    typeof
+    ##          <int> <chr>      <chr>    <chr>   <chr>        <chr>    <I<list> <chr> 
+    ## 1            0 <NA>       <NA>     f       MqfVUXHJ     x        <chr>    integ…
+    ## 2            0 <NA>       <NA>     f       MqfVUXHJ     y        <chr>    double
+    ## 3            0 <NA>       <NA>     f       MqfVUXHJ     z        <chr>    NULL  
+    ## 4            0 <NA>       <NA>     f       MqfVUXHJ     ...      <chr>    NULL  
+    ## 5            0 <NA>       <NA>     f       MqfVUXHJ     a        <chr>    chara…
+    ## 6            0 <NA>       <NA>     f       MqfVUXHJ     b        <chr>    list  
+    ## 7            0 <NA>       <NA>     f       MqfVUXHJ     f        <chr>    langu…
+    ## # ℹ 6 more variables: mode <chr>, storage_mode <chr>, length <int>,
+    ## #   formal <named list>, uneval <I<list>>, eval <I<list>>
 
 Each row of the result returned by `load_traces()` represents one
 parameter passed to one function call. Each function call itself
@@ -126,7 +133,7 @@ unevaluated and evaluated forms of parameters:
     ## 
     ## $f
     ## a ~ b
-    ## <environment: 0x55c4851c7198>
+    ## <environment: 0x55fe322cf860>
 
 Unevaluated parameters are generally converted to equivalent character
 expressions.
@@ -182,25 +189,26 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     res <- trace_package ("rematch")
     res
 
-    ## # A tibble: 8 × 14
-    ##   trace_number trace…¹ fn_name fn_ca…² par_n…³ class typeof mode  stora…⁴ length
-    ##          <int> <chr>   <chr>   <chr>   <chr>   <I<l> <chr>  <chr> <chr>    <int>
-    ## 1            0 exampl… re_mat… NKOqPl… pattern <chr> chara… char… charac…      1
-    ## 2            0 exampl… re_mat… NKOqPl… text    <chr> chara… char… charac…      7
-    ## 3            0 exampl… re_mat… NKOqPl… perl    <chr> logic… logi… logical      1
-    ## 4            0 exampl… re_mat… NKOqPl… ...     <chr> NULL   NULL  NULL         0
-    ## 5            1 exampl… re_mat… kbIZej… pattern <chr> chara… char… charac…      1
-    ## 6            1 exampl… re_mat… kbIZej… text    <chr> chara… char… charac…      7
-    ## 7            1 exampl… re_mat… kbIZej… perl    <chr> logic… logi… logical      1
-    ## 8            1 exampl… re_mat… kbIZej… ...     <chr> NULL   NULL  NULL         0
-    ## # … with 4 more variables: formal <named list>, uneval <I<list>>,
-    ## #   eval <I<list>>, source <chr>, and abbreviated variable names ¹​trace_source,
-    ## #   ²​fn_call_hash, ³​par_name, ⁴​storage_mode
+    ## # A tibble: 8 × 16
+    ##   trace_number trace_source trace_file call_env fn_name  fn_call_hash par_name
+    ##          <int> <chr>        <chr>      <chr>    <chr>    <chr>        <chr>   
+    ## 1            0 examples     <NA>       <NA>     re_match nVGJmSkO     pattern 
+    ## 2            0 examples     <NA>       <NA>     re_match nVGJmSkO     text    
+    ## 3            0 examples     <NA>       <NA>     re_match nVGJmSkO     perl    
+    ## 4            0 examples     <NA>       <NA>     re_match nVGJmSkO     ...     
+    ## 5            1 examples     <NA>       <NA>     re_match tpfwGxWd     pattern 
+    ## 6            1 examples     <NA>       <NA>     re_match tpfwGxWd     text    
+    ## 7            1 examples     <NA>       <NA>     re_match tpfwGxWd     perl    
+    ## 8            1 examples     <NA>       <NA>     re_match tpfwGxWd     ...     
+    ## # ℹ 9 more variables: class <I<list>>, typeof <chr>, mode <chr>,
+    ## #   storage_mode <chr>, length <int>, formal <named list>, uneval <I<list>>,
+    ## #   eval <I<list>>, source <chr>
 
-The `data.frame` returned by the `trace_package()` function includes one
-more column than the result directly returned by `load_traces()`. This
-column is called “source”, and identifies the source-code object which
-generated each trace:
+The `data.frame` returned by the `trace_package()` function includes
+three more columns than the result directly returned by `load_traces()`.
+These columns identify the sources and calling environments of each
+function call being traces. The “source” column identifies the
+source-code object which generated each trace:
 
     unique (res$source)
 
@@ -217,10 +225,18 @@ also includes an additional parameter, `types`, which defaults to
 `c ("examples", "tests")`, so that traces are also by default generated
 for all tests included with local source packages (or for packages
 installed to include test files). The “source” column for test files
-identifies the names of each test, prefixed with “test\_”. Other than
-this column, the results are the same as shown above for
-`load_traces()`, with one line for every parameter passed to every
-function call in the examples.
+identifies the names of each test, prefixed with “test\_”.
+
+The other two additional columns of “trace\_file” and “call\_env”
+respectively specify the source file and calling environment of each
+trace. These will generally only retain information from test files, in
+which case the source file will generally be the file name identified in
+the “source” column, and “call\_env” will specify the environment from
+which that function call originated. Environments may, for example,
+include various types of expectation from the [“testthat”
+package](https://testthat.r-lib.org). These calling environments are
+useful to discern whether, for example, a call was made with an
+expectation that it should error.
 
 ### Example \#2(a) - Specifying Functions to Trace
 
@@ -232,13 +248,12 @@ package should be traced. For example,
     x <- trace_package ("stats", functions = "sd")
 
     ## # A tibble: 2 × 13
-    ##   trace_nu…¹ fn_name fn_ca…² par_n…³ class typeof mode  stora…⁴ length formal   
-    ##        <int> <chr>   <chr>   <chr>   <I<l> <chr>  <chr> <chr>    <int> <I<list>>
-    ## 1          0 sd      EzasZO… x       <chr> integ… nume… integer      2 <missing>
-    ## 2          0 sd      EzasZO… na.rm   <chr> logic… logi… logical      1 <lgl [1]>
-    ## # … with 3 more variables: uneval <I<list>>, eval <I<list>>, source <chr>, and
-    ## #   abbreviated variable names ¹​trace_number, ²​fn_call_hash, ³​par_name,
-    ## #   ⁴​storage_mode
+    ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
+    ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
+    ## 1            0 sd      EzasZOKV     x        <chr [1]> integ… nume… integer     
+    ## 2            0 sd      EzasZOKV     na.rm    <chr [1]> logic… logi… logical     
+    ## # ℹ 5 more variables: length <int>, formal <I<list>>, uneval <I<list>>,
+    ## #   eval <I<list>>, source <chr>
 
 ## Prior Art
 

@@ -32,10 +32,16 @@ Article No. 4, Pages 1–5, https://doi.org/10.1145/3340670.3342426
 
 ## Installation
 
-The package can be installed with the following command:
+The stable version of the package can be installed with one of the following commands:
 
 ```{r remotes, eval = FALSE}
-remotes::install_github ("mpadge/typetracer")
+# Stable version from CRAN:
+install.packages ("typetrace")
+# Current development version from r-universe:
+install.packages (
+    "typetracer",
+    repos = c ("https://mpadge.r-universe.dev", "https://cloud.r-project.org")
+)
 ```
 
 Then loaded for use by calling `library`:
@@ -171,9 +177,10 @@ res <- trace_package ("rematch")
 res
 ```
 
-The `data.frame` returned by the `trace_package()` function includes one
-more column than the result directly returned by `load_traces()`. This column
-is called "source", and identifies the source-code object which
+The `data.frame` returned by the `trace_package()` function includes three
+more columns than the result directly returned by `load_traces()`. These
+columns identify the sources and calling environments of each function call
+being traces. The "source" column identifies the source-code object which
 generated each trace:
 
 ```{r source}
@@ -191,9 +198,17 @@ also includes an additional parameter, `types`, which defaults to `c
 ("examples", "tests")`, so that traces are also by default generated for all
 tests included with local source packages (or for packages installed to include
 test files). The "source" column for test files identifies the names of each
-test, prefixed with "test_". Other than this column, the results are the same
-as shown above for `load_traces()`, with one line for every parameter passed to
-every function call in the examples.
+test, prefixed with "test_".
+
+The other two additional columns of "trace_file" and "call_env" respectively
+specify the source file and calling environment of each trace. These will
+generally only retain information from test files, in which case the source
+file will generally be the file name identified in the "source" column, and
+"call_env" will specify the environment from which that function call
+originated. Environments may, for example, include various types of expectation
+from the ["testthat" package](https://testthat.r-lib.org). These calling
+environments are useful to discern whether, for example, a call was made with
+an expectation that it should error.
 
 ### Example #2(a) - Specifying Functions to Trace
 
