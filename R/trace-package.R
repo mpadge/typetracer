@@ -44,8 +44,8 @@ trace_package <- function (package = NULL,
         trace_fns <- ls (p, all.names = TRUE)
     }
     pkg_env <- as.environment (p)
-    for (f in trace_fns) {
-        f <- get (f, envir = pkg_env)
+    for (fnm in trace_fns) {
+        f <- get (fnm, envir = pkg_env)
         if (is.function (f)) {
             inject_tracer (f)
         }
