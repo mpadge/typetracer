@@ -5,11 +5,11 @@
 #' character string).
 #' @return Nothing (will error on fail).
 #'
-#' @note The tracer is defined in the internal `get_types` function. This uses
-#' an `options` variable defined on package load for the current `tempdir`,
-#' defining a single location where all traced values are dumped. This is done
-#' via `options` to allow both multi-threaded function calls and calls via
-#' \pkg{callr} to be traced.
+#' @note The tracer is defined in the internal `typetracer_header()` function.
+#' This uses an `options` variable defined on package load for the current
+#' `tempdir`, defining a single location where all traced values are dumped.
+#' This is done via `options` to allow both multi-threaded function calls and
+#' calls via \pkg{callr} to be traced.
 #' @export
 inject_tracer <- function (f) {
 
@@ -20,8 +20,9 @@ inject_tracer <- function (f) {
     f_name <- cache_file_name (f, f_name)
     saveRDS (object = body (f), file = f_name)
 
-    get_types <- utils::getFromNamespace ("get_types", "typetracer")
-    code <- body (get_types)
+    typetracer_header <-
+        utils::getFromNamespace ("typetracer_header", "typetracer")
+    code <- body (typetracer_header)
 
     fun_body <- body (f)
 

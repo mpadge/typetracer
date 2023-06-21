@@ -7,7 +7,7 @@
 #' types have been traced. This environment also has to have an unambiguous and
 #' unique name.
 #' @noRd
-get_types <- function () {
+typetracer_header <- function () {
 
     typetracer_env <- new.env (parent = emptyenv ())
 
@@ -56,7 +56,7 @@ get_types <- function () {
 
     # Return structure of parameters as character strings
     # https://rpubs.com/maechler/R_language_objs
-    typetracer_env$get_str <- function (x, max.length = 1000L) {
+    typetracer_env$get_str <- function (x, max.length = 1000L) { # nolint
 
         r <- tryCatch (format (x), error = function (e) e)
         r <- if (inherits (r, "error")) {
