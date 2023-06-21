@@ -1,7 +1,21 @@
+.Rproj.user
 .Rhistory
 .RData
-.Rproj.user
-.ccls*
-/injectr.Rcheck
-/injectr_0.1.tar.gz
-docs
+inst/doc
+inst/WORDLIST
+data-raw/
+literature/
+aaa\.Rmd*
+# History files
+.Rhistory
+.Rapp.history
+# Session Data files
+.RData
+# Output files from R CMD build
+/*.tar.gz
+# vim files
+.*.un~
+.*.swp
+# compiled object files
+*.o
+*.so
