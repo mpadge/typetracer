@@ -62,10 +62,10 @@ test_that ("trace call", {
         names (x),
         c (
             "trace_name", "trace_number",
+            "fn_name", "fn_call_hash",
             "trace_file", "call_env",
-            "fn_name", "fn_call_hash", "par_name",
-            "class", "typeof", "mode", "storage_mode", "length",
-            "formal", "uneval", "eval"
+            "par_name", "class", "typeof", "mode", "storage_mode",
+            "length", "formal", "uneval", "eval"
         )
     )
 })

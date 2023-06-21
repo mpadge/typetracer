@@ -27,7 +27,7 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
         fn_name <- tr_i$fn_name
         par_formals <- tr_i$formals
         num_traces <- tr_i$num_traces
-        trace_source <- tr_i$source
+        trace_source <- tr_i$source # only exists for packages
 
         tr_i <- tr_i [which (!names (tr_i) %in%
             c ("fn_name", "formals", "num_traces", "source"))]
@@ -64,10 +64,10 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
             trace_name = i,
             trace_number = num_traces,
             trace_source = trace_source,
-            trace_file = call_envs$file,
-            call_env = call_envs$call_env,
             fn_name = fn_name,
             fn_call_hash = fn_call_hash,
+            trace_file = call_envs$file,
+            call_env = call_envs$call_env,
             par_name = par_name,
             class = classes,
             typeof = types,
