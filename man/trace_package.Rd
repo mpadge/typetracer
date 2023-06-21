@@ -12,7 +12,7 @@ trace_package(
 )
 }
 \arguments{
-\item{package}{Name of package to be traced (as character value)}
+\item{package}{Name of package to be traced (as character value).}
 
 \item{functions}{Optional character vector of names of functions to trace.
 Defaults to tracing all functions.}

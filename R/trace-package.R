@@ -1,7 +1,7 @@
 
 #' Trace all parameters for all functions in a specified package
 #'
-#' @param package Name of package to be traced (as character value)
+#' @param package Name of package to be traced (as character value).
 #' @param functions Optional character vector of names of functions to trace.
 #' Defaults to tracing all functions.
 #' @param types The types of code to be run to generate traces: one or both
