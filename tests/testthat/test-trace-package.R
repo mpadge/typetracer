@@ -28,8 +28,9 @@ test_that ("trace installed package", {
     expect_identical (
         names (x0),
         c (
-            "trace_number", "trace_source", "fn_name",
-            "fn_call_hash", "par_name", "class",
+            "trace_number", "trace_source",
+            "trace_file", "call_env",
+            "fn_name", "fn_call_hash", "par_name", "class",
             "typeof", "mode", "storage_mode", "length",
             "formal", "uneval", "eval", "source"
         )
@@ -46,8 +47,9 @@ test_that ("trace installed package", {
     expect_identical (
         names (x1),
         c (
-            "trace_number", "trace_source", "fn_name",
-            "fn_call_hash", "par_name", "class",
+            "trace_number", "trace_source",
+            "trace_file", "call_env",
+            "fn_name", "fn_call_hash", "par_name", "class",
             "typeof", "mode", "storage_mode", "length",
             "formal", "uneval", "eval", "source"
         )
@@ -91,8 +93,9 @@ test_that ("trace source package", {
     expect_identical (
         names (x0),
         c (
-            "trace_number", "trace_source", "fn_name",
-            "fn_call_hash", "par_name", "class",
+            "trace_number", "trace_source",
+            "trace_file", "call_env",
+            "fn_name", "fn_call_hash", "par_name", "class",
             "typeof", "mode", "storage_mode", "length",
             "formal", "uneval", "eval", "source"
         )

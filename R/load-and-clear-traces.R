@@ -50,10 +50,22 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
         par_uneval <- I (lapply (tr_i, function (i) i$par_uneval))
         par_eval <- I (lapply (tr_i, function (i) i$par_eval))
 
+        call_envs <- do.call (rbind, lapply (tr_i, function (i) {
+            ci <- i$call_envs
+            if (nrow (ci) == 0L) {
+                ci <- ci [1, ] # auto-fills with NA
+            }
+            return (ci)
+        }))
+        call_envs$call_env <- paste0 (call_envs$namespace, "::", call_envs$name)
+        call_envs$call_env [which (is.na (call_envs$name))] <- NA_character_
+
         tibble::tibble (
             trace_name = i,
             trace_number = num_traces,
             trace_source = trace_source,
+            trace_file = call_envs$file,
+            call_env = call_envs$call_env,
             fn_name = fn_name,
             fn_call_hash = fn_call_hash,
             par_name = par_name,
