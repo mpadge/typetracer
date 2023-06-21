@@ -83,8 +83,11 @@
               if (length(index) > 0L) {
                   call_envs$namespace[index] <- trace_dat$scope[index]
               }
-              call_envs <- call_envs[which(!call_envs$name == typetracer_env$fn_name), 
+              call_envs <- call_envs[which(call_envs$namespace != "typetracer"), 
                   ]
+              if (nrow(call_envs) > 0L) {
+                  call_envs <- call_envs[1, ]
+              }
               list(par = p, class = class(res), typeof = typeof(res), 
                   storage_mode = storage.mode(res), mode = mode(res), 
                   length = length(res), par_uneval = s, par_eval = res, 

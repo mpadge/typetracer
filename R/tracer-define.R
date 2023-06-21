@@ -129,8 +129,11 @@ typetracer_header <- function () {
         if (length (index) > 0L) {
             call_envs$namespace [index] <- trace_dat$scope [index]
         }
-        call_envs <-
-            call_envs [which (!call_envs$name == typetracer_env$fn_name), ]
+        call_envs <- call_envs [which (call_envs$namespace != "typetracer"), ]
+        if (nrow (call_envs) > 0L) {
+            # assume first branch of trace_back is desired env
+            call_envs <- call_envs [1, ]
+        }
 
         list (
             par = p,
