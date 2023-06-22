@@ -23,3 +23,16 @@ This uses an \code{options} variable defined on package load for the current
 This is done via \code{options} to allow both multi-threaded function calls and
 calls via \pkg{callr} to be traced.
 }
+\examples{
+f <- function (x, y, z, ...) {
+    x * x + y * y
+}
+inject_tracer (f)
+val <- f (1:2, 3:4 + 0., a = "blah")
+x <- load_traces ()
+
+# Traces should always be "uninjected":
+uninject_tracer (f)
+# Traces may also be removed:
+clear_traces ()
+}

@@ -11,6 +11,18 @@
 #' This is done via `options` to allow both multi-threaded function calls and
 #' calls via \pkg{callr} to be traced.
 #' @export
+#' @examples
+#' f <- function (x, y, z, ...) {
+#'     x * x + y * y
+#' }
+#' inject_tracer (f)
+#' val <- f (1:2, 3:4 + 0., a = "blah")
+#' x <- load_traces ()
+#'
+#' # Traces should always be "uninjected":
+#' uninject_tracer (f)
+#' # Traces may also be removed:
+#' clear_traces ()
 inject_tracer <- function (f) {
 
     checkmate::assert_function (f)
@@ -62,6 +74,18 @@ reassign_function_body <- function (fun, body) {
 #' @return Logical value indicating whether or not tracer was able to be removed
 #' ("uninjected").
 #' @export
+#' @examples
+#' f <- function (x, y, z, ...) {
+#'     x * x + y * y
+#' }
+#' inject_tracer (f)
+#' val <- f (1:2, 3:4 + 0., a = "blah")
+#' x <- load_traces ()
+#'
+#' # Traces should always be "uninjected":
+#' uninject_tracer (f)
+#' # Traces may also be removed:
+#' clear_traces ()
 uninject_tracer <- function (f) {
 
     checkmate::assert_function (f)

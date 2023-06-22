@@ -20,3 +20,17 @@ evaluated forms.
 \description{
 Load traces of parameter types
 }
+\examples{
+f <- function (x, y, z, ...) {
+    x * x + y * y
+}
+inject_tracer (f)
+val <- f (1:2, 3:4 + 0., a = "blah")
+x <- load_traces ()
+print (x)
+
+# Traces should always be "uninjected":
+uninject_tracer (f)
+# Traces may also be removed:
+clear_traces ()
+}

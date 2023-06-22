@@ -31,3 +31,9 @@ specified in code provided in package examples.
 \description{
 Trace all parameters for all functions in a specified package
 }
+\examples{
+\dontrun{
+res <- trace_package ("rematch")
+res <- trace_package (pkg_dir = "/<path>/<to>/<local>/<pacakge>")
+}
+}

@@ -8,6 +8,19 @@
 #' parameters, and values of each parameter traced in both unevaluated and
 #' evaluated forms.
 #' @export
+#' @examples
+#' f <- function (x, y, z, ...) {
+#'     x * x + y * y
+#' }
+#' inject_tracer (f)
+#' val <- f (1:2, 3:4 + 0., a = "blah")
+#' x <- load_traces ()
+#' print (x)
+#'
+#' # Traces should always be "uninjected":
+#' uninject_tracer (f)
+#' # Traces may also be removed:
+#' clear_traces ()
 load_traces <- function (files = FALSE, quiet = FALSE) {
 
     td <- get_typetrace_dir ()

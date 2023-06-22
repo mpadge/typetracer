@@ -12,6 +12,11 @@
 #' @return A `data.frame` of data on every parameter of every function as
 #' specified in code provided in package examples.
 #' @export
+#' @examples
+#' \dontrun{
+#' res <- trace_package ("rematch")
+#' res <- trace_package (pkg_dir = "/<path>/<to>/<local>/<pacakge>")
+#' }
 trace_package <- function (package = NULL,
                            functions = NULL,
                            types = c ("examples", "tests"),
