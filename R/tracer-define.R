@@ -59,6 +59,11 @@ typetracer_header <- function () {
         utils::getFromNamespace ("process_back_trace", "typetracer")
     # Initial trace has to be called in this environment:
     trace_dat <- rlang::trace_back (bottom = fn_env)
+
+    # Uncomment this for debugging, and add "trace_dat" to "trace_objs" at start
+    # of "load_traces" fn:
+    # typetracer_env$data$trace_dat <- trace_dat
+
     typetracer_env$data$call_envs <-
         typetracer_env$process_back_trace (trace_dat, typetracer_env$fn_name)
 
@@ -185,8 +190,7 @@ process_back_trace <- function (trace_dat, fn_name) {
     # includes any embedded environments of those, such as testthat expectations
     # or 'tryCatch' calls. Those will then be first on the call_env list in the
     # final reduction to one row, below.
-    tt <- as.data.frame (trace_dat)
-    has_fn_name <- vapply (tt$call, function (i) {
+    has_fn_name <- vapply (trace_dat$call, function (i) {
         pd <- tryCatch (
             utils::getParseData (parse (text = i)),
             error = function (e) NULL
@@ -198,7 +202,8 @@ process_back_trace <- function (trace_dat, fn_name) {
         fns <- pd$text [index]
         return (any (fns == fn_name))
     }, logical (1L))
-    trace_dat <- trace_dat [which (has_fn_name), ]
+    parent_level <- sort (unique (trace_dat$parent [which (has_fn_name)]))
+    trace_dat <- trace_dat [which (trace_dat$parent %in% parent_level), ]
     if (nrow (trace_dat) == 0L) {
         return (call_envs)
     }
