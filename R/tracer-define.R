@@ -212,11 +212,6 @@ process_back_trace <- function (trace_dat, fn_name) {
         return (any (fns == fn_name))
     }, logical (1L))
 
-    # These 2 lines are needed to catch expect_error in geodist_vec, but then
-    # they miss all 'tryCatch' calls:
-    # parent_level <- sort (unique (trace_dat$parent [which (has_fn_name)]))
-    # trace_dat <- trace_dat [which (trace_dat$parent %in% parent_level), ]
-
     trace_dat <- trace_dat [which (has_fn_name), ]
 
     if (nrow (trace_dat) == 0L) {
@@ -243,8 +238,7 @@ process_back_trace <- function (trace_dat, fn_name) {
     if (length (index) > 0L) {
         call_envs$namespace [index] <- trace_dat$scope [index]
     }
-    call_envs <- call_envs [which (call_envs$namespace != "typetracer"), ]
-    call_envs <- call_envs [which (!grepl ("typetracer", call_envs$file)), ]
+
     if (nrow (call_envs) > 0L) {
         # assume first branch of trace_back is desired env
         call_envs <- call_envs [1, ]
