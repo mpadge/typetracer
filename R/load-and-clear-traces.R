@@ -20,18 +20,25 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
         return (NULL)
     }
 
+    # These are 'meta'-level trace objects, which are moved into the main
+    # function environment here, and removed from traces. Traces from that point
+    # on may be analysed by iterating over sequences of parameter traces.
+    fn_name <- par_formals <- num_traces <-
+        trace_source <- call_envs <- NULL # nolint
+    trace_objs <- c (
+        "fn_name", "par_formals", "num_traces",
+        "trace_source", "call_envs"
+    )
+
     out <- lapply (traces, function (i) {
 
         tr_i <- readRDS (i)
 
-        fn_name <- tr_i$fn_name
-        par_formals <- tr_i$par_formals
-        num_traces <- tr_i$num_traces
-        trace_source <- tr_i$trace_source # only exists for packages
-        call_envs <- tr_i$call_envs
+        for (to in trace_objs) {
+            assign (to, tr_i [[to]])
+        }
 
-        tr_i <- tr_i [which (!names (tr_i) %in%
-            c ("fn_name", "par_formals", "num_traces", "trace_source", "call_envs"))]
+        tr_i <- tr_i [which (!names (tr_i) %in% trace_objs)]
         fn_call_hash <- gsub ("^.*typetrace\\_|\\.Rds$", "", i)
 
         # simple vector columns:
