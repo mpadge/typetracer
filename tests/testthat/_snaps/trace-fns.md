@@ -29,29 +29,10 @@
           }
           typetracer_env$get_str <- getFromNamespace("get_param_str", 
               "typetracer")
+          typetracer_env$trace_one_param <- getFromNamespace("trace_one_param", 
+              "typetracer")
           typetracer_env$data <- lapply(typetracer_env$par_names, function(p) {
-              res <- NULL
-              if (p %in% ls(fn_env)) {
-                  res <- tryCatch(get(p, envir = fn_env, inherits = FALSE), 
-                      error = function(e) NULL)
-              }
-              if (is.null(res)) {
-                  res <- tryCatch(eval(typetracer_env$pars[[p]], envir = fn_env), 
-                      error = function(e) NULL)
-              }
-              s <- "NULL"
-              if (!is.null(res)) {
-                  s <- typetracer_env$get_str(typetracer_env$pars[[p]])
-                  if (length(s) > 1L) {
-                      s <- paste0(s, collapse = "; ")
-                  }
-                  if (is.null(s)) {
-                      s <- "NULL"
-                  }
-              }
-              list(par = p, class = class(res), typeof = typeof(res), 
-                  storage_mode = storage.mode(res), mode = mode(res), 
-                  length = length(res), par_uneval = s, par_eval = res)
+              typetracer_env$trace_one_param(typetracer_env, p, fn_env)
           })
           trace_dat <- rlang::trace_back(bottom = fn_env)
           trace_dat <- trace_dat[which(trace_dat$parent == 0), ]
