@@ -33,7 +33,16 @@ following commands:
         repos = c ("https://mpadge.r-universe.dev", "https://cloud.r-project.org")
     )
 
-Then loaded for use by calling `library`:
+Alternatively, for those who prefer to use other source code platforms,
+the package can also be installed by running any one of the following
+lines:
+
+    remotes::install_git ("https://git.sr.ht/~mpadge/dodgr")
+    remotes::install_git ("https://codeberg.org/UrbanAnalyst/dodgr")
+    remotes::install_bitbucket ("UrbanAnalyst/dodgr")
+    remotes::install_gitlab ("UrbanAnalyst/dodgr")
+
+The package can then loaded for use by calling `library`:
 
     library (typetracer)
 
@@ -71,18 +80,18 @@ from each function call.
     x <- load_traces ()
     x
 
-    ## # A tibble: 7 × 14
-    ##   trace_number trace_file call_env fn_name fn_call_hash par_name class    typeof
-    ##          <int> <chr>      <chr>    <chr>   <chr>        <chr>    <I<list> <chr> 
-    ## 1            0 <NA>       <NA>     f       KNEtbPwO     x        <chr>    integ…
-    ## 2            0 <NA>       <NA>     f       KNEtbPwO     y        <chr>    double
-    ## 3            0 <NA>       <NA>     f       KNEtbPwO     z        <chr>    NULL  
-    ## 4            0 <NA>       <NA>     f       KNEtbPwO     ...      <chr>    NULL  
-    ## 5            0 <NA>       <NA>     f       KNEtbPwO     a        <chr>    chara…
-    ## 6            0 <NA>       <NA>     f       KNEtbPwO     b        <chr>    list  
-    ## 7            0 <NA>       <NA>     f       KNEtbPwO     f        <chr>    langu…
-    ## # ℹ 6 more variables: mode <chr>, storage_mode <chr>, length <int>,
-    ## #   formal <named list>, uneval <I<list>>, eval <I<list>>
+    ## # A tibble: 7 × 12
+    ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
+    ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
+    ## 1            0 f       EMWxFUiu     x        <chr [1]> integ… nume… integer     
+    ## 2            0 f       EMWxFUiu     y        <chr [1]> double nume… double      
+    ## 3            0 f       EMWxFUiu     z        <chr [1]> NULL   NULL  NULL        
+    ## 4            0 f       EMWxFUiu     ...      <chr [1]> NULL   NULL  NULL        
+    ## 5            0 f       EMWxFUiu     a        <chr [1]> chara… char… character   
+    ## 6            0 f       EMWxFUiu     b        <chr [1]> list   list  list        
+    ## 7            0 f       EMWxFUiu     f        <chr [1]> langu… call  language    
+    ## # ℹ 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
+    ## #   eval <I<list>>
 
 Each row of the result returned by `load_traces()` represents one
 parameter passed to one function call. Each function call itself
@@ -133,7 +142,7 @@ unevaluated and evaluated forms of parameters:
     ## 
     ## $f
     ## a ~ b
-    ## <environment: 0x559e837a22c8>
+    ## <environment: 0x55de67704208>
 
 Unevaluated parameters are generally converted to equivalent character
 expressions.
@@ -190,34 +199,44 @@ function](https://mpadge.github.io/typetracer/reference/inject_tracer).
     res
 
     ## # A tibble: 8 × 16
-    ##   trace_number trace_source trace_file call_env fn_name  fn_call_hash par_name
-    ##          <int> <chr>        <chr>      <chr>    <chr>    <chr>        <chr>   
-    ## 1            0 examples     <NA>       <NA>     re_match meGyWSPZ     pattern 
-    ## 2            0 examples     <NA>       <NA>     re_match meGyWSPZ     text    
-    ## 3            0 examples     <NA>       <NA>     re_match meGyWSPZ     perl    
-    ## 4            0 examples     <NA>       <NA>     re_match meGyWSPZ     ...     
-    ## 5            1 examples     <NA>       <NA>     re_match nGNFLgiO     pattern 
-    ## 6            1 examples     <NA>       <NA>     re_match nGNFLgiO     text    
-    ## 7            1 examples     <NA>       <NA>     re_match nGNFLgiO     perl    
-    ## 8            1 examples     <NA>       <NA>     re_match nGNFLgiO     ...     
+    ##   trace_number trace_source fn_name  fn_call_hash trace_file call_env par_name
+    ##          <int> <chr>        <chr>    <chr>        <chr>      <chr>    <chr>   
+    ## 1            0 examples     re_match ULkYuvZJ     <NA>       <NA>     pattern 
+    ## 2            0 examples     re_match ULkYuvZJ     <NA>       <NA>     text    
+    ## 3            0 examples     re_match ULkYuvZJ     <NA>       <NA>     perl    
+    ## 4            0 examples     re_match ULkYuvZJ     <NA>       <NA>     ...     
+    ## 5            1 examples     re_match oyqnuZhG     <NA>       <NA>     pattern 
+    ## 6            1 examples     re_match oyqnuZhG     <NA>       <NA>     text    
+    ## 7            1 examples     re_match oyqnuZhG     <NA>       <NA>     perl    
+    ## 8            1 examples     re_match oyqnuZhG     <NA>       <NA>     ...     
     ## # ℹ 9 more variables: class <I<list>>, typeof <chr>, mode <chr>,
     ## #   storage_mode <chr>, length <int>, formal <named list>, uneval <I<list>>,
-    ## #   eval <I<list>>, source <chr>
+    ## #   eval <I<list>>, source_file_name <chr>
 
 The `data.frame` returned by the `trace_package()` function includes
 three more columns than the result directly returned by `load_traces()`.
 These columns identify the sources and calling environments of each
-function call being traces. The “source” column identifies the
-source-code object which generated each trace:
+function call being traces. The “call\_env” column identifies the
+calling environment which generated each trace, while
+“source\_file\_name” identifies the file.
 
-    unique (res$source)
+    unique (res$call_env)
+
+    ## [1] NA
+
+    unique (res$source_file_name)
 
     ## [1] "rd_re_match"
 
-Tracing an installed package generally only extracts traces from example
-code, as documented in help, or `.Rd`, files. These are identified by
-the “rd\_” prefix on the source call, with the `rematch` package
-including only one `.Rd` file.
+Although the “call\_env” columns contains no useful information for that
+package, it includes information on the full environment in which each
+function was called. These “environments” include such things as
+`tryCatch` calls expected to generate errors, or the various `expect_`
+functions of the [“testthat” package](https://testthat.r-lib.org/). The
+above case of racing an installed package generally only extracts traces
+from example code, as documented in help, or `.Rd`, files. These are
+identified by the “rd\_” prefix on the “source\_file\_name”, with the
+`rematch` package including only one `.Rd` file.
 
 [The `trace_package()`
 function](https://mpadge.github.io/typetracer/reference/trace_package.html)

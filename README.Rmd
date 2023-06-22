@@ -44,7 +44,18 @@ install.packages (
 )
 ```
 
-Then loaded for use by calling `library`:
+Alternatively, for those who prefer to use other source code platforms, the
+package can also be installed by running any one of the following lines:
+
+```{r remotes-alt, eval = FALSE}
+remotes::install_git ("https://git.sr.ht/~mpadge/dodgr")
+remotes::install_git ("https://codeberg.org/UrbanAnalyst/dodgr")
+remotes::install_bitbucket ("UrbanAnalyst/dodgr")
+remotes::install_gitlab ("UrbanAnalyst/dodgr")
+```
+
+
+The package can then loaded for use by calling `library`:
 
 ```{r}
 library (typetracer)
@@ -180,16 +191,22 @@ res
 The `data.frame` returned by the `trace_package()` function includes three
 more columns than the result directly returned by `load_traces()`. These
 columns identify the sources and calling environments of each function call
-being traces. The "source" column identifies the source-code object which
-generated each trace:
+being traces. The "call_env" column identifies the calling environment which
+generated each trace, while "source_file_name" identifies the file.
 
-```{r source}
-unique (res$source)
+```{r call_env}
+unique (res$call_env)
+unique (res$source_file_name)
 ```
 
-Tracing an installed package generally only extracts traces from example code,
-as documented in help, or `.Rd`, files. These are identified by the "rd_"
-prefix on the source call, with the `rematch` package including only one `.Rd`
+Although the "call_env" columns contains no useful information for that
+package, it includes information on the full environment in which each function
+was called. These "environments" include such things as `tryCatch` calls
+expected to generate errors, or the various `expect_` functions of the
+["testthat" package](https://testthat.r-lib.org/). The above case of racing an
+installed package generally only extracts traces from example code, as
+documented in help, or `.Rd`, files. These are identified by the "rd_" prefix
+on the "source_file_name", with the `rematch` package including only one `.Rd`
 file.
 
 [The `trace_package()`
