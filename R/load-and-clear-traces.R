@@ -25,13 +25,13 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
         tr_i <- readRDS (i)
 
         fn_name <- tr_i$fn_name
-        par_formals <- tr_i$formals
+        par_formals <- tr_i$par_formals
         num_traces <- tr_i$num_traces
         trace_source <- tr_i$source # only exists for packages
         call_envs <- tr_i$call_envs
 
         tr_i <- tr_i [which (!names (tr_i) %in%
-            c ("fn_name", "formals", "num_traces", "source", "call_envs"))]
+            c ("fn_name", "par_formals", "num_traces", "source", "call_envs"))]
         fn_call_hash <- gsub ("^.*typetrace\\_|\\.Rds$", "", i)
 
         # simple vector columns:

@@ -63,7 +63,7 @@ typetracer_header <- function () {
         typetracer_env$process_back_trace (trace_dat)
 
     typetracer_env$data$fn_name <- as.character (typetracer_env$fn_name)
-    typetracer_env$data$formals <- typetracer_env$par_formals
+    typetracer_env$data$par_formals <- typetracer_env$par_formals
     typetracer_env$data$num_traces <- typetracer_env$num_traces
 
     saveRDS (typetracer_env$data, typetracer_env$fname)
