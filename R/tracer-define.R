@@ -54,23 +54,8 @@ typetracer_header <- function () {
         )
     }
 
-    # Return structure of parameters as character strings
-    # https://rpubs.com/maechler/R_language_objs
-    typetracer_env$get_str <- function (x, max.length = 1000L) { # nolint
-
-        r <- tryCatch (format (x), error = function (e) e)
-        r <- if (inherits (r, "error")) {
-            tryCatch (as.character (x), error = function (e) e)
-        } else {
-            paste (r, collapse = " ")
-        }
-        r <- if (inherits (r, "error")) {
-            tryCatch (utils::capture.output (x), error = function (e) e)
-        } else {
-            paste (r, collapse = " ")
-        }
-        substr (r, 1L, max.length)
-    }
+    # Bring in typetracer internal functions:
+    typetracer_env$get_str <- getFromNamespace ("get_param_str", "typetracer")
 
     typetracer_env$data <- lapply (typetracer_env$par_names, function (p) {
 
@@ -156,4 +141,24 @@ typetracer_header <- function () {
     saveRDS (typetracer_env$data, typetracer_env$fname)
 
     rm (typetracer_env)
+}
+
+#' Return structure of parameters as character strings
+#'
+#' See https://rpubs.com/maechler/R_language_objs
+#' @noRd
+get_param_str <- function (x, max.length = 1000L) { # nolint
+
+    r <- tryCatch (format (x), error = function (e) e)
+    r <- if (inherits (r, "error")) {
+        tryCatch (as.character (x), error = function (e) e)
+    } else {
+        paste (r, collapse = " ")
+    }
+    r <- if (inherits (r, "error")) {
+        tryCatch (utils::capture.output (x), error = function (e) e)
+    } else {
+        paste (r, collapse = " ")
+    }
+    substr (r, 1L, max.length)
 }
