@@ -1,11 +1,11 @@
 
 #' Code injected in function heads that gets the types of all parameters
 #'
-#' All variables are defined within a new environment, to avoid any confusion
-#' with variables defined within functions in which this code in injected, and
-#' to enable all of the local variables defined here to be easily deleted once
-#' types have been traced. This environment also has to have an unambiguous and
-#' unique name.
+#' All variables and functions are defined within a new environment, to avoid
+#' any confusion with variables or functions defined within functions in which
+#' this code in injected, and to enable all of the local variables and functions
+#' defined here to be easily deleted once types have been traced. This
+#' environment also has to have an unambiguous and unique name.
 #' @noRd
 typetracer_header <- function () {
 
