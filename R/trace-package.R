@@ -53,6 +53,8 @@ trace_package <- function (package = NULL,
 
     clear_traces ()
 
+    traces_ex <- NULL
+
     if ("examples" %in% types) {
         trace_names <- trace_package_exs (package, functions)
         traces_ex <- list_traces ()
@@ -68,7 +70,9 @@ trace_package <- function (package = NULL,
         } else {
             test_traces <- trace_package_tests (package, pkg_dir, pre_installed)
             traces_test <- list_traces ()
-            traces_test <- traces_test [which (!traces_test %in% traces_ex)]
+            if (!is.null (traces_ex)) {
+                traces_test <- traces_test [which (!traces_test %in% traces_ex)]
+            }
             add_trace_source (traces_test, "tests")
         }
     }
