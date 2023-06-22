@@ -20,13 +20,9 @@
           typetracer_env$fn <- match.fun(typetracer_env$fn_name)
           typetracer_env$par_names <- methods::formalArgs(typetracer_env$fn)
           typetracer_env$par_formals <- formals(typetracer_env$fn)
-          if ("..." %in% typetracer_env$par_names) {
-              typetracer_env$dot_names <- names(typetracer_env$fn_call)
-              typetracer_env$dot_names <- typetracer_env$dot_names[which(nzchar(typetracer_env$dot_names) & 
-                  !typetracer_env$dot_names %in% typetracer_env$par_names)]
-              typetracer_env$par_names <- c(typetracer_env$par_names, 
-                  typetracer_env$dot_names)
-          }
+          typetracer_env$add_dotdotdot_params <- getFromNamespace("add_dotdotdot_params", 
+              "typetracer")
+          typetracer_env <- typetracer_env$add_dotdotdot_params(typetracer_env)
           typetracer_env$get_str <- getFromNamespace("get_param_str", 
               "typetracer")
           typetracer_env$trace_one_param <- getFromNamespace("trace_one_param", 

@@ -41,24 +41,15 @@ typetracer_header <- function () {
     typetracer_env$par_names <- methods::formalArgs (typetracer_env$fn)
     typetracer_env$par_formals <- formals (typetracer_env$fn)
 
-    # Add `...` parameters to par_names:
-    if ("..." %in% typetracer_env$par_names) {
-        typetracer_env$dot_names <- names (typetracer_env$fn_call)
-        typetracer_env$dot_names <-
-            typetracer_env$dot_names [which (nzchar (typetracer_env$dot_names) &
-                !typetracer_env$dot_names %in%
-                    typetracer_env$par_names)]
-        typetracer_env$par_names <- c (
-            typetracer_env$par_names,
-            typetracer_env$dot_names
-        )
-    }
+    # Bring in and run typetracer internal functions:
+    typetracer_env$add_dotdotdot_params <-
+        getFromNamespace ("add_dotdotdot_params", "typetracer")
+    typetracer_env <- typetracer_env$add_dotdotdot_params (typetracer_env)
 
-    # Bring in typetracer internal functions:
+    # 'get_str' is used in 'trace_one_param':
     typetracer_env$get_str <- getFromNamespace ("get_param_str", "typetracer")
     typetracer_env$trace_one_param <-
         getFromNamespace ("trace_one_param", "typetracer")
-
     typetracer_env$data <- lapply (typetracer_env$par_names, function (p) {
         typetracer_env$trace_one_param (typetracer_env, p, fn_env)
     })
@@ -77,6 +68,27 @@ typetracer_header <- function () {
     saveRDS (typetracer_env$data, typetracer_env$fname)
 
     rm (typetracer_env)
+}
+
+#' Add information on any additional parameters passed via '...'
+#' @noRd
+add_dotdotdot_params <- function (typetracer_env) {
+
+    if ("..." %in% typetracer_env$par_names) {
+
+        typetracer_env$dot_names <- names (typetracer_env$fn_call)
+
+        index <- which (nzchar (typetracer_env$dot_names) &
+            !typetracer_env$dot_names %in% typetracer_env$par_names)
+        typetracer_env$dot_names <- typetracer_env$dot_names [index]
+
+        typetracer_env$par_names <- c (
+            typetracer_env$par_names,
+            typetracer_env$dot_names
+        )
+    }
+
+    return (typetracer_env)
 }
 
 #' Return structure of parameters as character strings
