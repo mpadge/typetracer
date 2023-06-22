@@ -34,30 +34,10 @@
           typetracer_env$data <- lapply(typetracer_env$par_names, function(p) {
               typetracer_env$trace_one_param(typetracer_env, p, fn_env)
           })
+          typetracer_env$process_back_trace <- getFromNamespace("process_back_trace", 
+              "typetracer")
           trace_dat <- rlang::trace_back(bottom = fn_env)
-          trace_dat <- trace_dat[which(trace_dat$parent == 0), ]
-          call_envs <- lapply(trace_dat$call, function(i) {
-              call_i <- data.frame(name = as.character(as.name(as.list(i)[[1]])), 
-                  file = NA_character_, linestart = NA_integer_, lineend = NA_integer_)
-              if (!is.null(attributes(i)$srcref)) {
-                  call_i$file <- attr(attributes(i)$srcref, "srcfile")$filename
-                  call_i$linestart <- attr(i, "srcref")[1]
-                  call_i$lineend <- attr(i, "srcref")[3]
-              }
-              return(call_i)
-          })
-          call_envs <- do.call(rbind, call_envs)
-          call_envs$namespace <- trace_dat$namespace
-          index <- which(is.na(call_envs$namespaces))
-          if (length(index) > 0L) {
-              call_envs$namespace[index] <- trace_dat$scope[index]
-          }
-          call_envs <- call_envs[which(call_envs$namespace != "typetracer"), 
-              ]
-          if (nrow(call_envs) > 0L) {
-              call_envs <- call_envs[1, ]
-          }
-          typetracer_env$data$call_envs <- call_envs
+          typetracer_env$data$call_envs <- typetracer_env$process_back_trace(trace_dat)
           typetracer_env$data$fn_name <- as.character(typetracer_env$fn_name)
           typetracer_env$data$formals <- typetracer_env$par_formals
           typetracer_env$data$num_traces <- typetracer_env$num_traces
