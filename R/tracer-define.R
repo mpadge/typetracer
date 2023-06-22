@@ -191,8 +191,17 @@ process_back_trace <- function (trace_dat, fn_name) {
     # or 'tryCatch' calls. Those will then be first on the call_env list in the
     # final reduction to one row, below.
     has_fn_name <- vapply (trace_dat$call, function (i) {
+        index <- seq_along (i)
+        p <- NULL
+        while (is.null (p) && length (index) > 0L) {
+            p <- tryCatch (
+                parse (text = i [index], encoding = "UTF-8"),
+                error = function (e) NULL
+            )
+            index <- index [-length (index)]
+        }
         pd <- tryCatch (
-            utils::getParseData (parse (text = i)),
+            utils::getParseData (p),
             error = function (e) NULL
         )
         if (is.null (pd)) {
@@ -202,8 +211,14 @@ process_back_trace <- function (trace_dat, fn_name) {
         fns <- pd$text [index]
         return (any (fns == fn_name))
     }, logical (1L))
-    parent_level <- sort (unique (trace_dat$parent [which (has_fn_name)]))
-    trace_dat <- trace_dat [which (trace_dat$parent %in% parent_level), ]
+
+    # These 2 lines are needed to catch expect_error in geodist_vec, but then
+    # they miss all 'tryCatch' calls:
+    # parent_level <- sort (unique (trace_dat$parent [which (has_fn_name)]))
+    # trace_dat <- trace_dat [which (trace_dat$parent %in% parent_level), ]
+
+    trace_dat <- trace_dat [which (has_fn_name), ]
+
     if (nrow (trace_dat) == 0L) {
         return (call_envs)
     }
@@ -229,6 +244,7 @@ process_back_trace <- function (trace_dat, fn_name) {
         call_envs$namespace [index] <- trace_dat$scope [index]
     }
     call_envs <- call_envs [which (call_envs$namespace != "typetracer"), ]
+    call_envs <- call_envs [which (!grepl ("typetracer", call_envs$file)), ]
     if (nrow (call_envs) > 0L) {
         # assume first branch of trace_back is desired env
         call_envs <- call_envs [1, ]
