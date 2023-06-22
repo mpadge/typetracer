@@ -87,39 +87,6 @@ typetracer_header <- function () {
             }
         }
 
-        # Extract calling environments, noting that rlang enumerates envs from
-        # "0" for the calling environment. For srcref structure, see:
-        # https://journal.r-project.org/archive/2010-2/RJournal_2010-2_Murdoch.pdf # nolint
-        # Note that line numbers in srcref are from parsed versions, so will
-        # generally not exactly match.
-        trace_dat <- rlang::trace_back (bottom = fn_env)
-        trace_dat <- trace_dat [which (trace_dat$parent == 0), ]
-        call_envs <- lapply (trace_dat$call, function (i) {
-            call_i <- data.frame (
-                name = as.character (as.name (as.list (i) [[1]])),
-                file = NA_character_,
-                linestart = NA_integer_,
-                lineend = NA_integer_
-            )
-            if (!is.null (attributes (i)$srcref)) {
-                call_i$file <- attr (attributes (i)$srcref, "srcfile")$filename
-                call_i$linestart <- attr (i, "srcref") [1]
-                call_i$lineend <- attr (i, "srcref") [3]
-            }
-            return (call_i)
-        })
-        call_envs <- do.call (rbind, call_envs)
-        call_envs$namespace <- trace_dat$namespace
-        index <- which (is.na (call_envs$namespaces))
-        if (length (index) > 0L) {
-            call_envs$namespace [index] <- trace_dat$scope [index]
-        }
-        call_envs <- call_envs [which (call_envs$namespace != "typetracer"), ]
-        if (nrow (call_envs) > 0L) {
-            # assume first branch of trace_back is desired env
-            call_envs <- call_envs [1, ]
-        }
-
         list (
             par = p,
             class = class (res),
@@ -128,11 +95,43 @@ typetracer_header <- function () {
             mode = mode (res),
             length = length (res),
             par_uneval = s,
-            par_eval = res,
-            call_envs = call_envs
+            par_eval = res
         )
-
     })
+
+    # Extract calling environments, noting that rlang enumerates envs from
+    # "0" for the calling environment. For srcref structure, see:
+    # https://journal.r-project.org/archive/2010-2/RJournal_2010-2_Murdoch.pdf # nolint
+    # Note that line numbers in srcref are from parsed versions, so will
+    # generally not exactly match.
+    trace_dat <- rlang::trace_back (bottom = fn_env)
+    trace_dat <- trace_dat [which (trace_dat$parent == 0), ]
+    call_envs <- lapply (trace_dat$call, function (i) {
+        call_i <- data.frame (
+            name = as.character (as.name (as.list (i) [[1]])),
+            file = NA_character_,
+            linestart = NA_integer_,
+            lineend = NA_integer_
+        )
+        if (!is.null (attributes (i)$srcref)) {
+            call_i$file <- attr (attributes (i)$srcref, "srcfile")$filename
+            call_i$linestart <- attr (i, "srcref") [1]
+            call_i$lineend <- attr (i, "srcref") [3]
+        }
+        return (call_i)
+    })
+    call_envs <- do.call (rbind, call_envs)
+    call_envs$namespace <- trace_dat$namespace
+    index <- which (is.na (call_envs$namespaces))
+    if (length (index) > 0L) {
+        call_envs$namespace [index] <- trace_dat$scope [index]
+    }
+    call_envs <- call_envs [which (call_envs$namespace != "typetracer"), ]
+    if (nrow (call_envs) > 0L) {
+        # assume first branch of trace_back is desired env
+        call_envs <- call_envs [1, ]
+    }
+    typetracer_env$data$call_envs <- call_envs
 
     typetracer_env$data$fn_name <- as.character (typetracer_env$fn_name)
     typetracer_env$data$formals <- typetracer_env$par_formals

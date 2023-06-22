@@ -28,19 +28,18 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
         par_formals <- tr_i$formals
         num_traces <- tr_i$num_traces
         trace_source <- tr_i$source # only exists for packages
+        call_envs <- tr_i$call_envs
 
         tr_i <- tr_i [which (!names (tr_i) %in%
-            c ("fn_name", "formals", "num_traces", "source"))]
+            c ("fn_name", "formals", "num_traces", "source", "call_envs"))]
         fn_call_hash <- gsub ("^.*typetrace\\_|\\.Rds$", "", i)
 
         # simple vector columns:
         par_name <- vapply (tr_i, function (i) i$par, character (1L))
         types <- vapply (tr_i, function (i) i$type, character (1L))
         modes <- vapply (tr_i, function (i) i$mode, character (1L))
-        storage_mode <- vapply ( # wrapped coz otherwise > 80 char wide
-            tr_i, function (i) {
-                i$storage_mode
-            },
+        storage_mode <- vapply (
+            tr_i, function (i) i$storage_mode,
             character (1)
         )
         len <- vapply (tr_i, function (i) i$length, integer (1L))
@@ -50,13 +49,9 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
         par_uneval <- I (lapply (tr_i, function (i) i$par_uneval))
         par_eval <- I (lapply (tr_i, function (i) i$par_eval))
 
-        call_envs <- do.call (rbind, lapply (tr_i, function (i) {
-            ci <- i$call_envs
-            if (nrow (ci) == 0L) {
-                ci <- ci [1, ] # auto-fills with NA
-            }
-            return (ci)
-        }))
+        if (nrow (call_envs) == 0L) {
+            call_envs <- call_envs [1, ] # auto-fills with NA
+        }
         call_envs$call_env <- paste0 (call_envs$namespace, "::", call_envs$name)
         call_envs$call_env [which (is.na (call_envs$name))] <- NA_character_
 
