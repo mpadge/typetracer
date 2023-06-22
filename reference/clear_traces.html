@@ -14,7 +14,7 @@ traces that are not appended to previous ones."><!-- mathjax --><script src="htt
     
     <a class="navbar-brand me-2" href="../index.html">typetracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,6 +71,36 @@ traces that are not appended to previous ones.</p>
 were successfully cleared.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span> <span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">z</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="va">x</span> <span class="op">*</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span> <span class="op">*</span> <span class="va">y</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="inject_tracer.html">inject_tracer</a></span> <span class="op">(</span><span class="va">f</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">val</span> <span class="op">&lt;-</span> <span class="fu">f</span> <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">4</span> <span class="op">+</span> <span class="fl">0.</span>, a <span class="op">=</span> <span class="st">"blah"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_traces.html">load_traces</a></span> <span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span> <span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 12</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;I&lt;list&gt;&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>            0 f       rPAuOlTc     x        <span style="color: #949494;">&lt;chr [1]&gt;</span> integ… nume… integer     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>            0 f       rPAuOlTc     y        <span style="color: #949494;">&lt;chr [1]&gt;</span> double nume… double      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>            0 f       rPAuOlTc     z        <span style="color: #949494;">&lt;chr [1]&gt;</span> NULL   NULL  NULL        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>            0 f       rPAuOlTc     ...      <span style="color: #949494;">&lt;chr [1]&gt;</span> NULL   NULL  NULL        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>            0 f       rPAuOlTc     a        <span style="color: #949494;">&lt;chr [1]&gt;</span> chara… char… character   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4 more variables: length &lt;int&gt;, formal &lt;named list&gt;, uneval &lt;I&lt;list&gt;&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   eval &lt;I&lt;list&gt;&gt;</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Then call 'clear_traces' to remove them:</span></span></span>
+<span class="r-in"><span><span class="fu">clear_traces</span> <span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Trying to load again wil then indicate 'No traces found':</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_traces.html">load_traces</a></span> <span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> No traces found; first run 'inject_tracer'</span>
+<span class="r-in"><span><span class="co"># Traces should also always be "uninjected":</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="uninject_tracer.html">uninject_tracer</a></span> <span class="op">(</span><span class="va">f</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
