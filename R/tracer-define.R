@@ -60,7 +60,7 @@ typetracer_header <- function () {
     # Initial trace has to be called in this environment:
     trace_dat <- rlang::trace_back (bottom = fn_env)
     typetracer_env$data$call_envs <-
-        typetracer_env$process_back_trace (trace_dat)
+        typetracer_env$process_back_trace (trace_dat, typetracer_env$fn_name)
 
     typetracer_env$data$fn_name <- as.character (typetracer_env$fn_name)
     typetracer_env$data$par_formals <- typetracer_env$par_formals
@@ -168,9 +168,40 @@ trace_one_param <- function (typetracer_env, p, fn_env) {
 #' @param trace_dat A back-traced syntax tree returned from
 #' 'rlang::trace_back()'.
 #' @noRd
-process_back_trace <- function (trace_dat) {
+process_back_trace <- function (trace_dat, fn_name) {
 
-    trace_dat <- trace_dat [which (trace_dat$parent == 0), ]
+    call_envs <- data.frame (
+        name = NA_character_,
+        file = NA_character_,
+        linestart = NA_integer_,
+        lineend = NA_integer_,
+        namespace = NA_character_
+    )
+    if (length (fn_name) == 0L) {
+        return (call_envs [-1, ])
+    }
+
+    # Reduce to only calls at same level as the actual function, which then
+    # includes any embedded environments of those, such as testthat expectations
+    # or 'tryCatch' calls. Those will then be first on the call_env list in the
+    # final reduction to one row, below.
+    tt <- as.data.frame (trace_dat)
+    has_fn_name <- vapply (tt$call, function (i) {
+        pd <- tryCatch (
+            utils::getParseData (parse (text = i)),
+            error = function (e) NULL
+        )
+        if (is.null (pd)) {
+            return (FALSE)
+        }
+        index <- which (pd$token %in% c ("SYMBOL", "SYMBOL_FUNCTION_CALL"))
+        fns <- pd$text [index]
+        return (any (fns == fn_name))
+    }, logical (1L))
+    trace_dat <- trace_dat [which (has_fn_name), ]
+    if (nrow (trace_dat) == 0L) {
+        return (call_envs)
+    }
 
     call_envs <- lapply (trace_dat$call, function (i) {
         call_i <- data.frame (
