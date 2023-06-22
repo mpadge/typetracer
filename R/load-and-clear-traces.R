@@ -119,6 +119,21 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
 #' @return (Invisibly) A single logical value indicating whether or not traces
 #' were successfully cleared.
 #' @export
+#' @examples
+#' f <- function (x, y, z, ...) {
+#'     x * x + y * y
+#' }
+#' inject_tracer (f)
+#' val <- f (1:2, 3:4 + 0., a = "blah")
+#' x <- load_traces ()
+#' print (x)
+#'
+#' # Then call 'clear_traces' to remove them:
+#' clear_traces ()
+#' # Trying to load again wil then indicate 'No traces found':
+#' x <- load_traces ()
+#' # Traces should also always be "uninjected":
+#' uninject_tracer (f)
 clear_traces <- function () {
 
     td <- get_typetrace_dir ()

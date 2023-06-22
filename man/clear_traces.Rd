@@ -15,3 +15,19 @@ Traces are by default appended to previous traces. This function can be used
 to clean those previous ones, to enable subsequent calls to generate new
 traces that are not appended to previous ones.
 }
+\examples{
+f <- function (x, y, z, ...) {
+    x * x + y * y
+}
+inject_tracer (f)
+val <- f (1:2, 3:4 + 0., a = "blah")
+x <- load_traces ()
+print (x)
+
+# Then call 'clear_traces' to remove them:
+clear_traces ()
+# Trying to load again wil then indicate 'No traces found':
+x <- load_traces ()
+# Traces should also always be "uninjected":
+uninject_tracer (f)
+}
