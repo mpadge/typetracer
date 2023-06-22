@@ -33,10 +33,10 @@ test_that ("trace installed package", {
             "trace_file", "call_env",
             "par_name", "class",
             "typeof", "mode", "storage_mode", "length",
-            "formal", "uneval", "eval", "source"
+            "formal", "uneval", "eval", "source_file_name"
         )
     )
-    expect_true (all (grepl ("^rd_", x0$source)))
+    expect_true (all (grepl ("^rd_", x0$source_file_name)))
 
     expect_s3_class (
         x1 <- trace_package (package,
@@ -53,11 +53,11 @@ test_that ("trace installed package", {
             "trace_file", "call_env",
             "par_name", "class",
             "typeof", "mode", "storage_mode", "length",
-            "formal", "uneval", "eval", "source"
+            "formal", "uneval", "eval", "source_file_name"
         )
     )
     # still only Rd sources because no test files
-    expect_true (all (grepl ("^rd_", x0$source)))
+    expect_true (all (grepl ("^rd_", x0$source_file_name)))
 
     # installed packages have no tests, so traces are examples only:
     expect_identical (nrow (x0), nrow (x1))
@@ -100,13 +100,13 @@ test_that ("trace source package", {
             "trace_file", "call_env",
             "par_name", "class",
             "typeof", "mode", "storage_mode", "length",
-            "formal", "uneval", "eval", "source"
+            "formal", "uneval", "eval", "source_file_name"
         )
     )
-    expect_false (all (grepl ("^rd_", x0$source)))
+    expect_false (all (grepl ("^rd_", x0$source_file_name)))
 
-    source_rd <- grep ("^rd\\_", x0$source, value = TRUE)
-    source_test <- grep ("^test", x0$source, value = TRUE)
+    source_rd <- grep ("^rd\\_", x0$source_file_name, value = TRUE)
+    source_test <- grep ("^test", x0$source_file_name, value = TRUE)
     expect_true (length (source_rd) > 1L)
     expect_true (length (source_test) > 1L)
 

@@ -74,14 +74,14 @@ trace_package <- function (package = NULL,
     }
 
     traces <- load_traces (files = TRUE, quiet = TRUE)
-    traces$source <- NA_character_
+    traces$source_file_name <- NA_character_
 
     if ("examples" %in% types) {
         # join rd_name from trace_names:
-        traces$source <-
+        traces$source_file_name <-
             trace_names$rd_name [match (traces$trace_name, trace_names$trace)]
-        index <- which (!is.na (traces$source))
-        traces$source [index] <- paste0 ("rd_", traces$source [index])
+        index <- which (!is.na (traces$source_file_name))
+        traces$source_file_name [index] <- paste0 ("rd_", traces$source_file_name [index])
         traces$trace_name <- NULL
     }
     if ("tests" %in% types && length (test_traces) > 0L) {
@@ -359,7 +359,7 @@ join_test_trace_data <- function (traces, test_traces) {
     test_tr_index <- seq (tr_start1, tr_end1)
     traces_index <- which (traces$trace_number %in% test_tr_index)
     index <- match (traces$trace_number [traces_index], test_tr_index)
-    traces$source [traces_index] <- paste0 (test_files, "/", test_names) [index]
+    traces$source_file_name [traces_index] <- paste0 (test_files, "/", test_names) [index]
 
     return (traces)
 }
@@ -370,7 +370,7 @@ add_trace_source <- function (traces, trace_source) {
 
     for (i in traces) {
         tr <- readRDS (i)
-        tr$source <- trace_source
+        tr$trace_source <- trace_source
         saveRDS (tr, i)
     }
 }
