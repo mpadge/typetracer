@@ -20,17 +20,17 @@
           typetracer_env$fn <- match.fun(typetracer_env$fn_name)
           typetracer_env$par_names <- methods::formalArgs(typetracer_env$fn)
           typetracer_env$par_formals <- formals(typetracer_env$fn)
-          typetracer_env$add_dotdotdot_params <- getFromNamespace("add_dotdotdot_params", 
+          typetracer_env$add_dotdotdot_params <- utils::getFromNamespace("add_dotdotdot_params", 
               "typetracer")
           typetracer_env <- typetracer_env$add_dotdotdot_params(typetracer_env)
-          typetracer_env$get_str <- getFromNamespace("get_param_str", 
+          typetracer_env$get_str <- utils::getFromNamespace("get_param_str", 
               "typetracer")
-          typetracer_env$trace_one_param <- getFromNamespace("trace_one_param", 
+          typetracer_env$trace_one_param <- utils::getFromNamespace("trace_one_param", 
               "typetracer")
           typetracer_env$data <- lapply(typetracer_env$par_names, function(p) {
               typetracer_env$trace_one_param(typetracer_env, p, fn_env)
           })
-          typetracer_env$process_back_trace <- getFromNamespace("process_back_trace", 
+          typetracer_env$process_back_trace <- utils::getFromNamespace("process_back_trace", 
               "typetracer")
           trace_dat <- rlang::trace_back(bottom = fn_env)
           typetracer_env$data$call_envs <- typetracer_env$process_back_trace(trace_dat)
