@@ -17,6 +17,10 @@ trace_package <- function (package = NULL,
                            types = c ("examples", "tests"),
                            pkg_dir = NULL) {
 
+    types <- match.arg (types, c ("examples", "tests"),
+        several.ok = TRUE
+    )
+
     package <- assert_trace_package_inputs (package, types, pkg_dir)
     pkg_was_attached <- any (grepl (paste0 ("package:", package), search ()))
     if (pkg_was_attached) {
@@ -118,10 +122,6 @@ trace_package <- function (package = NULL,
 assert_trace_package_inputs <- function (package = NULL,
                                          types = c ("examples", "tests"),
                                          pkg_dir = NULL) {
-
-    types <- match.arg (types, c ("examples", "tests"),
-        several.ok = TRUE
-    )
 
     if (!is.null (pkg_dir)) {
 
