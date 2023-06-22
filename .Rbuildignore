@@ -5,6 +5,7 @@
 ^\.gitignore$
 ^\.git$
 ^cran-comments.md$
+^CONTRIBUTING.md$
 ^inst/WORDLIST$
 ^typetracer.Rcheck$
 ^Makefile$
