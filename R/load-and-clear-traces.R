@@ -94,7 +94,7 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
         )
 
         has_list <- integer (0L)
-        if (options ("typetracer_trace_lists") [[1]]) {
+        if (get_trace_lists_param ()) {
             has_list <- which (vapply (
                 tr_i,
                 function (i) "list_data" %in% names (i),

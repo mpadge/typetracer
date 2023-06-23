@@ -138,11 +138,6 @@ trace_package <- function (package = NULL,
     return (traces)
 }
 
-set_trace_list_option <- function (trace_lists) {
-
-    options (typetracer_trace_lists = trace_lists)
-}
-
 assert_trace_package_inputs <- function (package = NULL,
                                          types = c ("examples", "tests"),
                                          pkg_dir = NULL) {

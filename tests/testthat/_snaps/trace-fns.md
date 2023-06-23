@@ -29,10 +29,13 @@
               "typetracer")
           typetracer_env$trace_one_list <- utils::getFromNamespace("trace_one_list", 
               "typetracer")
+          typetracer_env$get_trace_lists_param <- utils::getFromNamespace("get_trace_lists_param", 
+              "typetracer")
           typetracer_env$data <- lapply(typetracer_env$par_names, function(p) {
               dat_i <- typetracer_env$trace_one_param(typetracer_env, 
                   p, fn_env)
-              if (dat_i$typeof == "list") {
+              trace_lists <- typetracer_env$get_trace_lists_param()
+              if (dat_i$typeof == "list" && trace_lists) {
                   dat_i$list_data <- typetracer_env$trace_one_list(typetracer_env, 
                       p, fn_env)
               }
