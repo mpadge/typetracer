@@ -66,7 +66,7 @@ trace_package <- function (package = NULL,
     for (fnm in trace_fns) {
         f <- get (fnm, envir = pkg_env)
         if (is.function (f)) {
-            inject_tracer (f)
+            inject_tracer (f, trace_lists = trace_lists)
         }
     }
 
