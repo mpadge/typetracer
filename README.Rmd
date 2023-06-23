@@ -181,9 +181,10 @@ using `typetracer`, to ensure expected function behaviour is restored.
 
 R has extensive support for list structures, notably including all
 `data.frame`-like objects in which each column is actually a list item.
-`typetracer` also offers the ability to recurse into lists to trace the
-properties of each list item. To do this, the traces themselves have to be
-injected with the additional parameter, `trace_lists = TRUE`.
+`typetracer` also offers the ability to recurse into the list structures of
+individual parameters, to recursively trace the properties of each list item.
+To do this, the traces themselves have to be injected with the additional
+parameter, `trace_lists = TRUE`.
 
 
 The final call above included an additional parameter passed as a list. The
@@ -205,7 +206,10 @@ print (x_lists)
 
 And that result now has `r nrow(x_lists)` rows, or
 `r nrow(x_lists) - nrow(x)` more than the previous example, reflecting the two
-items passed as a `list` to the parameter, `b`.
+items passed as a `list` to the parameter, `b`. List-parameter items are
+identifiable in typetracer output through the "dollar-notation" in the
+`par_name` field. The final two values in the above table are `b$a` and `b$b`,
+representing the two elements of the list passed as the parameter, `b`.
 
 
 ## Example #3 - Tracing a Package

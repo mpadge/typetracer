@@ -83,13 +83,13 @@ from each function call.
     ## # A tibble: 7 × 12
     ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
     ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
-    ## 1            0 f       nqOLeYdi     x        <chr [1]> integ… nume… integer     
-    ## 2            0 f       nqOLeYdi     y        <chr [1]> double nume… double      
-    ## 3            0 f       nqOLeYdi     z        <chr [1]> NULL   NULL  NULL        
-    ## 4            0 f       nqOLeYdi     ...      <chr [1]> NULL   NULL  NULL        
-    ## 5            0 f       nqOLeYdi     a        <chr [1]> chara… char… character   
-    ## 6            0 f       nqOLeYdi     b        <chr [1]> list   list  list        
-    ## 7            0 f       nqOLeYdi     f        <chr [1]> langu… call  language    
+    ## 1            0 f       uDgEbied     x        <chr [1]> integ… nume… integer     
+    ## 2            0 f       uDgEbied     y        <chr [1]> double nume… double      
+    ## 3            0 f       uDgEbied     z        <chr [1]> NULL   NULL  NULL        
+    ## 4            0 f       uDgEbied     ...      <chr [1]> NULL   NULL  NULL        
+    ## 5            0 f       uDgEbied     a        <chr [1]> chara… char… character   
+    ## 6            0 f       uDgEbied     b        <chr [1]> list   list  list        
+    ## 7            0 f       uDgEbied     f        <chr [1]> langu… call  language    
     ## # ℹ 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
     ## #   eval <I<list>>
 
@@ -142,7 +142,7 @@ unevaluated and evaluated forms of parameters:
     ## 
     ## $f
     ## a ~ b
-    ## <environment: 0x56302b62b6f0>
+    ## <environment: 0x560b15656ca8>
 
 Unevaluated parameters are generally converted to equivalent character
 expressions.
@@ -191,9 +191,10 @@ is restored.
 
 R has extensive support for list structures, notably including all
 `data.frame`-like objects in which each column is actually a list item.
-`typetracer` also offers the ability to recurse into lists to trace the
-properties of each list item. To do this, the traces themselves have to
-be injected with the additional parameter, `trace_lists = TRUE`.
+`typetracer` also offers the ability to recurse into the list structures
+of individual parameters, to recursively trace the properties of each
+list item. To do this, the traces themselves have to be injected with
+the additional parameter, `trace_lists = TRUE`.
 
 The final call above included an additional parameter passed as a list.
 The following code re-injects a tracer with the ability to traverse into
@@ -213,20 +214,24 @@ list structures:
     ## # A tibble: 9 × 12
     ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
     ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
-    ## 1            0 f       HlGYZtMI     x        <chr [1]> integ… nume… integer     
-    ## 2            0 f       HlGYZtMI     y        <chr [1]> double nume… double      
-    ## 3            0 f       HlGYZtMI     z        <chr [1]> NULL   NULL  NULL        
-    ## 4            0 f       HlGYZtMI     ...      <chr [1]> NULL   NULL  NULL        
-    ## 5            0 f       HlGYZtMI     a        <chr [1]> chara… char… character   
-    ## 6            0 f       HlGYZtMI     b        <chr [1]> list   list  list        
-    ## 7            0 f       HlGYZtMI     f        <chr [1]> langu… call  language    
-    ## 8            0 f       HlGYZtMI     b$a      <chr [1]> double nume… double      
-    ## 9            0 f       HlGYZtMI     b$b      <chr [1]> chara… char… character   
+    ## 1            0 f       LzZIbYvx     x        <chr [1]> integ… nume… integer     
+    ## 2            0 f       LzZIbYvx     y        <chr [1]> double nume… double      
+    ## 3            0 f       LzZIbYvx     z        <chr [1]> NULL   NULL  NULL        
+    ## 4            0 f       LzZIbYvx     ...      <chr [1]> NULL   NULL  NULL        
+    ## 5            0 f       LzZIbYvx     a        <chr [1]> chara… char… character   
+    ## 6            0 f       LzZIbYvx     b        <chr [1]> list   list  list        
+    ## 7            0 f       LzZIbYvx     f        <chr [1]> langu… call  language    
+    ## 8            0 f       LzZIbYvx     b$a      <chr [1]> double nume… double      
+    ## 9            0 f       LzZIbYvx     b$b      <chr [1]> chara… char… character   
     ## # ℹ 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
     ## #   eval <I<list>>
 
 And that result now has 9 rows, or 2 more than the previous example,
 reflecting the two items passed as a `list` to the parameter, `b`.
+List-parameter items are identifiable in typetracer output through the
+“dollar-notation” in the `par_name` field. The final two values in the
+above table are `b$a` and `b$b`, representing the two elements of the
+list passed as the parameter, `b`.
 
 ## Example \#3 - Tracing a Package
 
@@ -250,14 +255,14 @@ structures.)
     ## # A tibble: 8 × 14
     ##   trace_number source_file_name fn_name  fn_call_hash call_env par_name class   
     ##          <int> <chr>            <chr>    <chr>        <chr>    <chr>    <I<list>
-    ## 1            0 man/re_match.Rd  re_match hRCLGQvi     <NA>     pattern  <chr>   
-    ## 2            0 man/re_match.Rd  re_match hRCLGQvi     <NA>     text     <chr>   
-    ## 3            0 man/re_match.Rd  re_match hRCLGQvi     <NA>     perl     <chr>   
-    ## 4            0 man/re_match.Rd  re_match hRCLGQvi     <NA>     ...      <chr>   
-    ## 5            1 man/re_match.Rd  re_match eKAOXftZ     <NA>     pattern  <chr>   
-    ## 6            1 man/re_match.Rd  re_match eKAOXftZ     <NA>     text     <chr>   
-    ## 7            1 man/re_match.Rd  re_match eKAOXftZ     <NA>     perl     <chr>   
-    ## 8            1 man/re_match.Rd  re_match eKAOXftZ     <NA>     ...      <chr>   
+    ## 1            0 man/re_match.Rd  re_match UJfHAIRp     <NA>     pattern  <chr>   
+    ## 2            0 man/re_match.Rd  re_match UJfHAIRp     <NA>     text     <chr>   
+    ## 3            0 man/re_match.Rd  re_match UJfHAIRp     <NA>     perl     <chr>   
+    ## 4            0 man/re_match.Rd  re_match UJfHAIRp     <NA>     ...      <chr>   
+    ## 5            1 man/re_match.Rd  re_match Anyflkea     <NA>     pattern  <chr>   
+    ## 6            1 man/re_match.Rd  re_match Anyflkea     <NA>     text     <chr>   
+    ## 7            1 man/re_match.Rd  re_match Anyflkea     <NA>     perl     <chr>   
+    ## 8            1 man/re_match.Rd  re_match Anyflkea     <NA>     ...      <chr>   
     ## # ℹ 7 more variables: typeof <chr>, mode <chr>, storage_mode <chr>,
     ## #   length <int>, formal <named list>, uneval <I<list>>, eval <I<list>>
 
