@@ -75,7 +75,7 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
         call_envs$call_env <- paste0 (call_envs$namespace, "::", call_envs$name)
         call_envs$call_env [which (is.na (call_envs$name))] <- NA_character_
 
-        tibble::tibble (
+        out_i <- tibble::tibble (
             trace_name = i,
             trace_number = num_traces,
             trace_source = trace_source,
@@ -92,6 +92,37 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
             uneval = par_uneval,
             eval = par_eval
         )
+
+        has_list <- which (vapply (
+            tr_i,
+            function (i) "list_data" %in% names (i),
+            logical (1L)
+        ))
+
+        if (length (has_list) > 0L) {
+
+            out_list_i <- lapply (tr_i [has_list], function (j) {
+                j_out <- do.call (rbind, lapply (j$list_data, as.data.frame))
+                j_out$par <- paste0 (j$par, "$", j_out$par)
+                return (j_out)
+            })
+            out_list_i <- do.call (rbind, out_list_i)
+            names (out_list_i) [names (out_list_i) == "par"] <- "par_name"
+            names (out_list_i) [names (out_list_i) == "par_uneval"] <- "uneval"
+            names (out_list_i) [names (out_list_i) == "par_eval"] <- "eval"
+
+            out_list <- out_i [integer (0L), ]
+            out_list <- out_list [seq_len (nrow (out_list_i)), ]
+            index <- match (names (out_list_i), names (out_list))
+            out_list [, index] <- out_list_i
+            index1 <- which (!names (out_list) %in% names (out_list_i))
+            index2 <- match (names (out_list) [index1], names (out_i))
+            out_list [, index1] <- out_i [seq_len (nrow (out_list_i)), index2]
+
+            out_i <- rbind (out_i, out_list)
+        }
+
+        return (out_i)
     })
 
     out <- do.call (rbind, out)
