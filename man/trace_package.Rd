@@ -6,13 +6,18 @@
 \usage{
 trace_package(
   package = NULL,
+  pkg_dir = NULL,
   functions = NULL,
   types = c("examples", "tests"),
-  pkg_dir = NULL
+  trace_lists = FALSE
 )
 }
 \arguments{
 \item{package}{Name of package to be traced (as character value).}
+
+\item{pkg_dir}{For "types" including "tests", a local directory to the source
+code of the package. (This is needed because installed versions do not
+generally include tests.)}
 
 \item{functions}{Optional character vector of names of functions to trace.
 Defaults to tracing all functions.}
@@ -21,9 +26,10 @@ Defaults to tracing all functions.}
 values of "examples" or "tests" (as for \code{tools::testInstalledPackage}). Note
 that only tests run via the \pkg{testthat} package can be traced.}
 
-\item{pkg_dir}{For "types" including "tests", a local directory to the source
-code of the package. (This is needed because installed versions do not
-generally include tests.)}
+\item{trace_lists}{If \code{TRUE}, trace into any nested list parameters
+(including \code{data.frame}-type objects), and return type information on each
+list component. The parameter names for these list-components are then
+specified in "dollar-notation", as '\if{html}{\out{<par>}}$\if{html}{\out{<item>}}', for example 'Orange$age'.}
 }
 \value{
 A \code{data.frame} of data on every parameter of every function as
