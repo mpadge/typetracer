@@ -165,12 +165,50 @@ For the function, `r`, above, this simply requires,
 uninject_tracer (f)
 ```
 
+All traces can also be removed with this functions:
+
+```{r}
+clear_traces ()
+```
+
+
 Because `typetracer` modifies the internal code of functions as defined within
 a current R session, we strongly recommend restarting your R session after
 using `typetracer`, to ensure expected function behaviour is restored.
 
 
-## Example #2 - Tracing a Package
+## Example #2 - Recursion into lists
+
+R has extensive support for list structures, notably including all
+`data.frame`-like objects in which each column is actually a list item.
+`typetracer` also offers the ability to recurse into lists to trace the
+properties of each list item. To do this, the traces themselves have to be
+injected with the additional parameter, `trace_lists = TRUE`.
+
+
+The final call above included an additional parameter passed as a list. The
+following code re-injects a tracer with the ability to traverse into list
+structures:
+
+```{r}
+inject_tracer (f, trace_lists = TRUE)
+val <- f (
+    x = 1:2,
+    y = 3:4 + 0.,
+    a = "blah",
+    b = list (a = 1, b = "b"),
+    f = a ~ b
+)
+x_lists <- load_traces ()
+print (x_lists)
+```
+
+And that result now has `r nrow(x_lists)` rows, or
+`r nrow(x_lists) - nrow(x)` more than the previous example, reflecting the two
+items passed as a `list` to the parameter, `b`.
+
+
+## Example #3 - Tracing a Package
 
 This section presents a more complex example tracing all function calls from
 [the `rematch` package](https://github.com/MangoTheCat/rematch), chosen because
@@ -182,6 +220,9 @@ automatically injects tracing code into every
 function within the package, so there is no need to explicitly call [the
 `inject_tracer()`
 function](https://mpadge.github.io/typetracer/reference/inject_tracer).
+
+(This function also includes a `trace_lists` parameter, as demonstrated above,
+with a default of `FALSE` to not recurse into tracing list structures.)
 
 ```{r trace-rematch, message = FALSE}
 res <- trace_package ("rematch")
@@ -227,7 +268,7 @@ from the ["testthat" package](https://testthat.r-lib.org). These calling
 environments are useful to discern whether, for example, a call was made with
 an expectation that it should error.
 
-### Example #2(a) - Specifying Functions to Trace
+### Example #3(a) - Specifying Functions to Trace
 
 [The `trace_package()`
 function](https://mpadge.github.io/typetracer/reference/trace_package.html)
