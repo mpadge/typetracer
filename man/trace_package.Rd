@@ -18,7 +18,8 @@ trace_package(
 Defaults to tracing all functions.}
 
 \item{types}{The types of code to be run to generate traces: one or both
-values of "examples" or "tests" (as for \code{tools::testInstalledPackage}).}
+values of "examples" or "tests" (as for \code{tools::testInstalledPackage}). Note
+that only tests run via the \pkg{testthat} package can be traced.}
 
 \item{pkg_dir}{For "types" including "tests", a local directory to the source
 code of the package. (This is needed because installed versions do not

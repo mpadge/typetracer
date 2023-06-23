@@ -5,7 +5,8 @@
 #' @param functions Optional character vector of names of functions to trace.
 #' Defaults to tracing all functions.
 #' @param types The types of code to be run to generate traces: one or both
-#' values of "examples" or "tests" (as for `tools::testInstalledPackage`).
+#' values of "examples" or "tests" (as for `tools::testInstalledPackage`). Note
+#' that only tests run via the \pkg{testthat} package can be traced.
 #' @param pkg_dir For "types" including "tests", a local directory to the source
 #' code of the package. (This is needed because installed versions do not
 #' generally include tests.)
