@@ -3,6 +3,7 @@
 #'
 #' @param f A function (that is, an object of class "function", and not a
 #' character string).
+#' @inheritParams trace_package
 #' @return Nothing (will error on fail).
 #'
 #' @note The tracer is defined in the internal `typetracer_header()` function.
@@ -23,9 +24,10 @@
 #' uninject_tracer (f)
 #' # Traces may also be removed:
 #' clear_traces ()
-inject_tracer <- function (f) {
+inject_tracer <- function (f, trace_lists = FALSE) {
 
     checkmate::assert_function (f)
+    set_trace_list_option (trace_lists)
 
     # save body for re-injection:
     f_name <- deparse (substitute (f))
