@@ -93,11 +93,14 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
             eval = par_eval
         )
 
-        has_list <- which (vapply (
-            tr_i,
-            function (i) "list_data" %in% names (i),
-            logical (1L)
-        ))
+        has_list <- integer (0L)
+        if (options ("typetracer_trace_lists") [[1]]) {
+            has_list <- which (vapply (
+                tr_i,
+                function (i) "list_data" %in% names (i),
+                logical (1L)
+            ))
+        }
 
         if (length (has_list) > 0L) {
 

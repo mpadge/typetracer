@@ -31,6 +31,7 @@ trace_package <- function (package = NULL,
     types <- match.arg (types, c ("examples", "tests"),
         several.ok = TRUE
     )
+    set_trace_list_option (trace_lists)
 
     package <- assert_trace_package_inputs (package, types, pkg_dir)
     pkg_was_attached <- any (grepl (paste0 ("package:", package), search ()))
@@ -135,6 +136,11 @@ trace_package <- function (package = NULL,
     check <- reload_pkg (package, lib_path)
 
     return (traces)
+}
+
+set_trace_list_option <- function (trace_lists) {
+
+    options (typetracer_trace_lists = trace_lists)
 }
 
 assert_trace_package_inputs <- function (package = NULL,
