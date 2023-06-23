@@ -81,7 +81,6 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
             trace_source = trace_source,
             fn_name = fn_name,
             fn_call_hash = fn_call_hash,
-            trace_file = call_envs$file,
             call_env = call_envs$call_env,
             par_name = par_name,
             class = classes,
@@ -98,7 +97,7 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
     out <- do.call (rbind, out)
 
     if (!files) {
-        out$trace_name <- out$trace_file <- out$call_env <- NULL
+        out$trace_name <- out$call_env <- NULL
     }
 
     out <- out [order (out$trace_number), ]

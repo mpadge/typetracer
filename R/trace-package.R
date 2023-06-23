@@ -87,19 +87,22 @@ trace_package <- function (package = NULL,
     }
 
     traces <- load_traces (files = TRUE, quiet = TRUE)
-    traces$source_file_name <- NA_character_
+    traces <- tibble::add_column (
+        traces,
+        source_file_name = NA,
+        .after = "trace_source"
+    )
 
     if ("examples" %in% types) {
         # join rd_name from trace_names:
+        trace_names$rd_name <- paste0 ("man/", trace_names$rd_name, ".Rd")
         traces$source_file_name <-
             trace_names$rd_name [match (traces$trace_name, trace_names$trace)]
-        index <- which (!is.na (traces$source_file_name))
-        traces$source_file_name [index] <- paste0 ("rd_", traces$source_file_name [index])
-        traces$trace_name <- NULL
     }
     if ("tests" %in% types && length (test_traces) > 0L) {
         traces <- join_test_trace_data (traces, test_traces)
     }
+    traces$trace_name <- traces$trace_source <- NULL
 
     # Envvar to enable traces to remain so that package can be used by
     # 'autotest', through loading traces after calling 'trace_package()'
@@ -255,14 +258,13 @@ trace_package_tests <- function (package, pkg_dir = NULL,
         test_str <- data.frame (do.call (rbind, test_str))
         names (test_str) <- c ("file", "test_name")
         test_str$file <- file.path (
-            pkg_dir,
             testthat::test_path (),
             test_str$file
         )
         test_str$test <- gsub ("\\s+", "_", test_str$test_name)
         index <- match (test_trace_numbers$test, test_str$test)
         test_trace_numbers$test_name <- test_str$test_name [index]
-        test_trace_numbers$test_file <- basename (test_str$file [index])
+        test_trace_numbers$test_file <- test_str$file [index]
         test_trace_numbers$test <- NULL
         test_trace_numbers <-
             test_trace_numbers [, c ("test_file", "test_name", "trace_number")]

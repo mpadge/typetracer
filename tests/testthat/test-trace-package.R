@@ -1,7 +1,7 @@
 
 # CRAN: "Please do not install packages ... This can make the functions,
 # examples, and cran-check very slow.
-skip_on_cran ()
+# skip_on_cran ()
 
 is_gh_cov <- identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage")
 
@@ -28,15 +28,14 @@ test_that ("trace installed package", {
     expect_identical (
         names (x0),
         c (
-            "trace_number", "trace_source",
-            "fn_name", "fn_call_hash",
-            "trace_file", "call_env",
-            "par_name", "class",
-            "typeof", "mode", "storage_mode", "length",
-            "formal", "uneval", "eval", "source_file_name"
+            "trace_number", "source_file_name",
+            "fn_name", "fn_call_hash", "call_env",
+            "par_name", "class", "typeof",
+            "mode", "storage_mode", "length",
+            "formal", "uneval", "eval"
         )
     )
-    expect_true (all (grepl ("^rd_", x0$source_file_name)))
+    expect_true (all (grepl ("\\.Rd$", x0$source_file_name)))
 
     expect_s3_class (
         x1 <- trace_package (package,
@@ -48,16 +47,15 @@ test_that ("trace installed package", {
     expect_identical (
         names (x1),
         c (
-            "trace_number", "trace_source",
-            "fn_name", "fn_call_hash",
-            "trace_file", "call_env",
-            "par_name", "class",
-            "typeof", "mode", "storage_mode", "length",
-            "formal", "uneval", "eval", "source_file_name"
+            "trace_number", "source_file_name",
+            "fn_name", "fn_call_hash", "call_env",
+            "par_name", "class", "typeof",
+            "mode", "storage_mode", "length",
+            "formal", "uneval", "eval"
         )
     )
     # still only Rd sources because no test files
-    expect_true (all (grepl ("^rd_", x0$source_file_name)))
+    expect_true (all (grepl ("\\.Rd$", x0$source_file_name)))
 
     # installed packages have no tests, so traces are examples only:
     expect_identical (nrow (x0), nrow (x1))
@@ -95,18 +93,20 @@ test_that ("trace source package", {
     expect_identical (
         names (x0),
         c (
-            "trace_number", "trace_source",
-            "fn_name", "fn_call_hash",
-            "trace_file", "call_env",
-            "par_name", "class",
-            "typeof", "mode", "storage_mode", "length",
-            "formal", "uneval", "eval", "source_file_name"
+            "trace_number", "source_file_name",
+            "fn_name", "fn_call_hash", "call_env",
+            "par_name", "class", "typeof",
+            "mode", "storage_mode", "length",
+            "formal", "uneval", "eval"
         )
     )
     expect_false (all (grepl ("^rd_", x0$source_file_name)))
 
-    source_rd <- grep ("^rd\\_", x0$source_file_name, value = TRUE)
-    source_test <- grep ("^test", x0$source_file_name, value = TRUE)
+    source_rd <- grep ("\\.Rd$", x0$source_file_name, value = TRUE)
+    # The testthat::test_path in `trace_package_tests` returns blank in some
+    # test environments, giving source_file_names of "./test-name.R/..." rather
+    # than full paths:
+    source_test <- grep ("(^|\\.\\/)test", x0$source_file_name, value = TRUE)
     expect_true (length (source_rd) > 1L)
     expect_true (length (source_test) > 1L)
 
