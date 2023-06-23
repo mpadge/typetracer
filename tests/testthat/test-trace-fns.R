@@ -90,3 +90,28 @@ test_that ("untrace call", {
 
     expect_identical (e0, e2)
 })
+
+test_that ("trace lists", {
+
+    f <- function (x, y, a) {
+        stopifnot (is.list (a))
+        stopifnot ("x" %in% names (a))
+        x * x + y * y + a$x
+    }
+
+    inject_tracer (f, trace_lists = FALSE)
+    clear_traces ()
+    val <- f (x = 1:2, y = 3:4 + 0., a = list (x = 4))
+    x0 <- load_traces ()
+    uninject_tracer (f)
+
+    inject_tracer (f, trace_lists = TRUE)
+    clear_traces ()
+    val <- f (x = 1:2, y = 3:4 + 0., a = list (x = 4))
+    x1 <- load_traces ()
+    uninject_tracer (f)
+
+    expect_true (nrow (x1) > nrow (x0))
+    expect_false (any (grepl ("\\$", x0$par_name)))
+    expect_true (any (grepl ("\\$", x1$par_name)))
+})
