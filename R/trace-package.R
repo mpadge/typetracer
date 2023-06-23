@@ -59,6 +59,9 @@ trace_package <- function (package = NULL,
     if (is.null (trace_fns)) {
         trace_fns <- ls (p, all.names = TRUE)
     }
+
+    clear_traces ()
+
     pkg_env <- as.environment (p)
     for (fnm in trace_fns) {
         f <- get (fnm, envir = pkg_env)
@@ -66,8 +69,6 @@ trace_package <- function (package = NULL,
             inject_tracer (f)
         }
     }
-
-    clear_traces ()
 
     traces_ex <- NULL
 
@@ -115,19 +116,18 @@ trace_package <- function (package = NULL,
         traces$trace_name <- traces$trace_source <- NULL
     }
 
-    # Envvar to enable traces to remain so that package can be used by
-    # 'autotest', through loading traces after calling 'trace_package()'
-    if (!Sys.getenv ("TYPETRACER_LEAVE_TRACES") == "true") {
-        clear_traces ()
-    }
-
     for (f in trace_fns) {
         f <- get (f, envir = pkg_env)
         if (is.function (f)) {
             uninject_tracer (f)
         }
     }
-    clear_fn_bodies_dir ()
+
+    # Envvar to enable traces to remain so that package can be used by
+    # 'autotest', through loading traces after calling 'trace_package()'
+    if (!Sys.getenv ("TYPETRACER_LEAVE_TRACES") == "true") {
+        clear_traces ()
+    }
 
     tryCatch (
         unloadNamespace (package),
