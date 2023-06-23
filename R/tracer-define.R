@@ -51,8 +51,15 @@ typetracer_header <- function () {
         utils::getFromNamespace ("get_param_str", "typetracer")
     typetracer_env$trace_one_param <-
         utils::getFromNamespace ("trace_one_param", "typetracer")
+    typetracer_env$trace_one_list <-
+        utils::getFromNamespace ("trace_one_list", "typetracer")
     typetracer_env$data <- lapply (typetracer_env$par_names, function (p) {
-        typetracer_env$trace_one_param (typetracer_env, p, fn_env)
+        dat_i <- typetracer_env$trace_one_param (typetracer_env, p, fn_env)
+        if (dat_i$typeof == "list") {
+            dat_i$list_data <-
+                typetracer_env$trace_one_list (typetracer_env, p, fn_env)
+        }
+        return (dat_i)
     })
 
     typetracer_env$process_back_trace <-
@@ -160,6 +167,36 @@ trace_one_param <- function (typetracer_env, p, fn_env) {
         par_uneval = s,
         par_eval = res
     )
+}
+
+#' Recurse into one list-type parameter to extract internal structure.
+#'
+#' Standard evaluation only!
+#' @noRd
+trace_one_list <- function (typetracer_env, p, fn_env) {
+
+    res <- tryCatch (
+        get (p, envir = fn_env, inherits = FALSE),
+        error = function (e) NULL
+    )
+    if (is.null (res)) {
+        return (res)
+    }
+
+    list_str <- lapply (seq_along (res), function (i) {
+        list (
+            par = names (res) [i],
+            class = class (res [[i]]),
+            typeof = typeof (res [[i]]),
+            storage_mode = storage.mode (res [[i]]),
+            mode = mode (res [[i]]),
+            length = length (res [[i]]),
+            par_uneval = NA_character_,
+            par_eval = NA_character_
+        )
+    })
+
+    return (list_str)
 }
 
 #' Extract environments of function calls
