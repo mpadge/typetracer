@@ -36,3 +36,17 @@ get_pkg_lib_path <- function (package, lib_paths) {
 
     return (lib_path)
 }
+
+set_trace_list_option <- function (trace_lists) {
+
+    options (typetracer_trace_lists = trace_lists)
+}
+
+get_trace_lists_param <- function () {
+
+    op <- options ("typetracer_trace_lists") [[1]]
+    if (length (op) == 0L) {
+        op <- FALSE
+    }
+    return (op)
+}

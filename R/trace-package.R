@@ -2,14 +2,18 @@
 #' Trace all parameters for all functions in a specified package
 #'
 #' @param package Name of package to be traced (as character value).
+#' @param pkg_dir For "types" including "tests", a local directory to the source
+#' code of the package. (This is needed because installed versions do not
+#' generally include tests.)
 #' @param functions Optional character vector of names of functions to trace.
 #' Defaults to tracing all functions.
 #' @param types The types of code to be run to generate traces: one or both
 #' values of "examples" or "tests" (as for `tools::testInstalledPackage`). Note
 #' that only tests run via the \pkg{testthat} package can be traced.
-#' @param pkg_dir For "types" including "tests", a local directory to the source
-#' code of the package. (This is needed because installed versions do not
-#' generally include tests.)
+#' @param trace_lists If `TRUE`, trace into any nested list parameters
+#' (including `data.frame`-type objects), and return type information on each
+#' list component. The parameter names for these list-components are then
+#' specified in "dollar-notation", as '<par>$<item>', for example 'Orange$age'.
 #' @return A `data.frame` of data on every parameter of every function as
 #' specified in code provided in package examples.
 #' @export
@@ -19,13 +23,15 @@
 #' res <- trace_package (pkg_dir = "/<path>/<to>/<local>/<pacakge>")
 #' }
 trace_package <- function (package = NULL,
+                           pkg_dir = NULL,
                            functions = NULL,
                            types = c ("examples", "tests"),
-                           pkg_dir = NULL) {
+                           trace_lists = FALSE) {
 
     types <- match.arg (types, c ("examples", "tests"),
         several.ok = TRUE
     )
+    set_trace_list_option (trace_lists)
 
     package <- assert_trace_package_inputs (package, types, pkg_dir)
     pkg_was_attached <- any (grepl (paste0 ("package:", package), search ()))
@@ -53,6 +59,9 @@ trace_package <- function (package = NULL,
     if (is.null (trace_fns)) {
         trace_fns <- ls (p, all.names = TRUE)
     }
+
+    clear_traces ()
+
     pkg_env <- as.environment (p)
     for (fnm in trace_fns) {
         f <- get (fnm, envir = pkg_env)
@@ -60,8 +69,6 @@ trace_package <- function (package = NULL,
             inject_tracer (f)
         }
     }
-
-    clear_traces ()
 
     traces_ex <- NULL
 
@@ -109,19 +116,18 @@ trace_package <- function (package = NULL,
         traces$trace_name <- traces$trace_source <- NULL
     }
 
-    # Envvar to enable traces to remain so that package can be used by
-    # 'autotest', through loading traces after calling 'trace_package()'
-    if (!Sys.getenv ("TYPETRACER_LEAVE_TRACES") == "true") {
-        clear_traces ()
-    }
-
     for (f in trace_fns) {
         f <- get (f, envir = pkg_env)
         if (is.function (f)) {
             uninject_tracer (f)
         }
     }
-    clear_fn_bodies_dir ()
+
+    # Envvar to enable traces to remain so that package can be used by
+    # 'autotest', through loading traces after calling 'trace_package()'
+    if (!Sys.getenv ("TYPETRACER_LEAVE_TRACES") == "true") {
+        clear_traces ()
+    }
 
     tryCatch (
         unloadNamespace (package),
