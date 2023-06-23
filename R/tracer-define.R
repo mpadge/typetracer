@@ -55,6 +55,7 @@ typetracer_header <- function () {
         utils::getFromNamespace ("trace_one_list", "typetracer")
     typetracer_env$get_trace_lists_param <-
         utils::getFromNamespace ("get_trace_lists_param", "typetracer")
+
     typetracer_env$data <- lapply (typetracer_env$par_names, function (p) {
         dat_i <- typetracer_env$trace_one_param (typetracer_env, p, fn_env)
         trace_lists <- typetracer_env$get_trace_lists_param ()
@@ -182,6 +183,15 @@ trace_one_list <- function (typetracer_env, p, fn_env) {
         get (p, envir = fn_env, inherits = FALSE),
         error = function (e) NULL
     )
+
+    # non-standard evaluation, which is also necessary for lists passed as
+    # `...`:
+    if (is.null (res)) {
+        res <- tryCatch (
+            eval (typetracer_env$pars [[p]], envir = fn_env),
+            error = function (e) NULL
+        )
+    }
     if (is.null (res)) {
         return (res)
     }
