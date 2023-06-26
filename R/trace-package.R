@@ -52,23 +52,8 @@ trace_package <- function (package = NULL,
     }
 
     # -------- TRACING
-    # The original `functions = NULL` has to be passed through to
-    # `trace_package_exs`, so modified here as `trace_fns`:
-    trace_fns <- functions
-    p <- paste0 ("package:", package)
-    if (is.null (trace_fns)) {
-        trace_fns <- ls (p, all.names = TRUE)
-    }
-
-    clear_traces ()
-
-    pkg_env <- as.environment (p)
-    for (fnm in trace_fns) {
-        f <- get (fnm, envir = pkg_env)
-        if (is.function (f)) {
-            inject_tracer (f, trace_lists = trace_lists)
-        }
-    }
+    trace_fns <-
+        inject_pkg_trace_fns (functions, package, trace_lists = trace_lists)
 
     traces_ex <- NULL
 
@@ -106,18 +91,7 @@ trace_package <- function (package = NULL,
         )
     }
 
-    for (f in trace_fns) {
-        f <- get (f, envir = pkg_env)
-        if (is.function (f)) {
-            uninject_tracer (f)
-        }
-    }
-
-    # Envvar to enable traces to remain so that package can be used by
-    # 'autotest', through loading traces after calling 'trace_package()'
-    if (!Sys.getenv ("TYPETRACER_LEAVE_TRACES") == "true") {
-        clear_traces ()
-    }
+    uninject_pkg_trace_fns (trace_fns, package)
 
     tryCatch (
         unloadNamespace (package),
@@ -147,6 +121,46 @@ assert_trace_package_inputs <- function (package = NULL,
     checkmate::assert_scalar (package)
 
     return (package)
+}
+
+inject_pkg_trace_fns <- function (functions, package, trace_lists = FALSE) {
+
+    clear_traces ()
+
+    trace_fns <- functions
+    p <- paste0 ("package:", package)
+    if (is.null (trace_fns)) {
+        trace_fns <- ls (p, all.names = TRUE)
+    }
+
+    pkg_env <- as.environment (p)
+    for (fnm in trace_fns) {
+        f <- get (fnm, envir = pkg_env)
+        if (is.function (f)) {
+            inject_tracer (f, trace_lists = trace_lists)
+        }
+    }
+
+    return (trace_fns)
+}
+
+uninject_pkg_trace_fns <- function (trace_fns, package) {
+
+    p <- paste0 ("package:", package)
+    pkg_env <- as.environment (p)
+
+    for (f in trace_fns) {
+        f <- get (f, envir = pkg_env)
+        if (is.function (f)) {
+            uninject_tracer (f)
+        }
+    }
+
+    # Envvar to enable traces to remain so that package can be used by
+    # 'autotest', through loading traces after calling 'trace_package()'
+    if (!Sys.getenv ("TYPETRACER_LEAVE_TRACES") == "true") {
+        clear_traces ()
+    }
 }
 
 #' Trace all examples from a package
