@@ -13,7 +13,7 @@
 #' @param trace_lists If `TRUE`, trace into any nested list parameters
 #' (including `data.frame`-type objects), and return type information on each
 #' list component. The parameter names for these list-components are then
-#' specified in "dollar-notation", as '<par>$<item>', for example 'Orange$age'.
+#' specified in "dollar-notation", for example 'Orange$age'.
 #' @return A `data.frame` of data on every parameter of every function as
 #' specified in code provided in package examples.
 #' @export

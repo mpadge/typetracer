@@ -29,7 +29,7 @@ that only tests run via the \pkg{testthat} package can be traced.}
 \item{trace_lists}{If \code{TRUE}, trace into any nested list parameters
 (including \code{data.frame}-type objects), and return type information on each
 list component. The parameter names for these list-components are then
-specified in "dollar-notation", as '\if{html}{\out{<par>}}$\if{html}{\out{<item>}}', for example 'Orange$age'.}
+specified in "dollar-notation", for example 'Orange$age'.}
 }
 \value{
 A \code{data.frame} of data on every parameter of every function as
