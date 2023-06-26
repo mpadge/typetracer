@@ -107,8 +107,8 @@ trace_package <- function (package = NULL,
         if ("examples" %in% types) {
             # join rd_name from trace_names:
             trace_names$rd_name <- paste0 ("man/", trace_names$rd_name, ".Rd")
-            traces$source_file_name <-
-                trace_names$rd_name [match (traces$trace_name, trace_names$trace)]
+            index <- match (traces$trace_name, trace_names$trace)
+            traces$source_file_name <- trace_names$rd_name [index]
         }
         if ("tests" %in% types && length (test_traces) > 0L) {
             traces <- join_test_trace_data (traces, test_traces)
@@ -381,7 +381,8 @@ join_test_trace_data <- function (traces, test_traces) {
     test_tr_index <- seq (tr_start1, tr_end1)
     traces_index <- which (traces$trace_number %in% test_tr_index)
     index <- match (traces$trace_number [traces_index], test_tr_index)
-    traces$source_file_name [traces_index] <- paste0 (test_files, "/", test_names) [index]
+    traces$source_file_name [traces_index] <-
+        paste0 (test_files, "/", test_names) [index]
 
     return (traces)
 }
