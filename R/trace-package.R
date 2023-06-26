@@ -98,22 +98,12 @@ trace_package <- function (package = NULL,
 
     if (!is.null (traces)) {
 
-        traces <- tibble::add_column (
+        traces <- add_pkg_trace_sources (
             traces,
-            source_file_name = NA,
-            .after = "trace_source"
+            trace_names,
+            test_traces,
+            types
         )
-
-        if ("examples" %in% types) {
-            # join rd_name from trace_names:
-            trace_names$rd_name <- paste0 ("man/", trace_names$rd_name, ".Rd")
-            index <- match (traces$trace_name, trace_names$trace)
-            traces$source_file_name <- trace_names$rd_name [index]
-        }
-        if ("tests" %in% types && length (test_traces) > 0L) {
-            traces <- join_test_trace_data (traces, test_traces)
-        }
-        traces$trace_name <- traces$trace_source <- NULL
     }
 
     for (f in trace_fns) {
@@ -344,6 +334,28 @@ get_pkg_examples <- function (package) {
     names (exs) <- nms
 
     return (exs)
+}
+
+add_pkg_trace_sources <- function (traces, trace_names, test_traces, types) {
+
+    traces <- tibble::add_column (
+        traces,
+        source_file_name = NA,
+        .after = "trace_source"
+    )
+
+    if ("examples" %in% types) {
+        # join rd_name from trace_names:
+        trace_names$rd_name <- paste0 ("man/", trace_names$rd_name, ".Rd")
+        index <- match (traces$trace_name, trace_names$trace)
+        traces$source_file_name <- trace_names$rd_name [index]
+    }
+    if ("tests" %in% types && length (test_traces) > 0L) {
+        traces <- join_test_trace_data (traces, test_traces)
+    }
+    traces$trace_name <- traces$trace_source <- NULL
+
+    return (traces)
 }
 
 join_test_trace_data <- function (traces, test_traces) {
