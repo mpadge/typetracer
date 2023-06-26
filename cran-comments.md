@@ -1,6 +1,13 @@
-# CRAN notes for typetrace_0.1.1 submission
+# CRAN notes for typetracer_0.2.2 submission
 
-This is a re-submission of a previously rejected new submission. This update addresses the following problems:
+The package has been checked on all environments listed below, and generates no notes
 
-- First line of Description has been removed.
-- All references to R language in Description have been placed in single quotes.
+GitHub actions:
+* Linux: R-release, R-devel, R-oldrelease
+* OSX: R-release
+* Windows: R-release
+
+CRAN win-builder:
+* R-oldrelease, R-release, R-devel
+
+Package also checked using `Clang++ -Weverything`, and both local memory sanitzer and `rocker/r-devel-san` with clean results.
