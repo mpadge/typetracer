@@ -36,7 +36,7 @@ The stable version of the package can be installed with one of the following com
 
 ```{r remotes, eval = FALSE}
 # Stable version from CRAN:
-install.packages ("typetrace")
+install.packages ("typetracer")
 # Current development version from r-universe:
 install.packages (
     "typetracer",
