@@ -1,4 +1,3 @@
-
 # CRAN: "Please do not install packages ... This can make the functions,
 # examples, and cran-check very slow.
 # skip_on_cran ()

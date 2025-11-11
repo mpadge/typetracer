@@ -1,4 +1,3 @@
-
 test_that ("reassign_function_body changes function body", {
 
     f1 <- function (x) x
