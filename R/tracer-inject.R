@@ -1,4 +1,3 @@
-
 #' Inject parameter tracer into one function
 #'
 #' @param f A function (that is, an object of class "function", and not a

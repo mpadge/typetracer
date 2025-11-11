@@ -1,4 +1,3 @@
-
 get_typetrace_dir <- function () {
 
     td <- getOption ("typetracedir")

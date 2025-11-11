@@ -1,4 +1,3 @@
-
 testthat_is_parallel <- function (pkg_dir) {
 
     flist <- list.files (pkg_dir, recursive = TRUE, full.names = TRUE)

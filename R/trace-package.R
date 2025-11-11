@@ -1,4 +1,3 @@
-
 #' Trace all parameters for all functions in a specified package
 #'
 #' @param package Name of package to be traced (as character value).

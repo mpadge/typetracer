@@ -1,4 +1,3 @@
-
 #' Load traces of parameter types
 #'
 #' @param files If `TRUE`, return paths to all temporary files holding trace

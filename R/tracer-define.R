@@ -1,4 +1,3 @@
-
 #' Code injected in function heads that gets the types of all parameters
 #'
 #' All variables and functions are defined within a new environment, to avoid
