@@ -8,11 +8,11 @@
 #include <stdlib.h> // for NULL
 
 SEXP reassign_function_body(SEXP fun, SEXP body) {
-  if (TYPEOF(fun) != CLOSXP) Rf_error("fun must be a function");
+    if (TYPEOF(fun) != CLOSXP) Rf_error("fun must be a function");
 
-  SET_BODY(fun, body);
+    SET_BODY(fun, body);
 
-  return R_NilValue;
+    return R_NilValue;
 }
 
 extern SEXP reassign_function_body(SEXP, SEXP);
@@ -23,6 +23,6 @@ static const R_CallMethodDef CallEntries[] = {
 };
 
 void R_init_typetracer(DllInfo *dll) {
-  R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
-  R_useDynamicSymbols(dll, FALSE);
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }
