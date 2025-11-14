@@ -40,8 +40,9 @@ inject_tracer <- function (f, trace_lists = FALSE) {
     fun_body <- body (f)
 
     new_body <- prepend_code (fun_body, code)
+    new_fn <- as.function (c (formals (f), new_body))
 
-    invisible (reassign_function_body (f, new_body))
+    invisible (reassign_function_body (f, new_fn))
 }
 
 cache_file_name <- function (f, f_name) {
@@ -98,6 +99,7 @@ uninject_tracer <- function (f) {
     }
 
     body <- readRDS (f_name)
-    reassign_function_body (f, body)
+    old_fn <- as.function (c (formals (f), body))
+    reassign_function_body (f, old_fn)
     file.remove (f_name)
 }
