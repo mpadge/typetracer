@@ -1,4 +1,4 @@
-is_gh_cov <- identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage")
+is_gh_cov <- identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage.yaml")
 
 
 test_that ("tracer body", {
