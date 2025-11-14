@@ -48,10 +48,10 @@ Alternatively, for those who prefer to use other source code platforms, the
 package can also be installed by running any one of the following lines:
 
 ```{r remotes-alt, eval = FALSE}
-remotes::install_git ("https://git.sr.ht/~mpadge/dodgr")
-remotes::install_git ("https://codeberg.org/UrbanAnalyst/dodgr")
-remotes::install_bitbucket ("UrbanAnalyst/dodgr")
-remotes::install_gitlab ("UrbanAnalyst/dodgr")
+remotes::install_git ("https://git.sr.ht/~mpadge/typetracer")
+remotes::install_git ("https://codeberg.org/mpadge/typetracer")
+remotes::install_bitbucket ("mpadge/typetracer")
+remotes::install_gitlab ("mpadge/typetracer")
 ```
 
 

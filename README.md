@@ -26,7 +26,7 @@ The stable version of the package can be installed with one of the
 following commands:
 
     # Stable version from CRAN:
-    install.packages ("typetrace")
+    install.packages ("typetracer")
     # Current development version from r-universe:
     install.packages (
         "typetracer",
@@ -37,10 +37,10 @@ Alternatively, for those who prefer to use other source code platforms,
 the package can also be installed by running any one of the following
 lines:
 
-    remotes::install_git ("https://git.sr.ht/~mpadge/dodgr")
-    remotes::install_git ("https://codeberg.org/UrbanAnalyst/dodgr")
-    remotes::install_bitbucket ("UrbanAnalyst/dodgr")
-    remotes::install_gitlab ("UrbanAnalyst/dodgr")
+    remotes::install_git ("https://git.sr.ht/~mpadge/typetracer")
+    remotes::install_git ("https://codeberg.org/mpadge/typetracer")
+    remotes::install_bitbucket ("mpadge/typetracer")
+    remotes::install_gitlab ("mpadge/typetracer")
 
 The package can then loaded for use by calling `library`:
 
@@ -83,13 +83,13 @@ from each function call.
     ## # A tibble: 7 × 12
     ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
     ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
-    ## 1            0 f       uDgEbied     x        <chr [1]> integ… nume… integer     
-    ## 2            0 f       uDgEbied     y        <chr [1]> double nume… double      
-    ## 3            0 f       uDgEbied     z        <chr [1]> NULL   NULL  NULL        
-    ## 4            0 f       uDgEbied     ...      <chr [1]> NULL   NULL  NULL        
-    ## 5            0 f       uDgEbied     a        <chr [1]> chara… char… character   
-    ## 6            0 f       uDgEbied     b        <chr [1]> list   list  list        
-    ## 7            0 f       uDgEbied     f        <chr [1]> langu… call  language    
+    ## 1            0 f       yZjXlrOK     x        <chr [1]> integ… nume… integer     
+    ## 2            0 f       yZjXlrOK     y        <chr [1]> double nume… double      
+    ## 3            0 f       yZjXlrOK     z        <chr [1]> NULL   NULL  NULL        
+    ## 4            0 f       yZjXlrOK     ...      <chr [1]> NULL   NULL  NULL        
+    ## 5            0 f       yZjXlrOK     a        <chr [1]> chara… char… character   
+    ## 6            0 f       yZjXlrOK     b        <chr [1]> list   list  list        
+    ## 7            0 f       yZjXlrOK     f        <chr [1]> langu… call  language    
     ## # ℹ 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
     ## #   eval <I<list>>
 
@@ -142,7 +142,7 @@ unevaluated and evaluated forms of parameters:
     ## 
     ## $f
     ## a ~ b
-    ## <environment: 0x560b15656ca8>
+    ## <environment: 0x564f9d3d9140>
 
 Unevaluated parameters are generally converted to equivalent character
 expressions.
@@ -214,15 +214,15 @@ list structures:
     ## # A tibble: 9 × 12
     ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
     ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
-    ## 1            0 f       LzZIbYvx     x        <chr [1]> integ… nume… integer     
-    ## 2            0 f       LzZIbYvx     y        <chr [1]> double nume… double      
-    ## 3            0 f       LzZIbYvx     z        <chr [1]> NULL   NULL  NULL        
-    ## 4            0 f       LzZIbYvx     ...      <chr [1]> NULL   NULL  NULL        
-    ## 5            0 f       LzZIbYvx     a        <chr [1]> chara… char… character   
-    ## 6            0 f       LzZIbYvx     b        <chr [1]> list   list  list        
-    ## 7            0 f       LzZIbYvx     f        <chr [1]> langu… call  language    
-    ## 8            0 f       LzZIbYvx     b$a      <chr [1]> double nume… double      
-    ## 9            0 f       LzZIbYvx     b$b      <chr [1]> chara… char… character   
+    ## 1            0 f       bYWwKQAU     x        <chr [1]> integ… nume… integer     
+    ## 2            0 f       bYWwKQAU     y        <chr [1]> double nume… double      
+    ## 3            0 f       bYWwKQAU     z        <chr [1]> NULL   NULL  NULL        
+    ## 4            0 f       bYWwKQAU     ...      <chr [1]> NULL   NULL  NULL        
+    ## 5            0 f       bYWwKQAU     a        <chr [1]> chara… char… character   
+    ## 6            0 f       bYWwKQAU     b        <chr [1]> list   list  list        
+    ## 7            0 f       bYWwKQAU     f        <chr [1]> langu… call  language    
+    ## 8            0 f       bYWwKQAU     b$a      <chr [1]> double nume… double      
+    ## 9            0 f       bYWwKQAU     b$b      <chr [1]> chara… char… character   
     ## # ℹ 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
     ## #   eval <I<list>>
 
@@ -252,17 +252,15 @@ structures.)
     res <- trace_package ("rematch")
     res
 
-    ## # A tibble: 8 × 14
+    ## # A tibble: 6 × 14
     ##   trace_number source_file_name fn_name  fn_call_hash call_env par_name class   
     ##          <int> <chr>            <chr>    <chr>        <chr>    <chr>    <I<list>
-    ## 1            0 man/re_match.Rd  re_match UJfHAIRp     <NA>     pattern  <chr>   
-    ## 2            0 man/re_match.Rd  re_match UJfHAIRp     <NA>     text     <chr>   
-    ## 3            0 man/re_match.Rd  re_match UJfHAIRp     <NA>     perl     <chr>   
-    ## 4            0 man/re_match.Rd  re_match UJfHAIRp     <NA>     ...      <chr>   
-    ## 5            1 man/re_match.Rd  re_match Anyflkea     <NA>     pattern  <chr>   
-    ## 6            1 man/re_match.Rd  re_match Anyflkea     <NA>     text     <chr>   
-    ## 7            1 man/re_match.Rd  re_match Anyflkea     <NA>     perl     <chr>   
-    ## 8            1 man/re_match.Rd  re_match Anyflkea     <NA>     ...      <chr>   
+    ## 1            0 man/re_match.Rd  re_match incEgzJI     <NA>     pattern  <chr>   
+    ## 2            0 man/re_match.Rd  re_match incEgzJI     <NA>     text     <chr>   
+    ## 3            0 man/re_match.Rd  re_match incEgzJI     <NA>     ...      <chr>   
+    ## 4            1 man/re_match.Rd  re_match yqZHvFEG     <NA>     pattern  <chr>   
+    ## 5            1 man/re_match.Rd  re_match yqZHvFEG     <NA>     text     <chr>   
+    ## 6            1 man/re_match.Rd  re_match yqZHvFEG     <NA>     ...      <chr>   
     ## # ℹ 7 more variables: typeof <chr>, mode <chr>, storage_mode <chr>,
     ## #   length <int>, formal <named list>, uneval <I<list>>, eval <I<list>>
 
