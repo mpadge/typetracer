@@ -1,6 +1,9 @@
 0.2.2.00x (dev)
 ===================
 
+## Major changes
+
+- Code for injecting tracers into function bodies entire updated as described in https://github.com/r-lib/covr/pull/587
 
 0.2.2
 ===================
