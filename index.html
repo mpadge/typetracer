@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">typetracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2.013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2.014</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,17 +62,17 @@
 </h2>
 <p>The stable version of the package can be installed with one of the following commands:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Stable version from CRAN:</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">install.packages</span> (<span class="st">"typetrace"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">install.packages</span> (<span class="st">"typetracer"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># Current development version from r-universe:</span></span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">install.packages</span> (</span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="st">"typetracer"</span>,</span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    <span class="at">repos =</span> <span class="fu">c</span> (<span class="st">"https://mpadge.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span>)</span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>)</span></code></pre></div>
 <p>Alternatively, for those who prefer to use other source code platforms, the package can also be installed by running any one of the following lines:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_git</span> (<span class="st">"https://git.sr.ht/~mpadge/dodgr"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_git</span> (<span class="st">"https://codeberg.org/UrbanAnalyst/dodgr"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_bitbucket</span> (<span class="st">"UrbanAnalyst/dodgr"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_gitlab</span> (<span class="st">"UrbanAnalyst/dodgr"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_git</span> (<span class="st">"https://git.sr.ht/~mpadge/typetracer"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_git</span> (<span class="st">"https://codeberg.org/mpadge/typetracer"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_bitbucket</span> (<span class="st">"mpadge/typetracer"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_gitlab</span> (<span class="st">"mpadge/typetracer"</span>)</span></code></pre></div>
 <p>The package can then loaded for use by calling <code>library</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span> (typetracer)</span></code></pre></div>
 </div>
@@ -98,13 +98,13 @@
 <span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="do">## # A tibble: 7 × 12</span></span>
 <span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="do">##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode</span></span>
 <span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="do">##          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;list&gt;&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;       </span></span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="do">## 1            0 f       uDgEbied     x        &lt;chr [1]&gt; integ… nume… integer     </span></span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="do">## 2            0 f       uDgEbied     y        &lt;chr [1]&gt; double nume… double      </span></span>
-<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="do">## 3            0 f       uDgEbied     z        &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
-<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="do">## 4            0 f       uDgEbied     ...      &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
-<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="do">## 5            0 f       uDgEbied     a        &lt;chr [1]&gt; chara… char… character   </span></span>
-<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="do">## 6            0 f       uDgEbied     b        &lt;chr [1]&gt; list   list  list        </span></span>
-<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="do">## 7            0 f       uDgEbied     f        &lt;chr [1]&gt; langu… call  language    </span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="do">## 1            0 f       yZjXlrOK     x        &lt;chr [1]&gt; integ… nume… integer     </span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="do">## 2            0 f       yZjXlrOK     y        &lt;chr [1]&gt; double nume… double      </span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="do">## 3            0 f       yZjXlrOK     z        &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="do">## 4            0 f       yZjXlrOK     ...      &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="do">## 5            0 f       yZjXlrOK     a        &lt;chr [1]&gt; chara… char… character   </span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="do">## 6            0 f       yZjXlrOK     b        &lt;chr [1]&gt; list   list  list        </span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="do">## 7            0 f       yZjXlrOK     f        &lt;chr [1]&gt; langu… call  language    </span></span>
 <span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="do">## # ℹ 4 more variables: length &lt;int&gt;, formal &lt;named list&gt;, uneval &lt;I&lt;list&gt;&gt;,</span></span>
 <span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="do">## #   eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
 <p>Each row of the result returned by <code><a href="reference/load_traces.html">load_traces()</a></code> represents one parameter passed to one function call. Each function call itself represents a single “trace” as enumerated by the <code>trace_number</code> column, and also uniquely identified by an arbitrary function call hash (<code>fn_call_hash</code>). The remaining columns of the trace data define the properties of each parameter, <code>p</code>, as:</p>
@@ -150,7 +150,7 @@
 <span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="do">## $f</span></span>
 <span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="do">## a ~ b</span></span>
-<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="do">## &lt;environment: 0x560b15656ca8&gt;</span></span></code></pre></div>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="do">## &lt;environment: 0x564f9d3d9140&gt;</span></span></code></pre></div>
 <p>Unevaluated parameters are generally converted to equivalent character expressions.</p>
 <p>The <code>typeof</code>, <code>mode</code>, and <code>storage_mode</code> columns are similar, yet may hold distinct information for certain types of parameters. The conditions under which these values differ are complex, and depend among other things on the version of R itself. <code>typeof</code> alone should generally provide sufficient information, although <a href="https://stackoverflow.com/a/37469255" class="external-link">this list of differences</a> may provide further insight into whether the other columns may provide useful additional information.</p>
 <p>Traces themselves are saved in the temporary directory of the current R session, and <a href="https://mpadge.github.io/typetracer/reference/load_traces.html">the <code>load_traces()</code> function</a> simply loads all traces created in that session. <a href="https://mpadge.github.io/typetracer/reference/clear_traces.html">The function <code>clear_traces()</code></a> removes all traces, so that <a href="https://mpadge.github.io/typetracer/reference/load_traces.html"><code>load_traces()</code></a> will only load new traces produced after that time.</p>
@@ -185,15 +185,15 @@
 <span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="do">## # A tibble: 9 × 12</span></span>
 <span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="do">##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode</span></span>
 <span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="do">##          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;list&gt;&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;       </span></span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="do">## 1            0 f       LzZIbYvx     x        &lt;chr [1]&gt; integ… nume… integer     </span></span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="do">## 2            0 f       LzZIbYvx     y        &lt;chr [1]&gt; double nume… double      </span></span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="do">## 3            0 f       LzZIbYvx     z        &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="do">## 4            0 f       LzZIbYvx     ...      &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
-<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="do">## 5            0 f       LzZIbYvx     a        &lt;chr [1]&gt; chara… char… character   </span></span>
-<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="do">## 6            0 f       LzZIbYvx     b        &lt;chr [1]&gt; list   list  list        </span></span>
-<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="do">## 7            0 f       LzZIbYvx     f        &lt;chr [1]&gt; langu… call  language    </span></span>
-<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="do">## 8            0 f       LzZIbYvx     b$a      &lt;chr [1]&gt; double nume… double      </span></span>
-<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a><span class="do">## 9            0 f       LzZIbYvx     b$b      &lt;chr [1]&gt; chara… char… character   </span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="do">## 1            0 f       bYWwKQAU     x        &lt;chr [1]&gt; integ… nume… integer     </span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="do">## 2            0 f       bYWwKQAU     y        &lt;chr [1]&gt; double nume… double      </span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="do">## 3            0 f       bYWwKQAU     z        &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="do">## 4            0 f       bYWwKQAU     ...      &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="do">## 5            0 f       bYWwKQAU     a        &lt;chr [1]&gt; chara… char… character   </span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="do">## 6            0 f       bYWwKQAU     b        &lt;chr [1]&gt; list   list  list        </span></span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="do">## 7            0 f       bYWwKQAU     f        &lt;chr [1]&gt; langu… call  language    </span></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="do">## 8            0 f       bYWwKQAU     b$a      &lt;chr [1]&gt; double nume… double      </span></span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a><span class="do">## 9            0 f       bYWwKQAU     b$b      &lt;chr [1]&gt; chara… char… character   </span></span>
 <span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a><span class="do">## # ℹ 4 more variables: length &lt;int&gt;, formal &lt;named list&gt;, uneval &lt;I&lt;list&gt;&gt;,</span></span>
 <span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a><span class="do">## #   eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
 <p>And that result now has 9 rows, or 2 more than the previous example, reflecting the two items passed as a <code>list</code> to the parameter, <code>b</code>. List-parameter items are identifiable in typetracer output through the “dollar-notation” in the <code>par_name</code> field. The final two values in the above table are <code>b$a</code> and <code>b$b</code>, representing the two elements of the list passed as the parameter, <code>b</code>.</p>
@@ -206,19 +206,17 @@
 <div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">trace_package</span> (<span class="st">"rematch"</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>res</span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="do">## # A tibble: 8 × 14</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="do">## # A tibble: 6 × 14</span></span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="do">##   trace_number source_file_name fn_name  fn_call_hash call_env par_name class   </span></span>
 <span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="do">##          &lt;int&gt; &lt;chr&gt;            &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;    &lt;I&lt;list&gt;</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="do">## 1            0 man/re_match.Rd  re_match UJfHAIRp     &lt;NA&gt;     pattern  &lt;chr&gt;   </span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="do">## 2            0 man/re_match.Rd  re_match UJfHAIRp     &lt;NA&gt;     text     &lt;chr&gt;   </span></span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="do">## 3            0 man/re_match.Rd  re_match UJfHAIRp     &lt;NA&gt;     perl     &lt;chr&gt;   </span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="do">## 4            0 man/re_match.Rd  re_match UJfHAIRp     &lt;NA&gt;     ...      &lt;chr&gt;   </span></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="do">## 5            1 man/re_match.Rd  re_match Anyflkea     &lt;NA&gt;     pattern  &lt;chr&gt;   </span></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="do">## 6            1 man/re_match.Rd  re_match Anyflkea     &lt;NA&gt;     text     &lt;chr&gt;   </span></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="do">## 7            1 man/re_match.Rd  re_match Anyflkea     &lt;NA&gt;     perl     &lt;chr&gt;   </span></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="do">## 8            1 man/re_match.Rd  re_match Anyflkea     &lt;NA&gt;     ...      &lt;chr&gt;   </span></span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="do">## # ℹ 7 more variables: typeof &lt;chr&gt;, mode &lt;chr&gt;, storage_mode &lt;chr&gt;,</span></span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="do">## #   length &lt;int&gt;, formal &lt;named list&gt;, uneval &lt;I&lt;list&gt;&gt;, eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="do">## 1            0 man/re_match.Rd  re_match incEgzJI     &lt;NA&gt;     pattern  &lt;chr&gt;   </span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="do">## 2            0 man/re_match.Rd  re_match incEgzJI     &lt;NA&gt;     text     &lt;chr&gt;   </span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="do">## 3            0 man/re_match.Rd  re_match incEgzJI     &lt;NA&gt;     ...      &lt;chr&gt;   </span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="do">## 4            1 man/re_match.Rd  re_match yqZHvFEG     &lt;NA&gt;     pattern  &lt;chr&gt;   </span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="do">## 5            1 man/re_match.Rd  re_match yqZHvFEG     &lt;NA&gt;     text     &lt;chr&gt;   </span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="do">## 6            1 man/re_match.Rd  re_match yqZHvFEG     &lt;NA&gt;     ...      &lt;chr&gt;   </span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="do">## # ℹ 7 more variables: typeof &lt;chr&gt;, mode &lt;chr&gt;, storage_mode &lt;chr&gt;,</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="do">## #   length &lt;int&gt;, formal &lt;named list&gt;, uneval &lt;I&lt;list&gt;&gt;, eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
 <p>The <code>data.frame</code> returned by the <code><a href="reference/trace_package.html">trace_package()</a></code> function includes three more columns than the result directly returned by <code><a href="reference/load_traces.html">load_traces()</a></code>. These columns identify the sources and calling environments of each function call being traces. The “call_env” column identifies the calling environment which generated each trace, while “source_file_name” identifies the file.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">unique</span> (res<span class="sc">$</span>call_env)</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
