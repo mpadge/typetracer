@@ -19,7 +19,7 @@ test_that ("reassign_function_body changes function body", {
     # check no side-effects
     expect_equal (formals (f1), f1_formals)
     expect_equal (environment (f1), f1_env)
-    expect_equal (attributes (f1), f1_attrs)
+    expect_identical (attributes (f1), f1_attrs)
 })
 
 test_that ("reassign_function_body returns silently", {

@@ -40,9 +40,8 @@ inject_tracer <- function (f, trace_lists = FALSE) {
     fun_body <- body (f)
 
     new_body <- prepend_code (fun_body, code)
-    new_fn <- as.function (c (formals (f), new_body))
 
-    invisible (reassign_function_body (f, new_fn))
+    invisible (reassign_function_body (f, new_body))
 }
 
 cache_file_name <- function (f, f_name) {
@@ -63,7 +62,16 @@ cache_file_name <- function (f, f_name) {
 }
 
 reassign_function_body <- function (fun, body) {
-    invisible (.Call (reassign_function_body_, fun, body))
+    new_fn <- as.function (
+        c (as.list (formals (fun)), body),
+        envir = environment (fun)
+    )
+    attrs <- attributes (fun) [which (!names (attributes (fun)) == "srcref")]
+    if (length (attrs) > 0L) {
+        attributes (new_fn) <- attributes (fun)
+    }
+
+    invisible (.Call (reassign_function_body_, fun, new_fn))
 }
 
 
@@ -99,7 +107,6 @@ uninject_tracer <- function (f) {
     }
 
     body <- readRDS (f_name)
-    old_fn <- as.function (c (formals (f), body))
-    reassign_function_body (f, old_fn)
+    reassign_function_body (f, body)
     file.remove (f_name)
 }
