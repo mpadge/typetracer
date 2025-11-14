@@ -19,12 +19,12 @@ Source:
 [`DESCRIPTION`](https://github.com/mpadge/typetracer/blob/main/DESCRIPTION)
 
 Padgham M (2025). *typetracer: Trace Function Parameter Types*. R
-package version 0.2.2.008, <https://github.com/mpadge/typetracer>.
+package version 0.2.2.009, <https://github.com/mpadge/typetracer>.
 
     @Manual{,
       title = {typetracer: Trace Function Parameter Types},
       author = {Mark Padgham},
       year = {2025},
-      note = {R package version 0.2.2.008},
+      note = {R package version 0.2.2.009},
       url = {https://github.com/mpadge/typetracer},
     }
