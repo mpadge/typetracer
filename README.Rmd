@@ -20,7 +20,7 @@ knitr::opts_chunk$set (echo = TRUE)
 includes [a set of defined
 types](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types),
 but the language itself is ["absurdly
-dynamic"](https://dl.acm.org/doi/pdf/10.1145/3340670.3342426)[^1], and lacks
+dynamic"](https://doi.org/10.1145/3340670.3342426)[^1], and lacks
 any way to specify which types are expected by any expression. The `typetracer`
 package enables code to be traced to extract detailed information on the
 properties of parameters passed to R functions. `typetracer` can trace

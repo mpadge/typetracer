@@ -13,12 +13,11 @@ Downloads](https://cranlogs.r-pkg.org/badges/grand-total/typetracer?color=orange
 language includes [a set of defined
 types](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types),
 but the language itself is [“absurdly
-dynamic”](https://dl.acm.org/doi/pdf/10.1145/3340670.3342426)[1], and
-lacks any way to specify which types are expected by any expression. The
-`typetracer` package enables code to be traced to extract detailed
-information on the properties of parameters passed to R functions.
-`typetracer` can trace individual functions or entire packages, as
-demonstrated below.
+dynamic”](https://doi.org/10.1145/3340670.3342426)[1], and lacks any way
+to specify which types are expected by any expression. The `typetracer`
+package enables code to be traced to extract detailed information on the
+properties of parameters passed to R functions. `typetracer` can trace
+individual functions or entire packages, as demonstrated below.
 
 ## Installation
 
@@ -83,13 +82,13 @@ from each function call.
     ## # A tibble: 7 × 12
     ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
     ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
-    ## 1            0 f       yZjXlrOK     x        <chr [1]> integ… nume… integer     
-    ## 2            0 f       yZjXlrOK     y        <chr [1]> double nume… double      
-    ## 3            0 f       yZjXlrOK     z        <chr [1]> NULL   NULL  NULL        
-    ## 4            0 f       yZjXlrOK     ...      <chr [1]> NULL   NULL  NULL        
-    ## 5            0 f       yZjXlrOK     a        <chr [1]> chara… char… character   
-    ## 6            0 f       yZjXlrOK     b        <chr [1]> list   list  list        
-    ## 7            0 f       yZjXlrOK     f        <chr [1]> langu… call  language    
+    ## 1            0 f       yXYbicZQ     x        <chr [1]> integ… nume… integer     
+    ## 2            0 f       yXYbicZQ     y        <chr [1]> double nume… double      
+    ## 3            0 f       yXYbicZQ     z        <chr [1]> NULL   NULL  NULL        
+    ## 4            0 f       yXYbicZQ     ...      <chr [1]> NULL   NULL  NULL        
+    ## 5            0 f       yXYbicZQ     a        <chr [1]> chara… char… character   
+    ## 6            0 f       yXYbicZQ     b        <chr [1]> list   list  list        
+    ## 7            0 f       yXYbicZQ     f        <chr [1]> langu… call  language    
     ## # ℹ 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
     ## #   eval <I<list>>
 
@@ -142,7 +141,7 @@ unevaluated and evaluated forms of parameters:
     ## 
     ## $f
     ## a ~ b
-    ## <environment: 0x564f9d3d9140>
+    ## <environment: 0x558a6fb5dda8>
 
 Unevaluated parameters are generally converted to equivalent character
 expressions.
@@ -214,15 +213,15 @@ list structures:
     ## # A tibble: 9 × 12
     ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
     ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
-    ## 1            0 f       bYWwKQAU     x        <chr [1]> integ… nume… integer     
-    ## 2            0 f       bYWwKQAU     y        <chr [1]> double nume… double      
-    ## 3            0 f       bYWwKQAU     z        <chr [1]> NULL   NULL  NULL        
-    ## 4            0 f       bYWwKQAU     ...      <chr [1]> NULL   NULL  NULL        
-    ## 5            0 f       bYWwKQAU     a        <chr [1]> chara… char… character   
-    ## 6            0 f       bYWwKQAU     b        <chr [1]> list   list  list        
-    ## 7            0 f       bYWwKQAU     f        <chr [1]> langu… call  language    
-    ## 8            0 f       bYWwKQAU     b$a      <chr [1]> double nume… double      
-    ## 9            0 f       bYWwKQAU     b$b      <chr [1]> chara… char… character   
+    ## 1            0 f       DPfsArXY     x        <chr [1]> integ… nume… integer     
+    ## 2            0 f       DPfsArXY     y        <chr [1]> double nume… double      
+    ## 3            0 f       DPfsArXY     z        <chr [1]> NULL   NULL  NULL        
+    ## 4            0 f       DPfsArXY     ...      <chr [1]> NULL   NULL  NULL        
+    ## 5            0 f       DPfsArXY     a        <chr [1]> chara… char… character   
+    ## 6            0 f       DPfsArXY     b        <chr [1]> list   list  list        
+    ## 7            0 f       DPfsArXY     f        <chr [1]> langu… call  language    
+    ## 8            0 f       DPfsArXY     b$a      <chr [1]> double nume… double      
+    ## 9            0 f       DPfsArXY     b$b      <chr [1]> chara… char… character   
     ## # ℹ 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
     ## #   eval <I<list>>
 
@@ -255,12 +254,12 @@ structures.)
     ## # A tibble: 6 × 14
     ##   trace_number source_file_name fn_name  fn_call_hash call_env par_name class   
     ##          <int> <chr>            <chr>    <chr>        <chr>    <chr>    <I<list>
-    ## 1            0 man/re_match.Rd  re_match incEgzJI     <NA>     pattern  <chr>   
-    ## 2            0 man/re_match.Rd  re_match incEgzJI     <NA>     text     <chr>   
-    ## 3            0 man/re_match.Rd  re_match incEgzJI     <NA>     ...      <chr>   
-    ## 4            1 man/re_match.Rd  re_match yqZHvFEG     <NA>     pattern  <chr>   
-    ## 5            1 man/re_match.Rd  re_match yqZHvFEG     <NA>     text     <chr>   
-    ## 6            1 man/re_match.Rd  re_match yqZHvFEG     <NA>     ...      <chr>   
+    ## 1            0 man/re_match.Rd  re_match wNDFeOta     <NA>     pattern  <chr>   
+    ## 2            0 man/re_match.Rd  re_match wNDFeOta     <NA>     text     <chr>   
+    ## 3            0 man/re_match.Rd  re_match wNDFeOta     <NA>     ...      <chr>   
+    ## 4            1 man/re_match.Rd  re_match oEujlJYt     <NA>     pattern  <chr>   
+    ## 5            1 man/re_match.Rd  re_match oEujlJYt     <NA>     text     <chr>   
+    ## 6            1 man/re_match.Rd  re_match oEujlJYt     <NA>     ...      <chr>   
     ## # ℹ 7 more variables: typeof <chr>, mode <chr>, storage_mode <chr>,
     ## #   length <int>, formal <named list>, uneval <I<list>>, eval <I<list>>
 
