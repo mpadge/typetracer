@@ -1,4 +1,6 @@
-# CRAN notes for typetracer_0.2.2 submission
+# CRAN notes for typetracer_0.2.3 submission
+
+This submission rectifies previous warning about non-API call to the C function 'SET_BODY'. The call to that entry point has been removed, and replaced with equivalent calls to official R API entry points.
 
 The package has been checked on all environments listed below, and generates no notes
 
