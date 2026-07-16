@@ -26,15 +26,29 @@ typetracer_header <- function () {
         pattern = "^typetrace\\_"
     ))
 
-    # Extract values. `match.call` returns the *expressions* submitted to the
-    # call, while the evaluated versions of formalArgs are stored in the
-    # environment. `get` is used for the latter to avoid re-`eval`-ing, but
-    # `...` args are not eval'd on function entry.
+    # Extract values. These 3 lines extract from `match.call`, which returns
+    # the *expressions* submitted to the call. `match.call()` also assigns
+    # formal names to all positional arguments, so can't discern unnamed,
+    # position-only parameters.
+    #
+    # The evaluated versions of formalArgs are stored in the environment, in
+    # which `get` is used to avoid re-`eval`-ing, but `...` args are not eval'd
+    # on function entry.
     typetracer_env$fn_call <- match.call (expand.dots = TRUE)
     typetracer_env$fn_name <- typetracer_env$fn_call [[1]]
     typetracer_env$pars <- as.list (typetracer_env$fn_call [-1L])
 
     fn_env <- environment ()
+
+    # `sys.call()` has to be used to determine whether each parameter was
+    # passed in named ('a = 1') or positional ('1') form. This code is spliced
+    # directly into the traced function's own body, so it already executes in
+    # that function's own frame, and `sys.call()` with no argument defaults to
+    # returning the call of that (current) frame. `match.call()` above needs
+    # its own internal 'sys.parent()' to get the same call, because
+    # `match.call()` is itself a function call, so it executes one frame
+    # below this code, and must step back up to reach it.
+    typetracer_env$fn_call_raw <- sys.call ()
 
     typetracer_env$fn <- match.fun (typetracer_env$fn_name)
     typetracer_env$par_names <- methods::formalArgs (typetracer_env$fn)
@@ -167,9 +181,26 @@ trace_one_param <- function (typetracer_env, p, fn_env) {
         storage_mode = storage.mode (res),
         mode = mode (res),
         length = length (res),
+        named = is_named_param (typetracer_env, p),
         par_uneval = s,
         par_eval = res
     )
+}
+
+#' Was parameter 'p' passed in named ('p = value') or positional/value form?
+#'
+#' Uses the raw, unmatched call ('fn_call_raw'), because 'match.call' assigns
+#' formal parameter names to positional arguments as well, so it cannot be
+#' used to distinguish the two forms.
+#' @noRd
+is_named_param <- function (typetracer_env, p) {
+
+    raw_names <- names (typetracer_env$fn_call_raw)
+    if (is.null (raw_names)) {
+        return (FALSE)
+    }
+
+    p %in% raw_names [nzchar (raw_names)]
 }
 
 #' Recurse into one list-type parameter to extract internal structure.

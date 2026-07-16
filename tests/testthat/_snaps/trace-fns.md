@@ -17,6 +17,7 @@
           typetracer_env$fn_name <- typetracer_env$fn_call[[1]]
           typetracer_env$pars <- as.list(typetracer_env$fn_call[-1L])
           fn_env <- environment()
+          typetracer_env$fn_call_raw <- sys.call()
           typetracer_env$fn <- match.fun(typetracer_env$fn_name)
           typetracer_env$par_names <- methods::formalArgs(typetracer_env$fn)
           typetracer_env$par_formals <- formals(typetracer_env$fn)
