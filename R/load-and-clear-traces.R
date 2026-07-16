@@ -55,6 +55,7 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
 
         # simple vector columns:
         par_name <- vapply (tr_i, function (i) i$par, character (1L))
+        is_named <- vapply (tr_i, function (i) i$named, logical (1L))
         types <- vapply (tr_i, function (i) i$type, character (1L))
         modes <- vapply (tr_i, function (i) i$mode, character (1L))
         storage_mode <- vapply (
@@ -82,6 +83,7 @@ load_traces <- function (files = FALSE, quiet = FALSE) {
             fn_call_hash = fn_call_hash,
             call_env = call_envs$call_env,
             par_name = par_name,
+            is_named = is_named,
             class = classes,
             typeof = types,
             mode = modes,

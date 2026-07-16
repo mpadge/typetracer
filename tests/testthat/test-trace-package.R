@@ -29,7 +29,7 @@ test_that ("trace installed package", {
         c (
             "trace_number", "source_file_name",
             "fn_name", "fn_call_hash", "call_env",
-            "par_name", "class", "typeof",
+            "par_name", "is_named", "class", "typeof",
             "mode", "storage_mode", "length",
             "formal", "uneval", "eval"
         )
@@ -48,7 +48,7 @@ test_that ("trace installed package", {
         c (
             "trace_number", "source_file_name",
             "fn_name", "fn_call_hash", "call_env",
-            "par_name", "class", "typeof",
+            "par_name", "is_named", "class", "typeof",
             "mode", "storage_mode", "length",
             "formal", "uneval", "eval"
         )
@@ -94,7 +94,7 @@ test_that ("trace source package", {
         c (
             "trace_number", "source_file_name",
             "fn_name", "fn_call_hash", "call_env",
-            "par_name", "class", "typeof",
+            "par_name", "is_named", "class", "typeof",
             "mode", "storage_mode", "length",
             "formal", "uneval", "eval"
         )
