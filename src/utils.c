@@ -128,6 +128,10 @@ SEXP reassign_function_body(SEXP old_fun, SEXP new_fun) {
     MARK_NOT_MUTABLE(new->u.closxp.env);
     MARK_NOT_MUTABLE(new->u.closxp.formals);
 
+    R_PreserveObject((SEXP) new->u.closxp.formals);
+    R_PreserveObject((SEXP) new->u.closxp.body);
+    R_PreserveObject((SEXP) new->u.closxp.env);
+
     old->u.closxp = new->u.closxp;
 
     // Duplicate attributes is still not "non-API", thankfully.
