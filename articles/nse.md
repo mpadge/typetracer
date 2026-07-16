@@ -5,6 +5,7 @@ evaluated in non-standard ways. This first examples demonstrates that
 parameter values are captured at the initial point of function entry.
 
 ``` r
+
 eval_x_late_NSE <- function (x, y) {
     y <- 10 * y
     eval (substitute (x))
@@ -40,6 +41,7 @@ actual call passing no value, and thus having `"NULL"` in the
 unevaluated version, while evaluated versions remain identical.
 
 ``` r
+
 clear_traces () # clear all preceding traces
 eval_x_late_standard <- function (x = y + 1, y, z = y ~ x) {
     y <- 10 * y
@@ -69,7 +71,7 @@ res$eval
 #> 
 #> $z
 #> y ~ x
-#> <environment: 0x5615fb371610>
+#> <environment: 0x562f8f431008>
 ```
 
 The traces produced by `typetracer` also include a column, `formal`,
@@ -77,6 +79,7 @@ which contains the default values specified in the definition of
 `eval_x_late_standard()`:
 
 ``` r
+
 res$formal
 #> $x
 #> y + 1

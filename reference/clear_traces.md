@@ -25,16 +25,16 @@ inject_tracer (f)
 val <- f (1:2, 3:4 + 0., a = "blah")
 x <- load_traces ()
 print (x)
-#> # A tibble: 5 × 12
-#>   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
-#>          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
-#> 1            0 f       lKLUWEdX     x        <chr [1]> integ… nume… integer     
-#> 2            0 f       lKLUWEdX     y        <chr [1]> double nume… double      
-#> 3            0 f       lKLUWEdX     z        <chr [1]> NULL   NULL  NULL        
-#> 4            0 f       lKLUWEdX     ...      <chr [1]> NULL   NULL  NULL        
-#> 5            0 f       lKLUWEdX     a        <chr [1]> chara… char… character   
-#> # ℹ 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
-#> #   eval <I<list>>
+#> # A tibble: 5 × 13
+#>   trace_number fn_name fn_call_hash par_name is_named class     typeof    mode  
+#>          <int> <chr>   <chr>        <chr>    <lgl>    <I<list>> <chr>     <chr> 
+#> 1            0 f       SwlKLUEd     x        FALSE    <chr [1]> integer   numer…
+#> 2            0 f       SwlKLUEd     y        FALSE    <chr [1]> double    numer…
+#> 3            0 f       SwlKLUEd     z        FALSE    <chr [1]> NULL      NULL  
+#> 4            0 f       SwlKLUEd     ...      FALSE    <chr [1]> NULL      NULL  
+#> 5            0 f       SwlKLUEd     a        TRUE     <chr [1]> character chara…
+#> # ℹ 5 more variables: storage_mode <chr>, length <int>, formal <named list>,
+#> #   uneval <I<list>>, eval <I<list>>
 
 # Then call 'clear_traces' to remove them:
 clear_traces ()

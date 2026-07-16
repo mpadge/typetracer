@@ -1,9 +1,9 @@
-pandoc: 3.1.11
-pkgdown: 2.2.0
+pandoc: 3.8.3
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   nse: nse.html
-last_built: 2025-12-03T14:05Z
+last_built: 2026-07-16T10:01Z
 urls:
   reference: https://mpadge.github.io/typetracer/reference
   article: https://mpadge.github.io/typetracer/articles
