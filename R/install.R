@@ -1,3 +1,28 @@
+#' Session-level cache of already pre-installed packages.
+#'
+#' `pre_install()` used to reinstall + reload the target package from
+#' scratch on every call, even when called repeatedly for the same package
+#' within a single session (e.g. 'autotest' calling `trace_package()` more
+#' than once against the same package). Each such cycle re-runs
+#' `install.packages()` and unloads/reloads the package namespace, which is
+#' expensive on its own and, worse, compounds across repeated calls: R does
+#' not always release lazy-load database connections and namespace/method
+#' registry state cleanly on `unloadNamespace()`, so repeated cycles lead to
+#' growing memory use and increasingly slow `lazyLoadDBfetch` calls. Caching
+#' the resulting `lib_path` per package lets subsequent calls skip the
+#' reinstall and reuse the same temporary library, only re-attaching the
+#' namespace if it isn't currently attached.
+#'
+#' This is deliberately restricted to installed packages traced by name
+#' (`path` left `NULL`, i.e. resolved via `find.package()`), not to local
+#' source directories: local packages are typically only traced once or
+#' twice per session anyway, and reusing a cached reload for a package whose
+#' local source may have just changed underfoot risks stale/corrupt reads
+#' (e.g. of its help/Rd database) rather than the reinstall churn this cache
+#' exists to avoid.
+#' @noRd
+typetracer_pkg_cache <- new.env (parent = emptyenv ())
+
 #' Pre-install package in temporary `libPath`
 #'
 #' @param path Local path to package source.
@@ -11,6 +36,8 @@ pre_install <- function (package, path = NULL, quiet = FALSE) {
 
     libs <- .libPaths ()
 
+    is_installed_pkg <- is.null (path)
+
     if (is.null (path)) {
         # installed packages without local source. If packages are not
         # installed, `find.package()` errors with,
@@ -19,6 +46,27 @@ pre_install <- function (package, path = NULL, quiet = FALSE) {
     }
 
     p <- paste0 ("package:", package)
+
+    if (is_installed_pkg) {
+        cache_key <- paste0 (package, "::", path)
+        cached_lib_path <- mget (
+            cache_key,
+            envir = typetracer_pkg_cache,
+            ifnotfound = list (NULL)
+        ) [[1]]
+        if (!is.null (cached_lib_path) &&
+            dir.exists (file.path (cached_lib_path, package))) {
+
+            if (!p %in% search ()) {
+                tryCatch (unloadNamespace (package), error = function (e) NULL)
+                loadNamespace (package, lib.loc = cached_lib_path, keep.source = TRUE)
+                attachNamespace (package)
+            }
+
+            return (cached_lib_path)
+        }
+    }
+
     pkg_attached <- p %in% search ()
     if (pkg_attached) {
         tryCatch (
@@ -75,6 +123,10 @@ pre_install <- function (package, path = NULL, quiet = FALSE) {
 
     loadNamespace (package, lib.loc = lib_path, keep.source = TRUE)
     attachNamespace (package)
+
+    if (is_installed_pkg) {
+        assign (cache_key, lib_path, envir = typetracer_pkg_cache)
+    }
 
     return (lib_path)
 }

@@ -1,6 +1,9 @@
 0.2.3.00x (dev)
 ===================
 
+## Minor changes
+
+- Fix bug in `pre_install()` to avoid compounding namespace database entries
 
 
 0.2.3
