@@ -132,7 +132,11 @@ inject_pkg_trace_fns <- function (functions, package, trace_lists = FALSE) {
         trace_fns <- ls (p, all.names = TRUE)
     }
 
-    pkg_env <- as.environment (p)
+    # Function names may include unexported functions (e.g. S3 methods
+    # registered via 'NAMESPACE's `S3method()` but not `export()`ed), which
+    # are not bound in the attached 'package:<x>' environment; the internal
+    # namespace environment contains both exported and unexported functions.
+    pkg_env <- asNamespace (package)
     for (fnm in trace_fns) {
         f <- get (fnm, envir = pkg_env)
         if (is.function (f)) {
@@ -145,10 +149,18 @@ inject_pkg_trace_fns <- function (functions, package, trace_lists = FALSE) {
 
 uninject_pkg_trace_fns <- function (trace_fns, package) {
 
-    p <- paste0 ("package:", package)
-    pkg_env <- as.environment (p)
+    # As in 'inject_pkg_trace_fns()': the internal namespace environment
+    # contains both exported and unexported functions.
+    pkg_env <- asNamespace (package)
 
     for (f in trace_fns) {
+        # 'inject_tracer()'/'uninject_tracer()' cache each function's
+        # original body under a file name derived from
+        # 'deparse(substitute(f))' at their own call site, so the local
+        # variable name passed to 'uninject_tracer()' here must match the one
+        # used at the 'inject_tracer()' call site in
+        # 'inject_pkg_trace_fns()' (both named 'f') for the two to agree on
+        # the same cache file.
         f <- get (f, envir = pkg_env)
         if (is.function (f)) {
             uninject_tracer (f)
