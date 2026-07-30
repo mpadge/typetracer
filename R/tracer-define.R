@@ -11,16 +11,23 @@ typetracer_header <- function () {
     typetracer_env <- new.env (parent = emptyenv ())
 
     # temp file to dump trace:
-    typetracer_env$td <- options ("typetracedir")
+    typetracer_env$trace_dir <- options ("typetracedir")$typetracedir
+    if (is.null (typetracer_env$trace_dir)) {
+        # 'typetracedir' is set in .onLoad(), so is unset in contexts where
+        # the 'typetracer' package itself was never loaded in the current
+        # process (e.g. a traced closure executed in a fresh subprocess via
+        # 'callr::r_bg()'). Fall back to the same default 'tempdir()' used by
+        # 'get_typetrace_dir()' elsewhere in this package.
+        typetracer_env$trace_dir <- tempdir ()
+    }
     typetracer_env$nm <- paste0 (sample (c (letters, LETTERS), 8),
         collapse = ""
     )
     typetracer_env$fname <- file.path (
-        typetracer_env$td,
+        typetracer_env$trace_dir,
         paste0 ("typetrace_", typetracer_env$nm, ".Rds")
     )
 
-    typetracer_env$trace_dir <- options ("typetracedir")$typetracedir
     typetracer_env$num_traces <- length (list.files (
         typetracer_env$trace_dir,
         pattern = "^typetrace\\_"
@@ -36,6 +43,28 @@ typetracer_header <- function () {
     # on function entry.
     typetracer_env$fn_call <- match.call (expand.dots = TRUE)
     typetracer_env$fn_name <- typetracer_env$fn_call [[1]]
+    # Namespace-qualified calls ('pkg::fn(...)' or 'pkg:::fn(...)') have
+    # 'fn_call[[1]]' as a call to the '::'/':::' operator rather than a bare
+    # symbol; 'match.fun()' below requires the bare function-name symbol, so
+    # extract it from the qualified call in that case.
+    if (is.call (typetracer_env$fn_name)) {
+        ns_op <- typetracer_env$fn_name [[1]]
+        if (identical (ns_op, quote (`::`)) || identical (ns_op, quote (`:::`))) {
+            typetracer_env$fn_name <- typetracer_env$fn_name [[3]]
+        }
+    }
+    # Some invocation mechanisms (e.g. 'callr::r_bg()') call the traced
+    # function by passing the function *value* directly rather than a name,
+    # in which case 'fn_call[[1]]' (and so 'fn_name') is the closure itself.
+    # There is no reliable way to recover the name it was called by in that
+    # case, so fall back to a fixed placeholder for anywhere a character
+    # name is required below; 'match.fun()' already accepts a function
+    # object directly, so 'fn_name' itself is left as-is for that.
+    typetracer_env$fn_name_chr <- if (is.function (typetracer_env$fn_name)) {
+        "<unknown>"
+    } else {
+        as.character (typetracer_env$fn_name)
+    }
     typetracer_env$pars <- as.list (typetracer_env$fn_call [-1L])
 
     fn_env <- environment ()
@@ -89,9 +118,9 @@ typetracer_header <- function () {
     # typetracer_env$data$trace_dat <- trace_dat
 
     typetracer_env$data$call_envs <-
-        typetracer_env$process_back_trace (trace_dat, typetracer_env$fn_name)
+        typetracer_env$process_back_trace (trace_dat, typetracer_env$fn_name_chr)
 
-    typetracer_env$data$fn_name <- as.character (typetracer_env$fn_name)
+    typetracer_env$data$fn_name <- typetracer_env$fn_name_chr
     typetracer_env$data$par_formals <- typetracer_env$par_formals
     typetracer_env$data$num_traces <- typetracer_env$num_traces
 
