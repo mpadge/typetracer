@@ -71,7 +71,7 @@ res$eval
 #> 
 #> $z
 #> y ~ x
-#> <environment: 0x55cd60b60490>
+#> <environment: 0x55938538c3e0>
 ```
 
 The traces produced by `typetracer` also include a column, `formal`,
