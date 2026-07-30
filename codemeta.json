@@ -11,13 +11,13 @@
   "codeRepository": "https://github.com/mpadge/typetracer",
   "issueTracker": "https://github.com/mpadge/typetracer/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.2.3.011",
+  "version": "0.2.4.002",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.3.0 (2023-04-21)",
+  "runtimePlatform": "R version 4.6.1 (2026-06-24)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -174,10 +174,12 @@
     },
     "SystemRequirements": {}
   },
-  "fileSize": "106.259KB",
-  "releaseNotes": "https://github.com/mpadge/typetracer/blob/master/NEWS.md",
+  "fileSize": "130.613KB",
+  "releaseNotes": "https://github.com/mpadge/typetracer/blob/main/NEWS.md",
+  "readme": "https://github.com/mpadge/typetracer/blob/main/README.md",
   "contIntegration": [
     "https://github.com/mpadge/typetracer/actions",
     "https://app.codecov.io/gh/mpadge/typetracer"
-  ]
+  ],
+  "keywords": "r"
 }
