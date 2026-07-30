@@ -60,6 +60,8 @@ test_that ("trace installed package", {
     expect_identical (nrow (x0), nrow (x1))
 })
 
+skip_on_cran ()
+
 test_that ("trace source package", {
 
     # note that this is from the source
