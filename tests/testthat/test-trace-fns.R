@@ -174,6 +174,59 @@ test_that ("trace call via do.call with a function value", {
     expect_true (all (x$fn_name == "<unknown>"))
 })
 
+test_that ("inject_pkg_trace_fns resolves unexported functions", {
+
+    # Packages passed to 'inject_pkg_trace_fns()'/'uninject_pkg_trace_fns()'
+    # may include unexported functions (e.g. S3 methods registered via
+    # 'NAMESPACE's `S3method()` but not `export()`ed). These are always
+    # resolvable via the package's internal namespace even when (as under a
+    # real installed-package load, unlike 'devtools::load_all()'s default
+    # 'export_all = TRUE') they are not bound in the attached 'package:<x>'
+    # environment. 're_match_all1()' is a real, already-existing unexported
+    # function in 'rematch' (already used elsewhere in this suite as a toy
+    # target package), used here rather than one of typetracer's own internal
+    # functions to avoid any risk of self-referential tracing (several of
+    # typetracer's own internals, e.g. 'get_param_str()', are themselves
+    # called from within the injected header code while tracing is active).
+    skip_if_not_installed ("rematch")
+
+    ns <- asNamespace ("typetracer")
+    rematch_ns <- asNamespace ("rematch")
+    fn_name <- "re_match_all1"
+
+    body0 <- body (get (fn_name, envir = rematch_ns))
+
+    clear_traces ()
+    trace_fns <- ns$inject_pkg_trace_fns (
+        functions = fn_name,
+        package = "rematch"
+    )
+    expect_equal (trace_fns, fn_name)
+
+    fn <- get (fn_name, envir = rematch_ns)
+    body1 <- body (fn)
+    expect_false (identical (body0, body1))
+
+    m <- regexpr ("(a+)(b+)", "aaabb", perl = TRUE)
+    # Called via the local 'fn' variable, not ':::' - real unexported
+    # functions like this are normally reached via S3 dispatch (e.g.
+    # 'UseMethod()'), where the recorded call reflects the generic's own
+    # (exported, findable) name, not a ':::'-qualified direct call. As in
+    # the "trace call via namespace-qualified reference" test above, a bare
+    # call like this records the call-site variable's own name, "fn".
+    val <- fn (m, "aaabb")
+    expect_equal (unname (val [1, ]), c ("aaabb", "aaa", "bb"))
+
+    x <- load_traces (files = TRUE)
+    expect_s3_class (x, "tbl_df")
+    expect_true (nrow (x) > 0L)
+    expect_true (all (x$fn_name == "fn"))
+
+    ns$uninject_pkg_trace_fns (trace_fns, "rematch")
+    body2 <- body (get (fn_name, envir = rematch_ns))
+    expect_identical (body0, body2)
+})
+
 test_that ("untrace call", {
 
     f <- function (x, y) {
