@@ -328,8 +328,25 @@ process_back_trace <- function (trace_dat, fn_name) {
     }
 
     call_envs <- lapply (trace_dat$call, function (i) {
+        # As in the header code above: a call's head may itself be a
+        # '::'/':::'-qualified reference (a call, not a bare symbol) rather
+        # than a plain function name, or (rarely) a function value directly;
+        # normalize both to a usable name before 'as.name()', which accepts
+        # neither.
+        head_i <- as.list (i) [[1]]
+        if (is.call (head_i)) {
+            ns_op <- head_i [[1]]
+            if (identical (ns_op, quote (`::`)) || identical (ns_op, quote (`:::`))) {
+                head_i <- head_i [[3]]
+            }
+        }
+        name_i <- if (is.function (head_i)) {
+            "<unknown>"
+        } else {
+            as.character (as.name (head_i))
+        }
         call_i <- data.frame (
-            name = as.character (as.name (as.list (i) [[1]])),
+            name = name_i,
             file = NA_character_,
             linestart = NA_integer_,
             lineend = NA_integer_
