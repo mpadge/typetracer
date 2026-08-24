@@ -1,6 +1,15 @@
 0.2.4.00x (dev)
 ===================
 
+## Bug fixes
+
+- Fix `insert_counters_in_tests()` crashing (`'from' must be a finite number`) on
+  ordinary `test_that()` descriptions containing regex metacharacters (e.g.
+  `"foo() does x"`), apostrophes (e.g. `"doesn't"`), or a literal brace (e.g.
+  `"aborts when {pkgname} isn't installed"`), by locating the test body via
+  real parse-token positions instead of a text `grep()` of the description
+  (#29)
+
 0.2.4
 ===================
 

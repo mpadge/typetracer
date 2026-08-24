@@ -165,10 +165,19 @@ insert_counters_in_tests <- function (pkg_dir) {
                 str_const_i [which (str_const_i > testthat_start) [1]]
             test_name <- gsub ("\\\"|\\\'", "", pd_i$text [str_const_i])
 
+            # Locate the line of the `{` opening the test body via its real
+            # parse-token position, rather than via `grep()` on the
+            # deparsed *text* of the description and of "\\{": the
+            # description is arbitrary prose and commonly contains regex
+            # metacharacters (e.g. "foo() does x") and/or literal braces
+            # (e.g. "aborts when {pkgname} isn't installed"), either of
+            # which makes a text-based grep() match the wrong thing (or
+            # nothing at all, crashing `seq()` downstream).
+            brace_i <- which (pd_i$token == "'{'")
+            brace_i <- brace_i [which (brace_i > str_const_i) [1]]
+            index <- pd_i$line1 [brace_i]
+
             pd_i <- deparse (p [[i]])
-            index1 <- grep (test_name, pd_i)
-            index2 <- grep ("\\{", pd_i)
-            index <- index2 [which (index2 >= index1 [1])] [1]
             test_name <- gsub ("\\s+", "_", test_name)
             pd_i <- c (
                 pd_i [seq (index)],
