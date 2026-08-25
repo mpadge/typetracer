@@ -1,6 +1,10 @@
 0.2.4.00x (dev)
 ===================
 
+## Bug fixes
+
+- Fix `insert_counters_in_tests()` crashing on ordinary `test_that()` descriptions (#29)
+
 0.2.4
 ===================
 

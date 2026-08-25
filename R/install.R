@@ -165,10 +165,16 @@ insert_counters_in_tests <- function (pkg_dir) {
                 str_const_i [which (str_const_i > testthat_start) [1]]
             test_name <- gsub ("\\\"|\\\'", "", pd_i$text [str_const_i])
 
+            # Locate the `{` via its parse-token position rather than
+            # grep()-ing description text, which breaks on parens/braces/quotes.
+            brace_i <- which (pd_i$token == "'{'")
+            brace_i <- brace_i [which (brace_i > str_const_i) [1]]
+            if (is.na (brace_i)) {
+                return (deparse (p [[i]]))
+            }
+            index <- pd_i$line1 [brace_i]
+
             pd_i <- deparse (p [[i]])
-            index1 <- grep (test_name, pd_i)
-            index2 <- grep ("\\{", pd_i)
-            index <- index2 [which (index2 >= index1 [1])] [1]
             test_name <- gsub ("\\s+", "_", test_name)
             pd_i <- c (
                 pd_i [seq (index)],
