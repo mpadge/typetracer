@@ -9,6 +9,9 @@
   Author of original 'injectr' code on which this package builds;
   https://github.com/PRL-PRG/injectr
 
+- **Antoine Soetewey**. Contributor.
+  [](https://orcid.org/0000-0001-8159-0804)
+
 - **covr authors**. Copyright holder.  
   Original authors of sections of code from 'covr' package included here
   in modified form.
