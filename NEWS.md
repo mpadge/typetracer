@@ -1,7 +1,11 @@
 0.2.4.00x (dev)
 ===================
 
-## Bug fixes
+## Major changes
+
+- Added Antoine Soetewey (@AntoineSoetewey) as new contributor for #29.
+
+## Minor changes
 
 - Fix `insert_counters_in_tests()` crashing on ordinary `test_that()` descriptions (#29)
 
