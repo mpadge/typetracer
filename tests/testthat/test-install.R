@@ -2,6 +2,9 @@ test_that ("insert_counters_in_tests handles ordinary test descriptions", {
 
     # Reproduces https://github.com/mpadge/typetracer/issues/29.
 
+    # Windows temp paths routinely contain "\U" (as in "\Users\"), which breaks parsing once spliced unescaped into the generated "ftmp" line.
+    skip_on_os ("windows")
+
     pkg_dir <- file.path (tempdir (), "faketypetracerpkg")
     test_path <- file.path (pkg_dir, "tests", "testthat")
     dir.create (test_path, recursive = TRUE, showWarnings = FALSE)
