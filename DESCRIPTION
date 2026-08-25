@@ -6,6 +6,8 @@ Authors@R: c(
            comment = c(ORCID = "0000-0003-2172-5265")),
     person("Filip", "Krikava", role = "ctb",
            comment = "Author of original 'injectr' code on which this package builds; https://github.com/PRL-PRG/injectr"),
+    person("Antoine", "Soetewey", , "antoine.soetewey@uclouvain.be", role = "ctb",
+           comment = c(ORCID = "0000-0001-8159-0804")),
     person("covr authors", role = "cph",
             comment = "Original authors of sections of code from 'covr' package included here in modified form.")
   )
