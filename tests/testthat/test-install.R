@@ -37,6 +37,6 @@ test_that ("insert_counters_in_tests handles ordinary test descriptions", {
     expect_error (parse (test_file), NA)
 
     injected <- readLines (test_file)
-    expect_identical (length (grep ("^traces <- list.files", injected)), 3L)
+    expect_identical (length (grep ("^traces <- list\\.files \\\(", injected)), 3L)
     expect_identical (length (grep ("expect_true", injected)), 3L)
 })
