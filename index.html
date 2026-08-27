@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">typetracer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4.003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4.004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,18 +95,18 @@
 <span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">load_traces</span> ()</span>
 <span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>x</span>
 <span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="do">## # A tibble: 7 × 12</span></span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="do">##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode</span></span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="do">##          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;list&gt;&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;       </span></span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="do">## 1            0 f       yXYbicZQ     x        &lt;chr [1]&gt; integ… nume… integer     </span></span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="do">## 2            0 f       yXYbicZQ     y        &lt;chr [1]&gt; double nume… double      </span></span>
-<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="do">## 3            0 f       yXYbicZQ     z        &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
-<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="do">## 4            0 f       yXYbicZQ     ...      &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
-<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="do">## 5            0 f       yXYbicZQ     a        &lt;chr [1]&gt; chara… char… character   </span></span>
-<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="do">## 6            0 f       yXYbicZQ     b        &lt;chr [1]&gt; list   list  list        </span></span>
-<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="do">## 7            0 f       yXYbicZQ     f        &lt;chr [1]&gt; langu… call  language    </span></span>
-<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="do">## # ℹ 4 more variables: length &lt;int&gt;, formal &lt;named list&gt;, uneval &lt;I&lt;list&gt;&gt;,</span></span>
-<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="do">## #   eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="do">## # A tibble: 7 × 13</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="do">##   trace_number fn_name fn_call_hash par_name is_named class     typeof    mode  </span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="do">##          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;lgl&gt;    &lt;I&lt;list&gt;&gt; &lt;chr&gt;     &lt;chr&gt; </span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="do">## 1            0 f       WbYKyAXL     x        TRUE     &lt;chr [1]&gt; integer   numer…</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="do">## 2            0 f       WbYKyAXL     y        TRUE     &lt;chr [1]&gt; double    numer…</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="do">## 3            0 f       WbYKyAXL     z        FALSE    &lt;chr [1]&gt; NULL      NULL  </span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="do">## 4            0 f       WbYKyAXL     ...      FALSE    &lt;chr [1]&gt; NULL      NULL  </span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="do">## 5            0 f       WbYKyAXL     a        TRUE     &lt;chr [1]&gt; character chara…</span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="do">## 6            0 f       WbYKyAXL     b        TRUE     &lt;chr [1]&gt; list      list  </span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="do">## 7            0 f       WbYKyAXL     f        TRUE     &lt;chr [1]&gt; language  call  </span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="do">## # ℹ 5 more variables: storage_mode &lt;chr&gt;, length &lt;int&gt;, formal &lt;named list&gt;,</span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="do">## #   uneval &lt;I&lt;list&gt;&gt;, eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
 <p>Each row of the result returned by <code><a href="reference/load_traces.html">load_traces()</a></code> represents one parameter passed to one function call. Each function call itself represents a single “trace” as enumerated by the <code>trace_number</code> column, and also uniquely identified by an arbitrary function call hash (<code>fn_call_hash</code>). The remaining columns of the trace data define the properties of each parameter, <code>p</code>, as:</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -150,7 +150,7 @@
 <span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="do">## $f</span></span>
 <span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="do">## a ~ b</span></span>
-<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="do">## &lt;environment: 0x558a6fb5dda8&gt;</span></span></code></pre></div>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="do">## &lt;environment: 0x561c3d66a570&gt;</span></span></code></pre></div>
 <p>Unevaluated parameters are generally converted to equivalent character expressions.</p>
 <p>The <code>typeof</code>, <code>mode</code>, and <code>storage_mode</code> columns are similar, yet may hold distinct information for certain types of parameters. The conditions under which these values differ are complex, and depend among other things on the version of R itself. <code>typeof</code> alone should generally provide sufficient information, although <a href="https://stackoverflow.com/a/37469255" class="external-link">this list of differences</a> may provide further insight into whether the other columns may provide useful additional information.</p>
 <p>Traces themselves are saved in the temporary directory of the current R session, and <a href="https://mpadge.github.io/typetracer/reference/load_traces.html">the <code>load_traces()</code> function</a> simply loads all traces created in that session. <a href="https://mpadge.github.io/typetracer/reference/clear_traces.html">The function <code>clear_traces()</code></a> removes all traces, so that <a href="https://mpadge.github.io/typetracer/reference/load_traces.html"><code>load_traces()</code></a> will only load new traces produced after that time.</p>
@@ -182,20 +182,20 @@
 <span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>x_lists <span class="ot">&lt;-</span> <span class="fu">load_traces</span> ()</span>
 <span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="fu">print</span> (x_lists)</span>
 <span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="do">## # A tibble: 9 × 12</span></span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="do">##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode</span></span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="do">##          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;I&lt;list&gt;&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;       </span></span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="do">## 1            0 f       DPfsArXY     x        &lt;chr [1]&gt; integ… nume… integer     </span></span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="do">## 2            0 f       DPfsArXY     y        &lt;chr [1]&gt; double nume… double      </span></span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="do">## 3            0 f       DPfsArXY     z        &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="do">## 4            0 f       DPfsArXY     ...      &lt;chr [1]&gt; NULL   NULL  NULL        </span></span>
-<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="do">## 5            0 f       DPfsArXY     a        &lt;chr [1]&gt; chara… char… character   </span></span>
-<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="do">## 6            0 f       DPfsArXY     b        &lt;chr [1]&gt; list   list  list        </span></span>
-<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="do">## 7            0 f       DPfsArXY     f        &lt;chr [1]&gt; langu… call  language    </span></span>
-<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="do">## 8            0 f       DPfsArXY     b$a      &lt;chr [1]&gt; double nume… double      </span></span>
-<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a><span class="do">## 9            0 f       DPfsArXY     b$b      &lt;chr [1]&gt; chara… char… character   </span></span>
-<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a><span class="do">## # ℹ 4 more variables: length &lt;int&gt;, formal &lt;named list&gt;, uneval &lt;I&lt;list&gt;&gt;,</span></span>
-<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a><span class="do">## #   eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="do">## # A tibble: 9 × 13</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="do">##   trace_number fn_name fn_call_hash par_name is_named class     typeof    mode  </span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="do">##          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;    &lt;lgl&gt;    &lt;I&lt;list&gt;&gt; &lt;chr&gt;     &lt;chr&gt; </span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="do">## 1            0 f       KYQvBSib     x        TRUE     &lt;chr [1]&gt; integer   numer…</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="do">## 2            0 f       KYQvBSib     y        TRUE     &lt;chr [1]&gt; double    numer…</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="do">## 3            0 f       KYQvBSib     z        FALSE    &lt;chr [1]&gt; NULL      NULL  </span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="do">## 4            0 f       KYQvBSib     ...      FALSE    &lt;chr [1]&gt; NULL      NULL  </span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="do">## 5            0 f       KYQvBSib     a        TRUE     &lt;chr [1]&gt; character chara…</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="do">## 6            0 f       KYQvBSib     b        TRUE     &lt;chr [1]&gt; list      list  </span></span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="do">## 7            0 f       KYQvBSib     f        TRUE     &lt;chr [1]&gt; language  call  </span></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="do">## 8            0 f       KYQvBSib     b$a      TRUE     &lt;chr [1]&gt; double    numer…</span></span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a><span class="do">## 9            0 f       KYQvBSib     b$b      TRUE     &lt;chr [1]&gt; character chara…</span></span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a><span class="do">## # ℹ 5 more variables: storage_mode &lt;chr&gt;, length &lt;int&gt;, formal &lt;named list&gt;,</span></span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a><span class="do">## #   uneval &lt;I&lt;list&gt;&gt;, eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
 <p>And that result now has 9 rows, or 2 more than the previous example, reflecting the two items passed as a <code>list</code> to the parameter, <code>b</code>. List-parameter items are identifiable in typetracer output through the “dollar-notation” in the <code>par_name</code> field. The final two values in the above table are <code>b$a</code> and <code>b$b</code>, representing the two elements of the list passed as the parameter, <code>b</code>.</p>
 </div>
 <div class="section level2">
@@ -206,17 +206,18 @@
 <div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">trace_package</span> (<span class="st">"rematch"</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>res</span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="do">## # A tibble: 6 × 14</span></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="do">##   trace_number source_file_name fn_name  fn_call_hash call_env par_name class   </span></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="do">##          &lt;int&gt; &lt;chr&gt;            &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;    &lt;I&lt;list&gt;</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="do">## 1            0 man/re_match.Rd  re_match wNDFeOta     &lt;NA&gt;     pattern  &lt;chr&gt;   </span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="do">## 2            0 man/re_match.Rd  re_match wNDFeOta     &lt;NA&gt;     text     &lt;chr&gt;   </span></span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="do">## 3            0 man/re_match.Rd  re_match wNDFeOta     &lt;NA&gt;     ...      &lt;chr&gt;   </span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="do">## 4            1 man/re_match.Rd  re_match oEujlJYt     &lt;NA&gt;     pattern  &lt;chr&gt;   </span></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="do">## 5            1 man/re_match.Rd  re_match oEujlJYt     &lt;NA&gt;     text     &lt;chr&gt;   </span></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="do">## 6            1 man/re_match.Rd  re_match oEujlJYt     &lt;NA&gt;     ...      &lt;chr&gt;   </span></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="do">## # ℹ 7 more variables: typeof &lt;chr&gt;, mode &lt;chr&gt;, storage_mode &lt;chr&gt;,</span></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="do">## #   length &lt;int&gt;, formal &lt;named list&gt;, uneval &lt;I&lt;list&gt;&gt;, eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="do">## # A tibble: 6 × 15</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="do">##   trace_number source_file_name fn_name  fn_call_hash call_env par_name is_named</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="do">##          &lt;int&gt; &lt;chr&gt;            &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;    &lt;lgl&gt;   </span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="do">## 1            0 man/re_match.Rd  re_match YxLpbZck     &lt;NA&gt;     pattern  TRUE    </span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="do">## 2            0 man/re_match.Rd  re_match YxLpbZck     &lt;NA&gt;     text     TRUE    </span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="do">## 3            0 man/re_match.Rd  re_match YxLpbZck     &lt;NA&gt;     ...      FALSE   </span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="do">## 4            1 man/re_match.Rd  re_match FlhNHVGD     &lt;NA&gt;     pattern  TRUE    </span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="do">## 5            1 man/re_match.Rd  re_match FlhNHVGD     &lt;NA&gt;     text     TRUE    </span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="do">## 6            1 man/re_match.Rd  re_match FlhNHVGD     &lt;NA&gt;     ...      FALSE   </span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="do">## # ℹ 8 more variables: class &lt;I&lt;list&gt;&gt;, typeof &lt;chr&gt;, mode &lt;chr&gt;,</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="do">## #   storage_mode &lt;chr&gt;, length &lt;int&gt;, formal &lt;named list&gt;, uneval &lt;I&lt;list&gt;&gt;,</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="do">## #   eval &lt;I&lt;list&gt;&gt;</span></span></code></pre></div>
 <p>The <code>data.frame</code> returned by the <code><a href="reference/trace_package.html">trace_package()</a></code> function includes three more columns than the result directly returned by <code><a href="reference/load_traces.html">load_traces()</a></code>. These columns identify the sources and calling environments of each function call being traces. The “call_env” column identifies the calling environment which generated each trace, while “source_file_name” identifies the file.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">unique</span> (res<span class="sc">$</span>call_env)</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
@@ -302,7 +303,7 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/mpadge/typetracer/actions" class="external-link"><img src="https://github.com/mpadge/typetracer/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/mpadge/typetracer/actions" class="external-link"><img src="https://github.com/mpadge/typetracer/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://app.codecov.io/gh/mpadge/typetracer" class="external-link"><img src="https://codecov.io/gh/mpadge/typetracer/branch/main/graph/badge.svg" alt="codecov"></a></li>
 <li><a href="https://cran.r-project.org/package=typetracer/" class="external-link"><img src="https://www.r-pkg.org/badges/version/typetracer" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://cran.r-project.org/package=typetracer" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/typetracer?color=orange" alt="CRAN Downloads"></a></li>
