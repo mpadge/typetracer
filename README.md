@@ -1,6 +1,6 @@
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/mpadge/typetracer/workflows/R-CMD-check/badge.svg)](https://github.com/mpadge/typetracer/actions)
+[![R-CMD-check](https://github.com/mpadge/typetracer/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mpadge/typetracer/actions)
 [![codecov](https://codecov.io/gh/mpadge/typetracer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mpadge/typetracer)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/typetracer)](https://cran.r-project.org/package=typetracer/)
 [![CRAN
@@ -79,18 +79,18 @@ from each function call.
     x <- load_traces ()
     x
 
-    ## # A tibble: 7 × 12
-    ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
-    ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
-    ## 1            0 f       yXYbicZQ     x        <chr [1]> integ… nume… integer     
-    ## 2            0 f       yXYbicZQ     y        <chr [1]> double nume… double      
-    ## 3            0 f       yXYbicZQ     z        <chr [1]> NULL   NULL  NULL        
-    ## 4            0 f       yXYbicZQ     ...      <chr [1]> NULL   NULL  NULL        
-    ## 5            0 f       yXYbicZQ     a        <chr [1]> chara… char… character   
-    ## 6            0 f       yXYbicZQ     b        <chr [1]> list   list  list        
-    ## 7            0 f       yXYbicZQ     f        <chr [1]> langu… call  language    
-    ## # ℹ 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
-    ## #   eval <I<list>>
+    ## # A tibble: 7 × 13
+    ##   trace_number fn_name fn_call_hash par_name is_named class     typeof    mode  
+    ##          <int> <chr>   <chr>        <chr>    <lgl>    <I<list>> <chr>     <chr> 
+    ## 1            0 f       WbYKyAXL     x        TRUE     <chr [1]> integer   numer…
+    ## 2            0 f       WbYKyAXL     y        TRUE     <chr [1]> double    numer…
+    ## 3            0 f       WbYKyAXL     z        FALSE    <chr [1]> NULL      NULL  
+    ## 4            0 f       WbYKyAXL     ...      FALSE    <chr [1]> NULL      NULL  
+    ## 5            0 f       WbYKyAXL     a        TRUE     <chr [1]> character chara…
+    ## 6            0 f       WbYKyAXL     b        TRUE     <chr [1]> list      list  
+    ## 7            0 f       WbYKyAXL     f        TRUE     <chr [1]> language  call  
+    ## # ℹ 5 more variables: storage_mode <chr>, length <int>, formal <named list>,
+    ## #   uneval <I<list>>, eval <I<list>>
 
 Each row of the result returned by `load_traces()` represents one
 parameter passed to one function call. Each function call itself
@@ -141,7 +141,7 @@ unevaluated and evaluated forms of parameters:
     ## 
     ## $f
     ## a ~ b
-    ## <environment: 0x558a6fb5dda8>
+    ## <environment: 0x561c3d66a570>
 
 Unevaluated parameters are generally converted to equivalent character
 expressions.
@@ -210,20 +210,20 @@ list structures:
     x_lists <- load_traces ()
     print (x_lists)
 
-    ## # A tibble: 9 × 12
-    ##   trace_number fn_name fn_call_hash par_name class     typeof mode  storage_mode
-    ##          <int> <chr>   <chr>        <chr>    <I<list>> <chr>  <chr> <chr>       
-    ## 1            0 f       DPfsArXY     x        <chr [1]> integ… nume… integer     
-    ## 2            0 f       DPfsArXY     y        <chr [1]> double nume… double      
-    ## 3            0 f       DPfsArXY     z        <chr [1]> NULL   NULL  NULL        
-    ## 4            0 f       DPfsArXY     ...      <chr [1]> NULL   NULL  NULL        
-    ## 5            0 f       DPfsArXY     a        <chr [1]> chara… char… character   
-    ## 6            0 f       DPfsArXY     b        <chr [1]> list   list  list        
-    ## 7            0 f       DPfsArXY     f        <chr [1]> langu… call  language    
-    ## 8            0 f       DPfsArXY     b$a      <chr [1]> double nume… double      
-    ## 9            0 f       DPfsArXY     b$b      <chr [1]> chara… char… character   
-    ## # ℹ 4 more variables: length <int>, formal <named list>, uneval <I<list>>,
-    ## #   eval <I<list>>
+    ## # A tibble: 9 × 13
+    ##   trace_number fn_name fn_call_hash par_name is_named class     typeof    mode  
+    ##          <int> <chr>   <chr>        <chr>    <lgl>    <I<list>> <chr>     <chr> 
+    ## 1            0 f       KYQvBSib     x        TRUE     <chr [1]> integer   numer…
+    ## 2            0 f       KYQvBSib     y        TRUE     <chr [1]> double    numer…
+    ## 3            0 f       KYQvBSib     z        FALSE    <chr [1]> NULL      NULL  
+    ## 4            0 f       KYQvBSib     ...      FALSE    <chr [1]> NULL      NULL  
+    ## 5            0 f       KYQvBSib     a        TRUE     <chr [1]> character chara…
+    ## 6            0 f       KYQvBSib     b        TRUE     <chr [1]> list      list  
+    ## 7            0 f       KYQvBSib     f        TRUE     <chr [1]> language  call  
+    ## 8            0 f       KYQvBSib     b$a      TRUE     <chr [1]> double    numer…
+    ## 9            0 f       KYQvBSib     b$b      TRUE     <chr [1]> character chara…
+    ## # ℹ 5 more variables: storage_mode <chr>, length <int>, formal <named list>,
+    ## #   uneval <I<list>>, eval <I<list>>
 
 And that result now has 9 rows, or 2 more than the previous example,
 reflecting the two items passed as a `list` to the parameter, `b`.
@@ -251,17 +251,18 @@ structures.)
     res <- trace_package ("rematch")
     res
 
-    ## # A tibble: 6 × 14
-    ##   trace_number source_file_name fn_name  fn_call_hash call_env par_name class   
-    ##          <int> <chr>            <chr>    <chr>        <chr>    <chr>    <I<list>
-    ## 1            0 man/re_match.Rd  re_match wNDFeOta     <NA>     pattern  <chr>   
-    ## 2            0 man/re_match.Rd  re_match wNDFeOta     <NA>     text     <chr>   
-    ## 3            0 man/re_match.Rd  re_match wNDFeOta     <NA>     ...      <chr>   
-    ## 4            1 man/re_match.Rd  re_match oEujlJYt     <NA>     pattern  <chr>   
-    ## 5            1 man/re_match.Rd  re_match oEujlJYt     <NA>     text     <chr>   
-    ## 6            1 man/re_match.Rd  re_match oEujlJYt     <NA>     ...      <chr>   
-    ## # ℹ 7 more variables: typeof <chr>, mode <chr>, storage_mode <chr>,
-    ## #   length <int>, formal <named list>, uneval <I<list>>, eval <I<list>>
+    ## # A tibble: 6 × 15
+    ##   trace_number source_file_name fn_name  fn_call_hash call_env par_name is_named
+    ##          <int> <chr>            <chr>    <chr>        <chr>    <chr>    <lgl>   
+    ## 1            0 man/re_match.Rd  re_match YxLpbZck     <NA>     pattern  TRUE    
+    ## 2            0 man/re_match.Rd  re_match YxLpbZck     <NA>     text     TRUE    
+    ## 3            0 man/re_match.Rd  re_match YxLpbZck     <NA>     ...      FALSE   
+    ## 4            1 man/re_match.Rd  re_match FlhNHVGD     <NA>     pattern  TRUE    
+    ## 5            1 man/re_match.Rd  re_match FlhNHVGD     <NA>     text     TRUE    
+    ## 6            1 man/re_match.Rd  re_match FlhNHVGD     <NA>     ...      FALSE   
+    ## # ℹ 8 more variables: class <I<list>>, typeof <chr>, mode <chr>,
+    ## #   storage_mode <chr>, length <int>, formal <named list>, uneval <I<list>>,
+    ## #   eval <I<list>>
 
 The `data.frame` returned by the `trace_package()` function includes
 three more columns than the result directly returned by `load_traces()`.
@@ -330,11 +331,11 @@ package should be traced. For example,
 This package extends on concepts previously developed in other R
 packages, notably including:
 
--   The [`typed` package](https://github.com/moodymudskipper/typed) by
-    [@moodymudskipper](https://github.com/moodymudskipper)
--   The [`contractr` package](https://github.com/PRL-PRG/contractr) by
-    [@aviralg](https://github.com/aviralg) &
-    [@fikovnik](https://github.com/fikovnik)
+- The [`typed` package](https://github.com/moodymudskipper/typed) by
+  [@moodymudskipper](https://github.com/moodymudskipper)
+- The [`contractr` package](https://github.com/PRL-PRG/contractr) by
+  [@aviralg](https://github.com/aviralg) &
+  [@fikovnik](https://github.com/fikovnik)
 
 Plus work explained in detail in this footnote:<br>
 
