@@ -19,7 +19,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/mpadge/typetracer/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/mpadge/typetracer/blob/v0.2.5/DESCRIPTION)
 
 Padgham M (2026). *typetracer: Trace Function Parameter Types*. R
 package version 0.2.5, <https://github.com/mpadge/typetracer>.
