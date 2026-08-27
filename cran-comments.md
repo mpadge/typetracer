@@ -1,8 +1,6 @@
-# CRAN notes for typetracer_0.2.4 submission
+# CRAN notes for typetracer_0.2.5 submission
 
-The current CRAN version (0.2.3) has one failing test on two CRAN Linux machines. I can not reproduce that failure, nor does it arise on GitHub Linux runners. This submission has nevertheless disabled that failing test on CRAN machines, so should pass all tests regardless. The test was very minor, and most of the package remains thoroughly tested on CRAN machines.
-
-The package has been checked on all environments listed below, and generates no notes
+Current CRAN version generates no notes, warnings, or errors. This submission has been checked on all environments listed below, and generates only one note on some CRAN machines that https://stackoverflow.com is a forbidden URL. It is nevertheless obviously valid.
 
 GitHub actions:
 * Linux: R-release, R-devel, R-oldrelease
