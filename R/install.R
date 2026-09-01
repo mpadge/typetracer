@@ -226,7 +226,7 @@ reload_pkg <- function (pkg_name, lib_path) {
     }
 
     fpath <- ifelse (
-        grepl (tempdir (), lib_path),
+        grepl (tempdir (), lib_path, fixed = TRUE),
         lib_path,
         tempdir ()
     )
