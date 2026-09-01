@@ -1,6 +1,10 @@
 0.2.5.00x (current dev version)
 ===================
 
+## Minor changes
+
+- Fix a bug in `join_test-trace_data` when tests trigger no calls
+
 0.2.5
 ===================
 

@@ -407,13 +407,21 @@ join_test_trace_data <- function (traces, test_traces) {
         return (traces)
     }
 
+    # A test's own start trace number can exceed 'tr_end1' (the overall
+    # maximum trace number across all traces) when that test itself
+    # triggered no traced call in range -- most commonly the final test in
+    # 'test_traces', whose 'end' is 'tr_end1' by construction (see above).
+    # Such a test attributes no traces, so its span must be clamped to zero
+    # rather than passed as a negative 'rep(times = ...)' value.
+    test_tr_len <- pmax (0L, test_tr_end - test_tr_start + 1L)
+
     test_names <- rep (
         test_traces$test_name,
-        times = test_tr_end - test_tr_start + 1
+        times = test_tr_len
     )
     test_files <- rep (
         test_traces$test_file,
-        times = test_tr_end - test_tr_start + 1
+        times = test_tr_len
     )
     test_tr_index <- seq (tr_start1, tr_end1)
     traces_index <- which (traces$trace_number %in% test_tr_index)
