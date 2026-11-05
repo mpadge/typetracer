@@ -1,0 +1,18 @@
+when:
+  - event: ["push", "pull_request"]
+    branch: ["main"]
+
+engine: microvm
+image: nixos
+
+dependencies:
+  - R
+  - pandoc
+
+steps:
+
+  - name: "Install dependencies"
+    command: Rscript -e "install.packages(c('remotes','rcmdcheck'), repos='https://cloud.r-project.org'); remotes::install_deps('.', dependencies=TRUE, repos='https://cloud.r-project.org')"
+
+  - name: "Run R CMD check"
+    command: Rscript -e "rcmdcheck::rcmdcheck('.', args='--as-cran', error_on='warning')"
