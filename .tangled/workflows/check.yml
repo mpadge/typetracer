@@ -15,17 +15,25 @@ dependencies:
   - gnumake
   - qpdf
 
+environment:
+  R_LIBS_USER: "/tmp/Rlib"
+
+cache:
+  - key: r-library
+    hash: [DESCRIPTION]
+    paths: [/tmp/Rlib]
+
 steps:
 
   - name: "Install dependencies"
     command: |
-      mkdir -p /tmp/Rlib
-      R_LIBS_USER=/tmp/Rlib Rscript \
+      mkdir -p "$R_LIBS_USER"
+      Rscript \
         -e "repos <- 'https://cloud.r-project.org'" \
-        -e "install.packages(c('remotes', 'rcmdcheck'), lib = '/tmp/Rlib', repos = repos)" \
-        -e "remotes::install_deps('.', dependencies = TRUE, lib = '/tmp/Rlib', repos = repos)"
+        -e "install.packages(c('remotes', 'rcmdcheck'), repos = repos)" \
+        -e "remotes::install_deps('.', dependencies = TRUE, repos = repos)"
 
   - name: "Run R CMD check"
     command: |
-      R_LIBS_USER=/tmp/Rlib Rscript \
+      Rscript \
         -e "rcmdcheck::rcmdcheck('.', args = c('--as-cran', '--no-manual'), error_on = 'warning')"
