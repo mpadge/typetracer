@@ -52,6 +52,8 @@ package can also be installed by running any one of the following lines:
 ```{r remotes-alt, eval = FALSE}
 remotes::install_git ("https://git.sr.ht/~mpadge/typetracer")
 remotes::install_git ("https://codeberg.org/mpadge/typetracer")
+remotes::install_git ("https://codefloe.com/mpadge/typetracer")
+remotes::install_git ("https://tangled.org/mpadge.eu/typetracer")
 remotes::install_bitbucket ("mpadge/typetracer")
 remotes::install_gitlab ("mpadge/typetracer")
 ```
