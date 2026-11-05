@@ -1,6 +1,10 @@
 0.2.5.00x (current dev version)
 ===================
 
+## Major changes
+
+- Moved primary URL of repo from github to tangled.org; docs to mpadge.tngl.sh
+
 ## Minor changes
 
 - Fix a bug in `join_test-trace_data` when tests trigger no calls

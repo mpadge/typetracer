@@ -1,6 +1,6 @@
 Package: typetracer
 Title: Trace Function Parameter Types
-Version: 0.2.5.007
+Version: 0.2.5.008
 Authors@R: c(
     person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2172-5265")),
@@ -19,8 +19,8 @@ Description: The 'R' language includes a set of defined types, but the language
     passed to 'R' functions. 'typetracer' can trace individual functions or
     entire packages.
 License: MIT + file LICENSE
-URL: https://github.com/mpadge/typetracer,
-    https://mpadge.github.io/typetracer/
+URL: https://mpadge.tngl.sh/typetracer/,
+    https://tangled.org/mpadge.eu/typetracer
 BugReports: https://github.com/mpadge/typetracer/issues
 Imports:
     brio,
@@ -41,4 +41,4 @@ Encoding: UTF-8
 Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.1
