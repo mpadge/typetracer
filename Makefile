@@ -1,6 +1,8 @@
 RFILE = README
 VIGNETTE = nse
 
+.PHONY: all doc init pkgdown pkgdowncheck vignette knith knitr open allcon check test pkgcheck site clean help
+
 all: help
 
 doc: ## Update package documentation with `roxygen2`

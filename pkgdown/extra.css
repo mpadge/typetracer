@@ -1,0 +1,11 @@
+/* Tangled logo (MIT, (c) 2025 Anirudh Oppiliappan, Akshay Oppiliappan and contributors); see pkgdown/assets/tangled-dolly.svg */
+a.nav-link[aria-label="Tangled"]::before {
+  content: "";
+  display: inline-block;
+  width: 1.25em;
+  height: 1.25em;
+  vertical-align: -0.2em;
+  background-color: currentColor;
+  -webkit-mask: url('tangled-dolly.svg') center / contain no-repeat;
+  mask: url('tangled-dolly.svg') center / contain no-repeat;
+}

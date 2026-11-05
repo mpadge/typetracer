@@ -1,3 +1,16 @@
 url: https://mpadge.tngl.sh/typetracer/
 template:
   bootstrap: 5
+repo:
+  url:
+    home: https://tangled.org/mpadge.eu/typetracer
+    source: https://tangled.org/mpadge.eu/typetracer/tree/main/
+    issue: https://tangled.org/mpadge.eu/typetracer/issues/
+navbar:
+  components:
+    github:
+      text: ''
+      href: https://tangled.org/mpadge.eu/typetracer
+      aria-label: Tangled
+  structure:
+    right: [search, github, lightswitch]
