@@ -13,6 +13,8 @@ dependencies:
   - pkg-config
   - gcc
   - gnumake
+  - texliveBasic
+  - qpdf
 
 steps:
 
