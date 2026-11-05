@@ -35,6 +35,8 @@ lines:
 
 remotes::install_git ("https://git.sr.ht/~mpadge/typetracer")
 remotes::install_git ("https://codeberg.org/mpadge/typetracer")
+remotes::install_git ("https://codefloe.com/mpadge/typetracer")
+remotes::install_git ("https://tangled.org/mpadge.eu/typetracer")
 remotes::install_bitbucket ("mpadge/typetracer")
 remotes::install_gitlab ("mpadge/typetracer")
 ```
@@ -91,13 +93,13 @@ x
 ## # A tibble: 7 × 13
 ##   trace_number fn_name fn_call_hash par_name is_named class     typeof    mode  
 ##          <int> <chr>   <chr>        <chr>    <lgl>    <I<list>> <chr>     <chr> 
-## 1            0 f       gjzhSAYG     x        TRUE     <chr [1]> integer   numer…
-## 2            0 f       gjzhSAYG     y        TRUE     <chr [1]> double    numer…
-## 3            0 f       gjzhSAYG     z        FALSE    <chr [1]> NULL      NULL  
-## 4            0 f       gjzhSAYG     ...      FALSE    <chr [1]> NULL      NULL  
-## 5            0 f       gjzhSAYG     a        TRUE     <chr [1]> character chara…
-## 6            0 f       gjzhSAYG     b        TRUE     <chr [1]> list      list  
-## 7            0 f       gjzhSAYG     f        TRUE     <chr [1]> language  call  
+## 1            0 f       tPyHYFKS     x        TRUE     <chr [1]> integer   numer…
+## 2            0 f       tPyHYFKS     y        TRUE     <chr [1]> double    numer…
+## 3            0 f       tPyHYFKS     z        FALSE    <chr [1]> NULL      NULL  
+## 4            0 f       tPyHYFKS     ...      FALSE    <chr [1]> NULL      NULL  
+## 5            0 f       tPyHYFKS     a        TRUE     <chr [1]> character chara…
+## 6            0 f       tPyHYFKS     b        TRUE     <chr [1]> list      list  
+## 7            0 f       tPyHYFKS     f        TRUE     <chr [1]> language  call  
 ## # ℹ 5 more variables: storage_mode <chr>, length <int>, formal <named list>,
 ## #   uneval <I<list>>, eval <I<list>>
 ```
@@ -161,7 +163,7 @@ x$eval [x$par_name %in% c ("b", "f")]
 ## 
 ## $f
 ## a ~ b
-## <environment: 0x5590532bb970>
+## <environment: 0x559369470f78>
 ```
 
 Unevaluated parameters are generally converted to equivalent character
@@ -246,15 +248,15 @@ print (x_lists)
 ## # A tibble: 9 × 13
 ##   trace_number fn_name fn_call_hash par_name is_named class     typeof    mode  
 ##          <int> <chr>   <chr>        <chr>    <lgl>    <I<list>> <chr>     <chr> 
-## 1            0 f       XwrsPyzp     x        TRUE     <chr [1]> integer   numer…
-## 2            0 f       XwrsPyzp     y        TRUE     <chr [1]> double    numer…
-## 3            0 f       XwrsPyzp     z        FALSE    <chr [1]> NULL      NULL  
-## 4            0 f       XwrsPyzp     ...      FALSE    <chr [1]> NULL      NULL  
-## 5            0 f       XwrsPyzp     a        TRUE     <chr [1]> character chara…
-## 6            0 f       XwrsPyzp     b        TRUE     <chr [1]> list      list  
-## 7            0 f       XwrsPyzp     f        TRUE     <chr [1]> language  call  
-## 8            0 f       XwrsPyzp     b$a      TRUE     <chr [1]> double    numer…
-## 9            0 f       XwrsPyzp     b$b      TRUE     <chr [1]> character chara…
+## 1            0 f       rqhuFoya     x        TRUE     <chr [1]> integer   numer…
+## 2            0 f       rqhuFoya     y        TRUE     <chr [1]> double    numer…
+## 3            0 f       rqhuFoya     z        FALSE    <chr [1]> NULL      NULL  
+## 4            0 f       rqhuFoya     ...      FALSE    <chr [1]> NULL      NULL  
+## 5            0 f       rqhuFoya     a        TRUE     <chr [1]> character chara…
+## 6            0 f       rqhuFoya     b        TRUE     <chr [1]> list      list  
+## 7            0 f       rqhuFoya     f        TRUE     <chr [1]> language  call  
+## 8            0 f       rqhuFoya     b$a      TRUE     <chr [1]> double    numer…
+## 9            0 f       rqhuFoya     b$b      TRUE     <chr [1]> character chara…
 ## # ℹ 5 more variables: storage_mode <chr>, length <int>, formal <named list>,
 ## #   uneval <I<list>>, eval <I<list>>
 ```
@@ -292,12 +294,12 @@ res
 ## # A tibble: 6 × 15
 ##   trace_number source_file_name fn_name  fn_call_hash call_env par_name is_named
 ##          <int> <chr>            <chr>    <chr>        <chr>    <chr>    <lgl>   
-## 1            0 man/re_match.Rd  re_match NeYEdUZu     <NA>     pattern  TRUE    
-## 2            0 man/re_match.Rd  re_match NeYEdUZu     <NA>     text     TRUE    
-## 3            0 man/re_match.Rd  re_match NeYEdUZu     <NA>     ...      FALSE   
-## 4            1 man/re_match.Rd  re_match hdiItpyb     <NA>     pattern  TRUE    
-## 5            1 man/re_match.Rd  re_match hdiItpyb     <NA>     text     TRUE    
-## 6            1 man/re_match.Rd  re_match hdiItpyb     <NA>     ...      FALSE   
+## 1            0 man/re_match.Rd  re_match XPzrLwxi     <NA>     pattern  TRUE    
+## 2            0 man/re_match.Rd  re_match XPzrLwxi     <NA>     text     TRUE    
+## 3            0 man/re_match.Rd  re_match XPzrLwxi     <NA>     ...      FALSE   
+## 4            1 man/re_match.Rd  re_match FihetywI     <NA>     pattern  TRUE    
+## 5            1 man/re_match.Rd  re_match FihetywI     <NA>     text     TRUE    
+## 6            1 man/re_match.Rd  re_match FihetywI     <NA>     ...      FALSE   
 ## # ℹ 8 more variables: class <I<list>>, typeof <chr>, mode <chr>,
 ## #   storage_mode <chr>, length <int>, formal <named list>, uneval <I<list>>,
 ## #   eval <I<list>>
