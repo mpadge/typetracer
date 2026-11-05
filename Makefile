@@ -1,11 +1,22 @@
 LFILE = README
-VIGNETTE = F_extended-use-case
-
+VIGNETTE = nse
 
 all: help
 
 doc: ## Update package documentation with `roxygen2`
 	Rscript -e "roxygen2::roxygenise()"; \
+
+init: ## Initialize pkgdown site
+	echo "pkgdown::init_site()" | R --no-save -q
+
+pkgdown: ## Build entire pkgdown site
+	echo "pkgdown::build_site()" | R --no-save -q
+
+pkgdowncheck: ## Check 'pkgdown' site structure
+	echo "pkgdown::check_pkgdown()" | R --no-save -q
+
+vignette: ## Build pkgdown article
+	echo "pkgdown::build_article('$(VIGNETTE)',quiet=FALSE)" | R --no-save -q
 
 knith: $(LFILE).Rmd ## Render README as HTML
 	echo "rmarkdown::render('$(LFILE).Rmd',output_file='$(LFILE).html')" | R --no-save -q
@@ -28,8 +39,8 @@ test: ## Run test suite
 pkgcheck: ## Run `pkgcheck` and print results to screen.
 	Rscript -e 'library(pkgcheck); checks <- pkgcheck(); print(checks); summary (checks)'
 
-install: ## Install current local version
-	R CMD INSTALL '.'
+site: ## Build site into `docs` branch worktree, commit, push to `gitbin.upstream` if set
+	./.hooks/publish-site
 
 clean: ## Clean all junk files, including all pkgdown docs
 	rm -rf *.html *.png README_cache docs/

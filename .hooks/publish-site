@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# .hooks/publish-site [-b branch] [-d dir_in_branch] [-m message]
+# Build the pkgdown site directly into a private worktree of the publishing
+# branch (.git/site-<branch>/<dir_in_branch>) and commit it there.
+# Pushes only to the remote named by `git config gitbin.upstream`; if that is
+# unset (or not a remote of this repo), the site is committed locally only.
+set -euo pipefail
+branch=docs dest=docs msg="update site $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+while getopts b:d:m: o; do
+  case $o in b) branch=$OPTARG;; d) dest=$OPTARG;; m) msg=$OPTARG;; *) exit 2;; esac
+done
+# dest is wiped before each build, so it must be a plain relative subdirectory
+case $dest in ''|.|/*|*..*) echo "invalid -d '$dest': need a plain subdirectory" >&2; exit 2;; esac
+cd "$(git rev-parse --show-toplevel)"
+
+upstream=$(git config gitbin.upstream || true)
+if [ -n "$upstream" ] && ! git remote | grep -qx "$upstream"; then
+  echo "gitbin.upstream '$upstream' is not a remote of this repo; will not push" >&2
+  upstream=
+fi
+
+wt="$(git rev-parse --git-common-dir)/site-$branch"
+if [ ! -d "$wt" ]; then
+  if ! git show-ref --verify --quiet "refs/heads/$branch"; then
+    [ -n "$upstream" ] || { echo "no local '$branch' branch and gitbin.upstream unset; cannot fetch it" >&2; exit 1; }
+    git fetch "$upstream" "$branch:$branch"
+  fi
+  git worktree add "$wt" "$branch"
+fi
+
+# Start from an empty target so pages that no longer exist are removed
+rm -rf "${wt:?}/${dest:?}"
+SITE_DEST="$wt/$dest" Rscript -e \
+  'pkgdown::build_site(override = list(destination = Sys.getenv("SITE_DEST")))'
+
+git -C "$wt" add -A
+git -C "$wt" diff --cached --quiet && { echo "site unchanged"; exit 0; }
+git -C "$wt" commit -q -m "$msg"
+
+if [ -n "$upstream" ]; then
+  echo "--------Pushing to $upstream"
+  git -C "$wt" push "$upstream" "refs/heads/$branch:refs/heads/$branch" </dev/null
+else
+  echo "committed to '$branch'; gitbin.upstream not set, so not pushed"
+fi
