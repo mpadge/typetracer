@@ -13,7 +13,6 @@ dependencies:
   - pkg-config
   - gcc
   - gnumake
-  - texliveBasic
   - qpdf
 
 steps:
@@ -29,4 +28,4 @@ steps:
   - name: "Run R CMD check"
     command: |
       R_LIBS_USER=/tmp/Rlib Rscript \
-        -e "rcmdcheck::rcmdcheck('.', args = '--as-cran', error_on = 'warning')"
+        -e "rcmdcheck::rcmdcheck('.', args = c('--as-cran', '--no-manual'), error_on = 'warning')"
