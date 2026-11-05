@@ -28,6 +28,14 @@ if [ ! -d "$wt" ]; then
   git worktree add "$wt" "$branch"
 fi
 
+# Show the release version on the site: strip anything after <major>.<minor>.<patch>
+# (e.g. 0.2.5.014 -> 0.2.5) in DESCRIPTION for the build only; the original
+# file is restored on exit, whether or not the build succeeds.
+desc_bak=$(mktemp)
+cp -p DESCRIPTION "$desc_bak"
+trap 'cp -p "$desc_bak" DESCRIPTION; rm -f "$desc_bak"' EXIT
+sed -E -i 's/^(Version:[[:space:]]*[0-9]+\.[0-9]+\.[0-9]+)(\.[0-9]+)+[[:space:]]*$/\1/' DESCRIPTION
+
 # Start from an empty target so pages that no longer exist are removed
 rm -rf "${wt:?}/${dest:?}"
 SITE_DEST="$wt/$dest" Rscript -e \
