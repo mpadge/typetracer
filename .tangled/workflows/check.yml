@@ -12,7 +12,14 @@ dependencies:
 steps:
 
   - name: "Install dependencies"
-    command: Rscript -e "install.packages(c('remotes','rcmdcheck'), repos='https://cloud.r-project.org'); remotes::install_deps('.', dependencies=TRUE, repos='https://cloud.r-project.org')"
+    command: |
+      mkdir -p /tmp/Rlib
+      R_LIBS_USER=/tmp/Rlib Rscript \
+        -e "repos <- 'https://cloud.r-project.org'" \
+        -e "install.packages(c('remotes', 'rcmdcheck'), lib = '/tmp/Rlib', repos = repos)" \
+        -e "remotes::install_deps('.', dependencies = TRUE, lib = '/tmp/Rlib', repos = repos)"
 
   - name: "Run R CMD check"
-    command: Rscript -e "rcmdcheck::rcmdcheck('.', args='--as-cran', error_on='warning')"
+    command: |
+      R_LIBS_USER=/tmp/Rlib Rscript \
+        -e "rcmdcheck::rcmdcheck('.', args = '--as-cran', error_on = 'warning')"

@@ -10,6 +10,7 @@
 - Fix a bug in `join_test-trace_data` when tests trigger no calls
 - Fix `reload_pkg()` crashing on Windows library paths interpreted as invalid
   regular expressions
+- Add cli workflow for tangled
 
 0.2.5
 ===================
