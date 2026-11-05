@@ -3,4 +3,4 @@
 ### All vignettes
 
 - [Non-Standard
-  Evaluation](https://mpadge.github.io/typetracer/articles/nse.md):
+  Evaluation](https://mpadge.tngl.sh/typetracer/articles/nse.md):

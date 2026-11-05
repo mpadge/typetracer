@@ -1,7 +1,7 @@
 # Remove parameter tracer from one function
 
 This function removes traces previous injected into functions with the
-[inject_tracer](https://mpadge.github.io/typetracer/reference/inject_tracer.md)
+[inject_tracer](https://mpadge.tngl.sh/typetracer/reference/inject_tracer.md)
 function.
 
 ## Usage
