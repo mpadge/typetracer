@@ -70,7 +70,7 @@ library (typetracer)
 
 `typetracer` works by "injecting" tracing code into the body of a function
 using [the `inject_tracer()`
-function](https://mpadge.github.io/typetracer/reference/inject_tracer.html).
+function](https://mpadge.tngl.sh/typetracer/reference/inject_tracer.html).
 Locally-defined functions can be traced by simply passing the functions
 directly to `inject_tracer()`. The following example includes four parameters,
 including `...` to allow passing of additional and entirely arbitrary parameter
@@ -87,7 +87,7 @@ After injecting the `typetracer` code, calls to the function, `f`, will "trace"
 each parameter of the function, by capturing both unevaluated and evaluated
 representations at the point at which the function is first called. These
 values can be accessed with [the `load_traces`
-function](https://mpadge.github.io/typetracer/reference/load_traces.html),
+function](https://mpadge.tngl.sh/typetracer/reference/load_traces.html),
 which returns a `data.frame` object (in [`tibble`
 format](https://tibble.tidyverse.org)) with one row for each parameter from
 each function call.
@@ -149,20 +149,20 @@ into whether the other columns may provide useful additional information.
 
 Traces themselves are saved in the temporary directory of the current R
 session, and [the `load_traces()`
-function](https://mpadge.github.io/typetracer/reference/load_traces.html)
+function](https://mpadge.tngl.sh/typetracer/reference/load_traces.html),
 simply loads all traces created in that session. [The function
-`clear_traces()`](https://mpadge.github.io/typetracer/reference/clear_traces.html)
+`clear_traces()`](https://mpadge.tngl.sh/typetracer/reference/clear_traces.html)
 removes all traces, so that
-[`load_traces()`](https://mpadge.github.io/typetracer/reference/load_traces.html)
+[`load_traces()`](https://mpadge.tngl.sh/typetracer/reference/load_traces.html)
 will only load new traces produced after that time.
 
 ### Uninjecting Traces
 
 It is important after applying [the `inject_tracer()`
-function](https://mpadge.github.io/typetracer/reference/inject_tracer.html) to
+function](https://mpadge.tngl.sh/typetracer/reference/inject_tracer.html) to
 restore the functions back to their original form through calling [the obverse
 `uninject_tracer()`
-function](https://mpadge.github.io/typetracer/reference/uninject_tracer.html).
+function](https://mpadge.tngl.sh/typetracer/reference/uninject_tracer.html).
 For the function, `r`, above, this simply requires,
 
 ```{r}
@@ -223,11 +223,11 @@ This section presents a more complex example tracing all function calls from
 it has less code than almost any other package on CRAN. The following single
 line traces function calls in all examples for the nominated package. [The
 `trace_package()`
-function](https://mpadge.github.io/typetracer/reference/trace_package.html)
+function](https://mpadge.tngl.sh/typetracer/reference/trace_package.html)
 automatically injects tracing code into every
 function within the package, so there is no need to explicitly call [the
 `inject_tracer()`
-function](https://mpadge.github.io/typetracer/reference/inject_tracer).
+function](https://mpadge.tngl.sh/typetracer/reference/inject_tracer.html).
 
 (This function also includes a `trace_lists` parameter, as demonstrated above,
 with a default of `FALSE` to not recurse into tracing list structures.)
@@ -259,7 +259,7 @@ on the "source_file_name", with the `rematch` package including only one `.Rd`
 file.
 
 [The `trace_package()`
-function](https://mpadge.github.io/typetracer/reference/trace_package.html)
+function](https://mpadge.tngl.sh/typetracer/reference/trace_package.html)
 also includes an additional parameter, `types`, which defaults to `c
 ("examples", "tests")`, so that traces are also by default generated for all
 tests included with local source packages (or for packages installed to include
@@ -279,7 +279,7 @@ an expectation that it should error.
 ### Example #3(a) - Specifying Functions to Trace
 
 [The `trace_package()`
-function](https://mpadge.github.io/typetracer/reference/trace_package.html)
+function](https://mpadge.tngl.sh/typetracer/reference/trace_package.html)
 also accepts an argument, `functions`, specifying which functions from a
 package should be traced. For example,
 

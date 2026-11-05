@@ -58,7 +58,7 @@ library (typetracer)
 
 `typetracer` works by “injecting” tracing code into the body of a
 function using [the `inject_tracer()`
-function](https://mpadge.github.io/typetracer/reference/inject_tracer.html).
+function](https://mpadge.tngl.sh/typetracer/reference/inject_tracer.html).
 Locally-defined functions can be traced by simply passing the functions
 directly to `inject_tracer()`. The following example includes four
 parameters, including `...` to allow passing of additional and entirely
@@ -75,7 +75,7 @@ After injecting the `typetracer` code, calls to the function, `f`, will
 “trace” each parameter of the function, by capturing both unevaluated
 and evaluated representations at the point at which the function is
 first called. These values can be accessed with [the `load_traces`
-function](https://mpadge.github.io/typetracer/reference/load_traces.html),
+function](https://mpadge.tngl.sh/typetracer/reference/load_traces.html),
 which returns a `data.frame` object (in [`tibble`
 format](https://tibble.tidyverse.org)) with one row for each parameter
 from each function call.
@@ -95,13 +95,13 @@ x
     ## # A tibble: 7 × 13
     ##   trace_number fn_name fn_call_hash par_name is_named class     typeof    mode  
     ##          <int> <chr>   <chr>        <chr>    <lgl>    <I<list>> <chr>     <chr> 
-    ## 1            0 f       tPyHYFKS     x        TRUE     <chr [1]> integer   numer…
-    ## 2            0 f       tPyHYFKS     y        TRUE     <chr [1]> double    numer…
-    ## 3            0 f       tPyHYFKS     z        FALSE    <chr [1]> NULL      NULL  
-    ## 4            0 f       tPyHYFKS     ...      FALSE    <chr [1]> NULL      NULL  
-    ## 5            0 f       tPyHYFKS     a        TRUE     <chr [1]> character chara…
-    ## 6            0 f       tPyHYFKS     b        TRUE     <chr [1]> list      list  
-    ## 7            0 f       tPyHYFKS     f        TRUE     <chr [1]> language  call  
+    ## 1            0 f       PBeDtECm     x        TRUE     <chr [1]> integer   numer…
+    ## 2            0 f       PBeDtECm     y        TRUE     <chr [1]> double    numer…
+    ## 3            0 f       PBeDtECm     z        FALSE    <chr [1]> NULL      NULL  
+    ## 4            0 f       PBeDtECm     ...      FALSE    <chr [1]> NULL      NULL  
+    ## 5            0 f       PBeDtECm     a        TRUE     <chr [1]> character chara…
+    ## 6            0 f       PBeDtECm     b        TRUE     <chr [1]> list      list  
+    ## 7            0 f       PBeDtECm     f        TRUE     <chr [1]> language  call  
     ## # ℹ 5 more variables: storage_mode <chr>, length <int>, formal <named list>,
     ## #   uneval <I<list>>, eval <I<list>>
 
@@ -158,7 +158,7 @@ x$eval [x$par_name %in% c ("b", "f")]
     ## 
     ## $f
     ## a ~ b
-    ## <environment: 0x559369470f78>
+    ## <environment: 0x55cd79f48668>
 
 Unevaluated parameters are generally converted to equivalent character
 expressions.
@@ -174,20 +174,20 @@ information.
 
 Traces themselves are saved in the temporary directory of the current R
 session, and [the `load_traces()`
-function](https://mpadge.github.io/typetracer/reference/load_traces.html)
+function](https://mpadge.tngl.sh/typetracer/reference/load_traces.html),
 simply loads all traces created in that session. [The function
-`clear_traces()`](https://mpadge.github.io/typetracer/reference/clear_traces.html)
+`clear_traces()`](https://mpadge.tngl.sh/typetracer/reference/clear_traces.html)
 removes all traces, so that
-[`load_traces()`](https://mpadge.github.io/typetracer/reference/load_traces.html)
+[`load_traces()`](https://mpadge.tngl.sh/typetracer/reference/load_traces.html)
 will only load new traces produced after that time.
 
 ### Uninjecting Traces
 
 It is important after applying [the `inject_tracer()`
-function](https://mpadge.github.io/typetracer/reference/inject_tracer.html)
+function](https://mpadge.tngl.sh/typetracer/reference/inject_tracer.html)
 to restore the functions back to their original form through calling
 [the obverse `uninject_tracer()`
-function](https://mpadge.github.io/typetracer/reference/uninject_tracer.html).
+function](https://mpadge.tngl.sh/typetracer/reference/uninject_tracer.html).
 For the function, `r`, above, this simply requires,
 
 ``` r
@@ -236,15 +236,15 @@ print (x_lists)
     ## # A tibble: 9 × 13
     ##   trace_number fn_name fn_call_hash par_name is_named class     typeof    mode  
     ##          <int> <chr>   <chr>        <chr>    <lgl>    <I<list>> <chr>     <chr> 
-    ## 1            0 f       rqhuFoya     x        TRUE     <chr [1]> integer   numer…
-    ## 2            0 f       rqhuFoya     y        TRUE     <chr [1]> double    numer…
-    ## 3            0 f       rqhuFoya     z        FALSE    <chr [1]> NULL      NULL  
-    ## 4            0 f       rqhuFoya     ...      FALSE    <chr [1]> NULL      NULL  
-    ## 5            0 f       rqhuFoya     a        TRUE     <chr [1]> character chara…
-    ## 6            0 f       rqhuFoya     b        TRUE     <chr [1]> list      list  
-    ## 7            0 f       rqhuFoya     f        TRUE     <chr [1]> language  call  
-    ## 8            0 f       rqhuFoya     b$a      TRUE     <chr [1]> double    numer…
-    ## 9            0 f       rqhuFoya     b$b      TRUE     <chr [1]> character chara…
+    ## 1            0 f       FGyrIJah     x        TRUE     <chr [1]> integer   numer…
+    ## 2            0 f       FGyrIJah     y        TRUE     <chr [1]> double    numer…
+    ## 3            0 f       FGyrIJah     z        FALSE    <chr [1]> NULL      NULL  
+    ## 4            0 f       FGyrIJah     ...      FALSE    <chr [1]> NULL      NULL  
+    ## 5            0 f       FGyrIJah     a        TRUE     <chr [1]> character chara…
+    ## 6            0 f       FGyrIJah     b        TRUE     <chr [1]> list      list  
+    ## 7            0 f       FGyrIJah     f        TRUE     <chr [1]> language  call  
+    ## 8            0 f       FGyrIJah     b$a      TRUE     <chr [1]> double    numer…
+    ## 9            0 f       FGyrIJah     b$b      TRUE     <chr [1]> character chara…
     ## # ℹ 5 more variables: storage_mode <chr>, length <int>, formal <named list>,
     ## #   uneval <I<list>>, eval <I<list>>
 
@@ -262,10 +262,10 @@ from [the `rematch` package](https://github.com/MangoTheCat/rematch),
 chosen because it has less code than almost any other package on CRAN.
 The following single line traces function calls in all examples for the
 nominated package. [The `trace_package()`
-function](https://mpadge.github.io/typetracer/reference/trace_package.html)
+function](https://mpadge.tngl.sh/typetracer/reference/trace_package.html)
 automatically injects tracing code into every function within the
 package, so there is no need to explicitly call [the `inject_tracer()`
-function](https://mpadge.github.io/typetracer/reference/inject_tracer).
+function](https://mpadge.tngl.sh/typetracer/reference/inject_tracer.html).
 
 (This function also includes a `trace_lists` parameter, as demonstrated
 above, with a default of `FALSE` to not recurse into tracing list
@@ -279,12 +279,12 @@ res
     ## # A tibble: 6 × 15
     ##   trace_number source_file_name fn_name  fn_call_hash call_env par_name is_named
     ##          <int> <chr>            <chr>    <chr>        <chr>    <chr>    <lgl>   
-    ## 1            0 man/re_match.Rd  re_match XPzrLwxi     <NA>     pattern  TRUE    
-    ## 2            0 man/re_match.Rd  re_match XPzrLwxi     <NA>     text     TRUE    
-    ## 3            0 man/re_match.Rd  re_match XPzrLwxi     <NA>     ...      FALSE   
-    ## 4            1 man/re_match.Rd  re_match FihetywI     <NA>     pattern  TRUE    
-    ## 5            1 man/re_match.Rd  re_match FihetywI     <NA>     text     TRUE    
-    ## 6            1 man/re_match.Rd  re_match FihetywI     <NA>     ...      FALSE   
+    ## 1            0 man/re_match.Rd  re_match YrKqRnBg     <NA>     pattern  TRUE    
+    ## 2            0 man/re_match.Rd  re_match YrKqRnBg     <NA>     text     TRUE    
+    ## 3            0 man/re_match.Rd  re_match YrKqRnBg     <NA>     ...      FALSE   
+    ## 4            1 man/re_match.Rd  re_match AMDucCwy     <NA>     pattern  TRUE    
+    ## 5            1 man/re_match.Rd  re_match AMDucCwy     <NA>     text     TRUE    
+    ## 6            1 man/re_match.Rd  re_match AMDucCwy     <NA>     ...      FALSE   
     ## # ℹ 8 more variables: class <I<list>>, typeof <chr>, mode <chr>,
     ## #   storage_mode <chr>, length <int>, formal <named list>, uneval <I<list>>,
     ## #   eval <I<list>>
@@ -319,7 +319,7 @@ identified by the “rd\_” prefix on the “source_file_name”, with the
 `rematch` package including only one `.Rd` file.
 
 [The `trace_package()`
-function](https://mpadge.github.io/typetracer/reference/trace_package.html)
+function](https://mpadge.tngl.sh/typetracer/reference/trace_package.html)
 also includes an additional parameter, `types`, which defaults to
 `c ("examples", "tests")`, so that traces are also by default generated
 for all tests included with local source packages (or for packages
@@ -340,7 +340,7 @@ expectation that it should error.
 ### Example \#3(a) - Specifying Functions to Trace
 
 [The `trace_package()`
-function](https://mpadge.github.io/typetracer/reference/trace_package.html)
+function](https://mpadge.tngl.sh/typetracer/reference/trace_package.html)
 also accepts an argument, `functions`, specifying which functions from a
 package should be traced. For example,
 
