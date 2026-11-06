@@ -22,12 +22,12 @@ Source:
 [`DESCRIPTION`](https://tangled.org/mpadge.eu/typetracer/tree/main/DESCRIPTION)
 
 Padgham M (2026). *typetracer: Trace Function Parameter Types*. R
-package version 0.2.5.016, <https://mpadge.tngl.sh/typetracer/>.
+package version 0.2.5.017, <https://mpadge.tngl.sh/typetracer/>.
 
     @Manual{,
       title = {typetracer: Trace Function Parameter Types},
       author = {Mark Padgham},
       year = {2026},
-      note = {R package version 0.2.5.016},
+      note = {R package version 0.2.5.017},
       url = {https://mpadge.tngl.sh/typetracer/},
     }
