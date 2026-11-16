@@ -287,7 +287,7 @@ trace_package_tests <- function (package, pkg_dir = NULL,
             testthat::test_path (),
             test_str$file
         )
-        test_str$test <- gsub ("\\s+", "_", test_str$test_name)
+        test_str$test <- test_name_for_file (test_str$test_name)
         index <- match (test_trace_numbers$test, test_str$test)
         test_trace_numbers$test_name <- test_str$test_name [index]
         test_trace_numbers$test_file <- test_str$file [index]

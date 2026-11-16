@@ -175,7 +175,7 @@ insert_counters_in_tests <- function (pkg_dir) {
             index <- pd_i$line1 [brace_i]
 
             pd_i <- deparse (p [[i]])
-            test_name <- gsub ("\\s+", "_", test_name)
+            test_name <- test_name_for_file (test_name)
             pd_i <- c (
                 pd_i [seq (index)],
                 "",
@@ -201,6 +201,16 @@ insert_counters_in_tests <- function (pkg_dir) {
         })
         writeLines (unlist (p_injected), f)
     }
+}
+
+#' Convert a test description to the part of a counter file name
+#'
+#' Used both to write counter files in `insert_counters_in_tests()` and to
+#' match them back to test names in `trace_package()`. A "/" in a test name
+#' would otherwise be read as a directory separator.
+#' @noRd
+test_name_for_file <- function (test_name) {
+    gsub ("[[:space:]/]+", "_", test_name)
 }
 
 #' Reload package from default library location
