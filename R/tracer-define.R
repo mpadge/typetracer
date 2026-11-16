@@ -20,12 +20,13 @@ typetracer_header <- function () {
         # 'get_typetrace_dir()' elsewhere in this package.
         typetracer_env$trace_dir <- tempdir ()
     }
-    typetracer_env$nm <- paste0 (sample (c (letters, LETTERS), 8),
-        collapse = ""
-    )
-    typetracer_env$fname <- file.path (
-        typetracer_env$trace_dir,
-        paste0 ("typetrace_", typetracer_env$nm, ".Rds")
+    # 'tempfile()' does not use R's random number generator, so tracing a
+    # call leaves '.Random.seed' unchanged; 'sample()' here would shift the
+    # random stream of the traced code.
+    typetracer_env$fname <- tempfile (
+        pattern = "typetrace_",
+        tmpdir = typetracer_env$trace_dir,
+        fileext = ".Rds"
     )
 
     typetracer_env$num_traces <- length (list.files (
