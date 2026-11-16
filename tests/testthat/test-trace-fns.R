@@ -219,6 +219,39 @@ test_that ("trace call via '$' accessor", {
     expect_true (all (x$fn_name == "p.adjust"))
 })
 
+test_that ("trace S3 method dispatched from outside its environment", {
+
+    # A registered but unexported S3 method, reached by dispatch from a
+    # generic called through 'lapply()', is not visible by name from the
+    # calling frame. 'pkg_env' stands in for a package namespace; its
+    # '.packageName' variable makes it a top-level environment, so S3
+    # dispatch finds methods registered there.
+    pkg_env <- new.env ()
+    pkg_env$.packageName <- "typetracerfakepkg"
+    local ({
+        g <- function (x) UseMethod ("g")
+        g.tt_cls <- function (x) {
+            x + 1
+        }
+    }, envir = pkg_env)
+    registerS3method ("g", "tt_cls", pkg_env$g.tt_cls, envir = pkg_env)
+    expect_false (exists ("g.tt_cls"))
+
+    method <- pkg_env$g.tt_cls
+    clear_traces ()
+    inject_tracer (method)
+    on.exit (uninject_tracer (method), add = TRUE)
+
+    obj <- structure (1, class = "tt_cls")
+    val <- lapply (list (obj), pkg_env$g)
+    expect_equal (unclass (val [[1]]), 2)
+
+    x <- load_traces (files = TRUE)
+    expect_s3_class (x, "tbl_df")
+    expect_identical (x$par_name, "x")
+    expect_true (all (x$fn_name == "g.tt_cls"))
+})
+
 test_that ("inject_pkg_trace_fns resolves unexported functions", {
 
     # Packages passed to 'inject_pkg_trace_fns()'/'uninject_pkg_trace_fns()'

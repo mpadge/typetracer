@@ -13,6 +13,7 @@
 - Add cli workflow for tangled
 - Fix tracing functions called through `$`, as for functions stored in R6 fields or lists
 - Tracing no longer changes the random number state of traced code
+- Fix tracing unexported S3 methods reached by dispatch from outside their package, as in `lapply(x, stats::vcov)`
 
 0.2.5
 ===================
