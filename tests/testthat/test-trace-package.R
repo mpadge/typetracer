@@ -104,10 +104,9 @@ test_that ("trace source package", {
     expect_false (all (grepl ("^rd_", x0$source_file_name)))
 
     source_rd <- grep ("\\.Rd$", x0$source_file_name, value = TRUE)
-    # The testthat::test_path in `trace_package_tests` returns blank in some
-    # test environments, giving source_file_names of "./test-name.R/..." rather
-    # than full paths:
-    source_test <- grep ("(^|\\.\\/)test", x0$source_file_name, value = TRUE)
+    # Test sources are relative to the package root, independent of the
+    # working directory:
+    source_test <- grep ("^tests/testthat/test", x0$source_file_name, value = TRUE)
     expect_true (length (source_rd) > 1L)
     expect_true (length (source_test) > 1L)
 
