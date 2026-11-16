@@ -11,6 +11,7 @@
 - Fix `reload_pkg()` crashing on Windows library paths interpreted as invalid
   regular expressions
 - Add cli workflow for tangled
+- Tracing no longer changes the random number state of traced code
 
 0.2.5
 ===================

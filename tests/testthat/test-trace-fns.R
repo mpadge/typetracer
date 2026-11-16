@@ -122,6 +122,27 @@ test_that ("trace call via namespace-qualified reference", {
     expect_true (all (x2$fn_name == "f"))
 })
 
+test_that ("trace call leaves random number state unchanged", {
+
+    f <- function (x, y) {
+        x * x + y * y
+    }
+
+    clear_traces ()
+    inject_tracer (f)
+    on.exit (uninject_tracer (f), add = TRUE)
+
+    set.seed (1)
+    u0 <- runif (1)
+    set.seed (1)
+    val <- f (x = 1:2, y = 3:4 + 0.)
+    u1 <- runif (1)
+    expect_identical (u1, u0)
+
+    x <- load_traces (files = TRUE)
+    expect_equal (nrow (x), 2L)
+})
+
 test_that ("trace call with unset typetracedir option", {
 
     # 'typetracedir' is set in .onLoad(), so is unset in contexts where the

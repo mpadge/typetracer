@@ -9,10 +9,8 @@
           if (is.null(typetracer_env$trace_dir)) {
               typetracer_env$trace_dir <- tempdir()
           }
-          typetracer_env$nm <- paste0(sample(c(letters, LETTERS), 8), 
-              collapse = "")
-          typetracer_env$fname <- file.path(typetracer_env$trace_dir, 
-              paste0("typetrace_", typetracer_env$nm, ".Rds"))
+          typetracer_env$fname <- tempfile(pattern = "typetrace_", 
+              tmpdir = typetracer_env$trace_dir, fileext = ".Rds")
           typetracer_env$num_traces <- length(list.files(typetracer_env$trace_dir, 
               pattern = "^typetrace\\_"))
           typetracer_env$fn_call <- match.call(expand.dots = TRUE)
