@@ -9,10 +9,8 @@
           if (is.null(typetracer_env$trace_dir)) {
               typetracer_env$trace_dir <- tempdir()
           }
-          typetracer_env$nm <- paste0(sample(c(letters, LETTERS), 8), 
-              collapse = "")
-          typetracer_env$fname <- file.path(typetracer_env$trace_dir, 
-              paste0("typetrace_", typetracer_env$nm, ".Rds"))
+          typetracer_env$fname <- tempfile(pattern = "typetrace_", 
+              tmpdir = typetracer_env$trace_dir, fileext = ".Rds")
           typetracer_env$num_traces <- length(list.files(typetracer_env$trace_dir, 
               pattern = "^typetrace\\_"))
           typetracer_env$fn_call <- match.call(expand.dots = TRUE)
@@ -21,6 +19,10 @@
               ns_op <- typetracer_env$fn_name[[1]]
               if (identical(ns_op, quote(`::`)) || identical(ns_op, 
                   quote(`:::`))) {
+                  typetracer_env$fn_name <- typetracer_env$fn_name[[3]]
+              }
+              else if (identical(ns_op, quote(`$`))) {
+                  typetracer_env$fn <- sys.function()
                   typetracer_env$fn_name <- typetracer_env$fn_name[[3]]
               }
           }
@@ -33,7 +35,9 @@
           typetracer_env$pars <- as.list(typetracer_env$fn_call[-1L])
           fn_env <- environment()
           typetracer_env$fn_call_raw <- sys.call()
-          typetracer_env$fn <- match.fun(typetracer_env$fn_name)
+          if (is.null(typetracer_env$fn)) {
+              typetracer_env$fn <- match.fun(typetracer_env$fn_name)
+          }
           typetracer_env$par_names <- methods::formalArgs(typetracer_env$fn)
           typetracer_env$par_formals <- formals(typetracer_env$fn)
           typetracer_env$add_dotdotdot_params <- utils::getFromNamespace("add_dotdotdot_params", 

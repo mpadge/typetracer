@@ -122,6 +122,27 @@ test_that ("trace call via namespace-qualified reference", {
     expect_true (all (x2$fn_name == "f"))
 })
 
+test_that ("trace call leaves random number state unchanged", {
+
+    f <- function (x, y) {
+        x * x + y * y
+    }
+
+    clear_traces ()
+    inject_tracer (f)
+    on.exit (uninject_tracer (f), add = TRUE)
+
+    set.seed (1)
+    u0 <- runif (1)
+    set.seed (1)
+    val <- f (x = 1:2, y = 3:4 + 0.)
+    u1 <- runif (1)
+    expect_identical (u1, u0)
+
+    x <- load_traces (files = TRUE)
+    expect_equal (nrow (x), 2L)
+})
+
 test_that ("trace call with unset typetracedir option", {
 
     # 'typetracedir' is set in .onLoad(), so is unset in contexts where the
@@ -172,6 +193,30 @@ test_that ("trace call via do.call with a function value", {
     expect_s3_class (x, "tbl_df")
     expect_equal (nrow (x), 2L)
     expect_true (all (x$fn_name == "<unknown>"))
+})
+
+test_that ("trace call via '$' accessor", {
+
+    # Functions stored in R6 fields or lists are called as 'obj$fn(...)',
+    # so 'match.call()[[1]]' is a call to '$'. The field name here is also
+    # the name of a different function ('stats::p.adjust'), which must not
+    # be mistaken for the traced one.
+    f <- function (x, y) {
+        x * x + y * y
+    }
+
+    clear_traces ()
+    inject_tracer (f)
+    on.exit (uninject_tracer (f), add = TRUE)
+
+    obj <- list (p.adjust = f)
+    val <- obj$p.adjust (x = 1:2, y = 3:4 + 0.)
+    expect_equal (val, (1:2)^2 + (3:4 + 0.)^2)
+
+    x <- load_traces (files = TRUE)
+    expect_s3_class (x, "tbl_df")
+    expect_identical (x$par_name, c ("x", "y"))
+    expect_true (all (x$fn_name == "p.adjust"))
 })
 
 test_that ("inject_pkg_trace_fns resolves unexported functions", {
