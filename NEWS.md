@@ -11,6 +11,7 @@
 - Fix `reload_pkg()` crashing on Windows library paths interpreted as invalid
   regular expressions
 - Add cli workflow for tangled
+- Fix tracing tests whose names contain "/"
 
 0.2.5
 ===================
