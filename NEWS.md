@@ -11,6 +11,7 @@
 - Fix `reload_pkg()` crashing on Windows library paths interpreted as invalid
   regular expressions
 - Add cli workflow for tangled
+- Fix tracing functions called through `$`, as for functions stored in R6 fields or lists
 - Tracing no longer changes the random number state of traced code
 
 0.2.5

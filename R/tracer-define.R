@@ -52,6 +52,14 @@ typetracer_header <- function () {
         ns_op <- typetracer_env$fn_name [[1]]
         if (identical (ns_op, quote (`::`)) || identical (ns_op, quote (`:::`))) {
             typetracer_env$fn_name <- typetracer_env$fn_name [[3]]
+        } else if (identical (ns_op, quote (`$`))) {
+            # Calls via 'obj$fn(...)', as for functions stored in R6 fields
+            # or lists. The member name is not bound to the function in any
+            # frame 'match.fun()' searches, or is bound to another function
+            # (a field named 'p.adjust' would resolve to 'stats::p.adjust'),
+            # so take the running function itself.
+            typetracer_env$fn <- sys.function ()
+            typetracer_env$fn_name <- typetracer_env$fn_name [[3]]
         }
     }
     # Some invocation mechanisms (e.g. 'callr::r_bg()') call the traced
@@ -80,7 +88,9 @@ typetracer_header <- function () {
     # below this code, and must step back up to reach it.
     typetracer_env$fn_call_raw <- sys.call ()
 
-    typetracer_env$fn <- match.fun (typetracer_env$fn_name)
+    if (is.null (typetracer_env$fn)) {
+        typetracer_env$fn <- match.fun (typetracer_env$fn_name)
+    }
     typetracer_env$par_names <- methods::formalArgs (typetracer_env$fn)
     typetracer_env$par_formals <- formals (typetracer_env$fn)
 
@@ -337,7 +347,8 @@ process_back_trace <- function (trace_dat, fn_name) {
         head_i <- as.list (i) [[1]]
         if (is.call (head_i)) {
             ns_op <- head_i [[1]]
-            if (identical (ns_op, quote (`::`)) || identical (ns_op, quote (`:::`))) {
+            if (identical (ns_op, quote (`::`)) || identical (ns_op, quote (`:::`)) ||
+                identical (ns_op, quote (`$`))) {
                 head_i <- head_i [[3]]
             }
         }
