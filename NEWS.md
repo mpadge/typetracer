@@ -14,6 +14,7 @@
 - Fix tracing functions called through `$`, as for functions stored in R6 fields or lists
 - Tracing no longer changes the random number state of traced code
 - Fix `trace_package(pkg_dir = ...)` with tests failing when the working directory is not the package root
+- Fix tracing unexported S3 methods reached by dispatch from outside their package, as in `lapply(x, stats::vcov)`
 
 0.2.5
 ===================
