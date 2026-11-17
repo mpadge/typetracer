@@ -283,10 +283,10 @@ trace_package_tests <- function (package, pkg_dir = NULL,
         test_str <- lapply (out, function (i) c (i$file, i$test))
         test_str <- data.frame (do.call (rbind, test_str))
         names (test_str) <- c ("file", "test_name")
-        test_str$file <- file.path (
-            testthat::test_path (),
-            test_str$file
-        )
+        # Relative to the package root. 'testthat::test_path()' resolves
+        # against the working directory, and errors outside of a test run
+        # unless that is the package root.
+        test_str$file <- file.path ("tests", "testthat", test_str$file)
         test_str$test <- gsub ("\\s+", "_", test_str$test_name)
         index <- match (test_trace_numbers$test, test_str$test)
         test_trace_numbers$test_name <- test_str$test_name [index]
