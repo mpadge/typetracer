@@ -46,19 +46,15 @@ typetracer_header <- function () {
     typetracer_env$fn_name <- typetracer_env$fn_call [[1]]
     # Namespace-qualified calls ('pkg::fn(...)' or 'pkg:::fn(...)') have
     # 'fn_call[[1]]' as a call to the '::'/':::' operator rather than a bare
-    # symbol; 'match.fun()' below requires the bare function-name symbol, so
-    # extract it from the qualified call in that case.
+    # symbol, so extract the bare function name from the qualified call in
+    # that case.
     if (is.call (typetracer_env$fn_name)) {
         ns_op <- typetracer_env$fn_name [[1]]
         if (identical (ns_op, quote (`::`)) || identical (ns_op, quote (`:::`))) {
             typetracer_env$fn_name <- typetracer_env$fn_name [[3]]
         } else if (identical (ns_op, quote (`$`))) {
             # Calls via 'obj$fn(...)', as for functions stored in R6 fields
-            # or lists. The member name is not bound to the function in any
-            # frame 'match.fun()' searches, or is bound to another function
-            # (a field named 'p.adjust' would resolve to 'stats::p.adjust'),
-            # so take the running function itself.
-            typetracer_env$fn <- sys.function ()
+            # or lists: record the member name.
             typetracer_env$fn_name <- typetracer_env$fn_name [[3]]
         }
     }
@@ -67,8 +63,7 @@ typetracer_header <- function () {
     # in which case 'fn_call[[1]]' (and so 'fn_name') is the closure itself.
     # There is no reliable way to recover the name it was called by in that
     # case, so fall back to a fixed placeholder for anywhere a character
-    # name is required below; 'match.fun()' already accepts a function
-    # object directly, so 'fn_name' itself is left as-is for that.
+    # name is required below.
     typetracer_env$fn_name_chr <- if (is.function (typetracer_env$fn_name)) {
         "<unknown>"
     } else {
@@ -88,9 +83,12 @@ typetracer_header <- function () {
     # below this code, and must step back up to reach it.
     typetracer_env$fn_call_raw <- sys.call ()
 
-    if (is.null (typetracer_env$fn)) {
-        typetracer_env$fn <- match.fun (typetracer_env$fn_name)
-    }
+    # The traced function is the one running here. Looking it up by name
+    # with 'match.fun()' searches from the caller, where the name may be
+    # bound to nothing (an unexported S3 method reached by dispatch, as in
+    # 'lapply(x, stats::vcov)') or to another function (a list field named
+    # 'p.adjust').
+    typetracer_env$fn <- sys.function ()
     typetracer_env$par_names <- methods::formalArgs (typetracer_env$fn)
     typetracer_env$par_formals <- formals (typetracer_env$fn)
 
